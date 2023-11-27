@@ -10,17 +10,17 @@ import cart from "../assets/images/cart.svg";
 const Header = () => {
   return (
     <>
-      <header className="header-top-strip py-3">
+      <header className="header-top-strip py-2">
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
               <p className="text-white mb-0">
-                Free Shipping Over $100 & Free Returns
+                Step into Sneakify, Step into Style.
               </p>
             </div>
             <div className="col-6">
               <p className="text-end text-white mb-0">
-                Hotline:{" "}
+                Hotline:
                 <a className="text-white" href="tel:+91 1234567890">
                   +84 123 456 789
                 </a>
@@ -91,7 +91,7 @@ const Header = () => {
                     <img src={cart} alt="cart" />
                     <div className="d-flex flex-column gap-10">
                       <span className="badge bg-white text-dark">0</span>
-                      <p className="mb-0">$ 500</p>
+                      {/* <p className="mb-0">$ 500</p> */}
                     </div>
                   </Link>
                 </div>
@@ -138,7 +138,7 @@ const Header = () => {
                   </div>
                 </div>
                 <div className="menu-links">
-                  <div className="d-flex align-items-center gap-15">
+                  <div className="d-flex align-items-center gap-30">
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our Store</NavLink>
                     <NavLink to="/blogs">Blogs</NavLink>

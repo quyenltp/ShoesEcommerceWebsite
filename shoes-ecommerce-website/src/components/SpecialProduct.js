@@ -11,11 +11,11 @@ const SpecialProduct = () => {
           <div>
             <img
               src="assets/images/product-03.jpg"
-              className="img-fluid p-2"
+              className="img-fluid p-4"
               alt="product"
             />
           </div>
-          <div className="special-product-content col-7">
+          <div className="special-product-content col-6">
             <h5 className="brand">Vans</h5>
             <h6 className="title">Old Skool Classic Shoes</h6>
             <ReactStars
@@ -33,9 +33,9 @@ const SpecialProduct = () => {
                 <b>5 </b>days
               </p>
               <div className="d-flex gap-10 align-items-center">
-                <span className="badge rounded-circle p-3 bg-danger">1</span>:
-                <span className="badge rounded-circle p-3 bg-danger">1</span>:
-                <span className="badge rounded-circle p-3 bg-danger">1</span>
+                <span className="badge rounded-circle p-2 bg-danger">1</span>:
+                <span className="badge rounded-circle p-2 bg-danger">1</span>:
+                <span className="badge rounded-circle p-2 bg-danger">1</span>
               </div>
             </div>
             <div className="prod-count my-3">

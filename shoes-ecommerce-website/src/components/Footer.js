@@ -81,9 +81,6 @@ const Footer = () => {
                 <Link to="term-conditions" className="text-white py-2 mb-1">
                   Terms & Conditions
                 </Link>
-                <Link to="blogs" className="text-white py-2 mb-1">
-                  Blogs
-                </Link>
               </div>
             </div>
             <div className="col-3">
@@ -106,12 +103,12 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <footer className="py-4">
+      <footer className="py-2">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
               <p className="text-center mb-0 text-white">
-                &copy; {new Date().getFullYear()}; All Rights Reserved
+                &copy; {new Date().getFullYear()} - All Rights Reserved.
               </p>
             </div>
           </div>

@@ -30,6 +30,10 @@ const Signup = () => {
                   placeholder="Password"
                 />
                 <div>
+                  <p>
+                    Already have an account? <Link to="/login">Login</Link>
+                  </p>
+
                   <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
                     <button className="button border-0" type="submit">
                       Sign Up
