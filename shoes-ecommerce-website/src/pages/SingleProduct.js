@@ -52,7 +52,7 @@ const SingleProduct = () => {
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
-              {Array.isArray(productState.images[0]) &&
+              {Array.isArray(productState?.images[0]) &&
                 productState?.images[0].map((item, index) => {
                   return (
                     <div>
