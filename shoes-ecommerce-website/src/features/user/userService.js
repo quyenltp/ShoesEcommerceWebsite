@@ -21,6 +21,7 @@ const login = async (userData) => {
 
 const getUserWishlist = async () => {
   const response = await axios.get(`${base_url}user/wishlist`, config);
+  console.log("Wishlist Response:", response.data);
   if (response.data) {
     return response.data;
   }

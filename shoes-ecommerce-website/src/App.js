@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import OurStore from "./pages/OurStore";
-import Blogs from "./pages/Blogs";
+import Blogs from "./pages/Blog";
 import Wishlist from "./pages/Wishlist";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";

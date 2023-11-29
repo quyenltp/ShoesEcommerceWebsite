@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 
@@ -7,8 +7,20 @@ import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllBlogs } from "../features/blogs/blogSlice";
+
+import moment from "moment";
 
 const Home = () => {
+  const blogState = useSelector((state) => state?.blog?.blog);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getblogs();
+  }, []);
+  const getblogs = () => {
+    dispatch(getAllBlogs());
+  };
   return (
     <>
       <Container class1="home-wrapper-1 py-5">
@@ -239,18 +251,25 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-3">
-            <BlogCard />
-          </div>
-          <div className="col-3">
-            <BlogCard />
-          </div>
-          <div className="col-3">
-            <BlogCard />
-          </div>
-          <div className="col-3">
-            <BlogCard />
-          </div>
+          {blogState &&
+            Object.keys(blogState).map((key, index) => {
+              const item = blogState[key];
+              const imageUrl =
+                item?.image && item.image.length > 0
+                  ? item.images[0].url
+                  : "assets/images/blog-01.jpg";
+              if (index < 4) {
+                return (
+                  <div className="col-3" key={index}>
+                    <BlogCard
+                      title={item.title}
+                      image={imageUrl}
+                      description={item.description}
+                    />
+                  </div>
+                );
+              }
+            })}
         </div>
       </Container>
     </>

@@ -6,6 +6,13 @@ import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProductWishlist } from "../features/user/userSlice";
 const Wishlist = () => {
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   getWishlistFromDb();
+  // }, []);
+  // const getWishlistFromDb = () => {
+  //   dispatch(getUserProductWishlist());
+  // };
   const dispatch = useDispatch();
   useEffect(() => {
     getWishlistFromDb();
@@ -14,12 +21,14 @@ const Wishlist = () => {
     dispatch(getUserProductWishlist());
   };
   const wishlistState = useSelector((state) => state.auth.wishlist);
+  // console.log(wishlistState);
   return (
     <>
       <Meta title={"Wishlist"} />
       <BreadCrumb title="Wishlist" />
       <Container class1="wistlist-wrapper home-wrapper-2 py-5">
         <div className="row">
+          {wishlistState?.map((item, index) => {})}
           <div className="col-3">
             <div className="wishlist-card position-relative">
               <img
