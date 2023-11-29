@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactImageZoom from "react-image-zoom";
 import { AiOutlineHeart } from "react-icons/ai";
 
@@ -8,13 +8,25 @@ import ProductCard from "../components/ProductCard";
 import ReactStars from "react-rating-stars-component";
 import Colors from "../components/Colors";
 import Container from "../components/Container";
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAProduct } from "../features/product/productSlice";
 
 const SingleProduct = () => {
+  const location = useLocation();
+  const getProductId = location.pathname.split("/")[2];
+  const dispatch = useDispatch();
+  const productState = useSelector((state) => state.product.singleproduct);
+  useEffect(() => {
+    dispatch(getAProduct(getProductId));
+  });
   const props = {
     width: 400,
     height: 500,
     zoomWidth: 500,
-    img: "https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0",
+    img: productState?.images[0]?.url
+      ? productState?.images[0]?.url
+      : "https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0",
   };
   const copyToClipboard = (text) => {
     console.log("text", text);
@@ -40,7 +52,22 @@ const SingleProduct = () => {
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
+              {Array.isArray(productState?.images[0]) &&
+                productState?.images[0].map((item, index) => {
+                  return (
+                    <div>
+                      <img src={item?.url} alt="" className="img-fluid" />
+                    </div>
+                  );
+                })}
               <div>
+                <img
+                  src="https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0"
+                  alt=""
+                  className="img-fluid"
+                />
+              </div>
+              {/* <div>
                 <img
                   src="https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0"
                   alt=""
@@ -60,28 +87,21 @@ const SingleProduct = () => {
                   alt=""
                   className="img-fluid"
                 />
-              </div>
-              <div>
-                <img
-                  src="https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0"
-                  alt=""
-                  className="img-fluid"
-                />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-6">
             <div className="main-product-details">
               <div className="border-bottom">
-                <h3 className="title">Old Skool Classic Shoes</h3>
+                <h3 className="title">{productState?.title}</h3>
               </div>
               <div className="border-bottom py-3">
-                <p className="price">$100.00</p>
+                <p className="price">{productState?.price}</p>
                 <div className="d-flex align-items-center gap-10">
                   <ReactStars
                     count={5}
                     size={24}
-                    value="3"
+                    value={productState?.totalratings}
                     edit={false}
                     activeColor="#ffd700"
                   />
@@ -98,15 +118,15 @@ const SingleProduct = () => {
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Brand:</h3>
-                  <p className="product-data">Vans</p>
+                  <p className="product-data">{productState?.brand}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Categories:</h3>
-                  <p className="product-data">Old Skool</p>
+                  <p className="product-data">{productState?.category}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Tags:</h3>
-                  <p className="product-data">Old Skool</p>
+                  <p className="product-data">{productState?.tags}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Availablity: </h3>
@@ -167,9 +187,7 @@ const SingleProduct = () => {
                   <a
                     href="javascript:void(0);"
                     onClick={() => {
-                      copyToClipboard(
-                        "https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0"
-                      );
+                      copyToClipboard(window.location.href);
                     }}
                   >
                     Copy Product Link
@@ -186,15 +204,11 @@ const SingleProduct = () => {
           <div className="col-12">
             <h4>Description</h4>
             <div className="bg-white p-3">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: productState?.description || "empty",
+                }}
+              ></p>
             </div>
           </div>
         </div>
