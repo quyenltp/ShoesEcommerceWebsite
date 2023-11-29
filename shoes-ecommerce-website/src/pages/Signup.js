@@ -32,6 +32,19 @@ const Signup = () => {
     onSubmit: (values) => {
       dispatch(registerUser(values));
     },
+    // onSubmit: async (values) => {
+    //   try {
+    //     await dispatch(registerUser(values));
+    //   } catch (error) {
+    //     if (error.isAxiosError) {
+    //       // Handle AxiosError appropriately, e.g., log or display an error message
+    //       console.error("AxiosError:", error);
+    //     } else {
+    //       // Handle other types of errors
+    //       console.error("Error:", error);
+    //     }
+    //   }
+    // },
   });
   return (
     <>
