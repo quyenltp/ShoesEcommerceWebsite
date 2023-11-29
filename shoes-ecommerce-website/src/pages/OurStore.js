@@ -10,8 +10,9 @@ import Container from "../components/Container";
 import { getAllProducts } from "../features/product/productSlice";
 
 const OurStore = () => {
-  const [grid, setGrid] = useState(4);
+  const [grid, setGrid] = useState(3);
   const productState = useSelector((state) => state?.product?.product);
+  console.log(productState);
   const dispatch = useDispatch();
   useEffect(() => {
     getProducts();

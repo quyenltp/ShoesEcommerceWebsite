@@ -15,10 +15,10 @@ const ProductCard = (props) => {
   const { grid, data } = props;
   const dispatch = useDispatch();
 
-  console.log(data);
+  // console.log(data);
   let location = useLocation();
   const addToWish = (id) => {
-    alert(id);
+    // alert(id);
     dispatch(addToWishlist(id));
   };
 
