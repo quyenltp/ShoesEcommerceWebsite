@@ -13,13 +13,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAProduct } from "../features/product/productSlice";
 
 const SingleProduct = () => {
+  const productState = useSelector((state) => state?.product?.singleproduct);
+
   const location = useLocation();
   const getProductId = location.pathname.split("/")[2];
   const dispatch = useDispatch();
-  const productState = useSelector((state) => state.product.singleproduct);
   useEffect(() => {
     dispatch(getAProduct(getProductId));
-  });
+  }, []);
   const props = {
     width: 400,
     height: 500,
