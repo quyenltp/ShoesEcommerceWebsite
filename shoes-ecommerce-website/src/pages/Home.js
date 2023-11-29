@@ -225,19 +225,19 @@ const Home = () => {
                       </div>
                       <div className="product-image">
                         <img
-                          // src={item?.images[0]?.url}
-                          src={product01}
+                          src={item?.images[0]?.url}
+                          // src={product01}
                           className="img-fluid mx-auto"
                           alt="product image"
                           width={160}
                         />
                         {/* Hover image */}
-                        <img
+                        {/* <img
                           src={product01}
                           className="img-fluid mx-auto"
                           alt="product image"
                           width={160}
-                        />
+                        /> */}
                       </div>
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
@@ -319,6 +319,7 @@ const Home = () => {
                     price={item?.price}
                     sold={item?.sold}
                     quantity={item?.quantity}
+                    images={item?.images[0]?.url}
                   />
                 );
               }
@@ -357,19 +358,19 @@ const Home = () => {
                       </div>
                       <div className="product-image">
                         <img
-                          // src={item?.images[0]?.url}
-                          src={product01}
+                          src={item?.images[0]?.url}
+                          // src={product01}
                           className="img-fluid mx-auto"
                           alt="product image"
                           width={160}
                         />
                         {/* Hover image */}
-                        <img
+                        {/* <img
                           src={product01}
                           className="img-fluid mx-auto"
                           alt="product image"
                           width={160}
-                        />
+                        /> */}
                       </div>
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
