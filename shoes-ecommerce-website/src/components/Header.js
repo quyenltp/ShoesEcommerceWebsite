@@ -6,6 +6,8 @@ import compare from "../assets/images/compare.svg";
 import wishlist from "../assets/images/wishlist.svg";
 import user from "../assets/images/user.svg";
 import cart from "../assets/images/cart.svg";
+import logo from "../assets/images/logo.png";
+// import { PiSneakerMoveFill } from "react-icons/pi";
 
 const Header = () => {
   return (
@@ -20,7 +22,7 @@ const Header = () => {
             </div>
             <div className="col-6">
               <p className="text-end text-white mb-0">
-                Hotline:
+                Hotline: &nbsp;
                 <a className="text-white" href="tel:+91 1234567890">
                   +84 123 456 789
                 </a>
@@ -32,10 +34,12 @@ const Header = () => {
       <header className="header-upper py-3">
         <div className="container-xxl">
           <div className="row align-items-center">
-            <div className="col-2">
-              <h2>
-                <Link className="text-white">Sneakify.</Link>
-              </h2>
+            <div className="col-2 d-flex align-items-center">
+              <img src={logo} alt="logo" className="logo-img" />
+              {/* <PiSneakerMoveFill className="logo-img" /> */}
+              <h3>
+                <Link className="text-white">Sneakify</Link>
+              </h3>
             </div>
             <div className="col-5">
               <div className="input-group">

@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BsInstagram, BsFacebook, BsTwitter, BsTiktok } from "react-icons/bs";
-import newsletter from "../assets/images/newsletter.png";
-
+import logo from "../assets/images/logo.png";
 const Footer = () => {
   return (
     <>
@@ -11,8 +10,8 @@ const Footer = () => {
           <div className="row align-items-center">
             <div className="col-5">
               <div className="footer-top-data d-flex gap-30 align-items-center">
-                <img src={newsletter} alt="newsletter" />
-                <h2 className="mb-0 text-white">Sign Up for Newsletter</h2>
+                <img src={logo} alt="newsletter" />
+                <h3 className="mb-0 text-white">Sign Up for Newsletter</h3>
               </div>
             </div>
             <div className="col-7">
