@@ -17,10 +17,11 @@ import { addToWishlist } from "../features/product/productSlice";
 import { getAllProducts } from "../features/product/productSlice";
 import { getAllBlogs } from "../features/blogs/blogSlice";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const blogState = useSelector((state) => state?.blog?.blog);
   const productState = useSelector((state) => state.product.product);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     getblogs();
@@ -274,7 +275,7 @@ const Home = () => {
               if (item.tags === "popular") {
                 return (
                   <div key={index} className={"col-3"}>
-                    <Link
+                    <div
                       // to={`${
                       //   location.pathname == "/"
                       //     ? "/product/:id"
@@ -323,14 +324,18 @@ const Home = () => {
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">
                           <button className="border-0 bg-transparent">
-                            <img src={view} alt="view" />
+                            <img
+                              onClick={() => navigate(`/product/${item?._id}`)}
+                              src={view}
+                              alt="view"
+                            />
                           </button>
                           <button className="border-0 bg-transparent">
                             <img src={addcart} alt="addcart" />
                           </button>
                         </div>
                       </div>
-                    </Link>
+                    </div>
                   </div>
                 );
               }
