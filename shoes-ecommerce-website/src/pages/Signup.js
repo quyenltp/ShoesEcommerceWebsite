@@ -13,7 +13,10 @@ import { registerUser } from "../features/user/userSlice";
 const signUpSchema = yup.object({
   firstname: yup.string().required("First name is required"),
   lastname: yup.string().required("Last name is required"),
-  email: yup.string().email("Email should be valid"),
+  email: yup
+    .string()
+    .email("Email should be valid")
+    .required("Email is required"),
   mobile: yup.string().required("Mobile number is required"),
   password: yup.string().required("Password is required"),
 });
@@ -32,19 +35,6 @@ const Signup = () => {
     onSubmit: (values) => {
       dispatch(registerUser(values));
     },
-    // onSubmit: async (values) => {
-    //   try {
-    //     await dispatch(registerUser(values));
-    //   } catch (error) {
-    //     if (error.isAxiosError) {
-    //       // Handle AxiosError appropriately, e.g., log or display an error message
-    //       console.error("AxiosError:", error);
-    //     } else {
-    //       // Handle other types of errors
-    //       console.error("Error:", error);
-    //     }
-    //   }
-    // },
   });
   return (
     <>
