@@ -51,12 +51,12 @@ const ProductCard = (props) => {
                     width={160}
                   />
                   {/* Hover image */}
-                  {/* <img
+                  <img
                     src={product01}
                     className="img-fluid mx-auto"
                     alt="product image"
                     width={160}
-                  /> */}
+                  />
                 </div>
                 <div className="product-details">
                   <h6 className="brand">{item?.brand}</h6>
