@@ -17,7 +17,8 @@ const Cart = () => {
   const dispatch = useDispatch();
   const [productUpdateDetail, setProductUpdateDetail] = useState(null);
   const usercartState = useSelector((state) => state.auth.cartProducts);
-  console.log("Product Update Detail:", productUpdateDetail);
+  const [totalAmount, setTotalAmount] = useState(null);
+  // console.log("Product Update Detail:", productUpdateDetail);
   useEffect(() => {
     dispatch(getUserCart());
   }, []);
@@ -40,6 +41,13 @@ const Cart = () => {
     });
   };
   const updateACartProduct = () => {};
+  useEffect(() => {
+    let sum = 0;
+    for (let i = 0; i < usercartState?.length; i++) {
+      sum += Number(usercartState[i].quantity * usercartState[i].price);
+    }
+    setTotalAmount(sum);
+  }, [usercartState]);
   return (
     <>
       <Meta title={"Cart"} />
@@ -128,13 +136,19 @@ const Cart = () => {
               <Link to="/product" className="button button-dark">
                 Continue To Shop
               </Link>
-              <div className="d-flex flex-column align-items-end gap-15">
-                <h4>Subtotal: $200.00</h4>
-                <p>Taxes and shipping calculated at checkout</p>
-                <Link to="/checkout" className="button border-0" type="submit">
-                  Checkout
-                </Link>
-              </div>
+              {(totalAmount !== null || totalAmount !== 0) && (
+                <div className="d-flex flex-column align-items-end gap-15">
+                  <h4>Subtotal: {totalAmount} VND</h4>
+                  <p>Taxes and shipping calculated at checkout</p>
+                  <Link
+                    to="/checkout"
+                    className="button border-0"
+                    type="submit"
+                  >
+                    Checkout
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
