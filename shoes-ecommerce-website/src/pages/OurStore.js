@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
-import Colors from "../components/Colors";
+import Color from "../components/Color";
 import Container from "../components/Container";
 import { getAllProducts } from "../features/product/productSlice";
 
@@ -115,7 +115,7 @@ const OurStore = () => {
                         <li></li>
                       </ul>
                     </div> */}
-                  <Colors />
+                  <Color />
                 </div>
                 <h5 className="sub-title">Size</h5>
                 <div>

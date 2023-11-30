@@ -6,14 +6,18 @@ import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
 import ReactStars from "react-rating-stars-component";
-import Colors from "../components/Colors";
+import Color from "../components/Color";
 import Container from "../components/Container";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAProduct } from "../features/product/productSlice";
+import { toast } from "react-toastify";
+import { addProdToCart } from "../features/user/userSlice";
 
 const SingleProduct = () => {
-  const productState = useSelector((state) => state?.product?.singleproduct);
+  const [color, setColor] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const productState = useSelector((state) => state.product.singleproduct);
 
   const location = useLocation();
   const getProductId = location.pathname.split("/")[2];
@@ -21,13 +25,61 @@ const SingleProduct = () => {
   useEffect(() => {
     dispatch(getAProduct(getProductId));
   }, []);
+
+  const uploadCart = () => {
+    if (color === "") {
+      return toast.error("Please select a color");
+    }
+    // if (quantity < 1) {
+    //   return toast.error("Please select a quantity");}
+    else {
+      dispatch(
+        addProdToCart({
+          productId: productState?._id,
+          quantity,
+          color,
+          price: productState?.price,
+        })
+      );
+    }
+  };
+  // const uploadCart = () => {
+  //   try {
+  //     if (color === "") {
+  //       throw new Error("Please select a color");
+  //     }
+
+  //     dispatch(
+  //       addProdToCart({
+  //         productId: productState?._id,
+  //         quantity,
+  //         color,
+  //         price: productState?.price,
+  //       })
+  //     );
+
+  //     // Optionally, reset the form state or perform other actions on success.
+  //     setColor("");
+  //     setQuantity(1);
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
+  // const props = {
+  //   width: 400,
+  //   height: 500,
+  //   zoomWidth: 500,
+  //   img: productState?.images[0]?.url
+  //     ? productState?.images[0]?.url
+  //     : "https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0",
+  // };
   const props = {
     width: 400,
     height: 500,
     zoomWidth: 500,
-    img: productState?.images[0]?.url
-      ? productState?.images[0]?.url
-      : "https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0",
+    img:
+      productState?.images[0]?.url ||
+      "https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0",
   };
   const copyToClipboard = (text) => {
     console.log("text", text);
@@ -148,7 +200,8 @@ const SingleProduct = () => {
                   </div>
                 </div>
                 <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Color: </h3> <Colors />
+                  <h3 className="product-heading">Color: </h3>{" "}
+                  <Color setColor={setColor} colorData={productState?.color} />
                 </div>
                 <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
                   <h3 className="product-heading">Quantity: </h3>
@@ -161,10 +214,20 @@ const SingleProduct = () => {
                       className="form-control"
                       style={{ width: "70px" }}
                       id=""
+                      onChange={(e) => setQuantity(e.target.value)}
+                      value={quantity}
                     />
                   </div>
                   <div className="d-flex align-items-center gap-30 ms-5">
-                    <button className="button border-0" type="submit">
+                    <button
+                      className="button border-0"
+                      type="button"
+                      // data-bs-toggle="modal"
+                      // data-bs-target="#staticBackdrop"
+                      onClick={() => {
+                        uploadCart();
+                      }}
+                    >
                       Add to cart
                     </button>
                     <button className="button signup">Buy now</button>

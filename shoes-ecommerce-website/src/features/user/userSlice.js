@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "./userService";
 import { toast } from "react-toastify";
+import { config } from "../../utils/axiosConfig";
 
 export const registerUser = createAsyncThunk(
   "auth/register",
@@ -33,6 +34,28 @@ export const getUserProductWishlist = createAsyncThunk(
     }
   }
 );
+
+export const addProdToCart = createAsyncThunk(
+  "user/cart/add",
+  async (cartData, thunkAPI) => {
+    try {
+      return await authService.addToCart(cartData), config;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// export const addProdToCart = createAsyncThunk(
+//   "user/cart/add",
+//   async (cartData, { rejectWithValue }) => {
+//     try {
+//       return await authService.addToCart(cartData);
+//     } catch (error) {
+//       return rejectWithValue(error.response.data); // assuming your server returns error details
+//     }
+//   }
+// );
 
 const getCustomerfromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
@@ -116,6 +139,27 @@ export const authSlice = createSlice({
         // if (state.isError === true) {
         //   toast.error(action.error);
         // }
+      })
+      .addCase(addProdToCart.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addProdToCart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.cartProduct = action.payload;
+        if (state.isSuccess === true) {
+          toast.info("Product Added successfully");
+        }
+      })
+      .addCase(addProdToCart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isError === true) {
+          toast.info("Product Added Failed");
+        }
       });
   },
 });
