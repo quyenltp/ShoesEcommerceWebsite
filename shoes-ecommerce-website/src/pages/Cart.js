@@ -15,24 +15,31 @@ import {
 } from "../features/user/userSlice";
 const Cart = () => {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(null);
+  const [productUpdateDetail, setProductUpdateDetail] = useState(null);
   const usercartState = useSelector((state) => state.auth.cartProducts);
-
+  console.log("Product Update Detail:", productUpdateDetail);
   useEffect(() => {
     dispatch(getUserCart());
   }, []);
+  useEffect(() => {
+    if (productUpdateDetail !== null) {
+      dispatch(
+        updateCartProduct({
+          cartItemId: productUpdateDetail?.cartItemId,
+          quantity: productUpdateDetail?.quantity,
+        })
+      ).then(() => {
+        dispatch(getUserCart());
+      });
+    }
+  }, [productUpdateDetail]);
   const deleteACartProduct = (id) => {
     dispatch(deleteCartProduct(id));
     setTimeout(() => {
       dispatch(getUserCart());
     });
   };
-  const updateACartProduct = (id) => {
-    dispatch(updateCartProduct({ cartItemId: id, quantity }));
-    setTimeout(() => {
-      dispatch(getUserCart());
-    });
-  };
+  const updateACartProduct = () => {};
   return (
     <>
       <Meta title={"Cart"} />
@@ -86,9 +93,16 @@ const Cart = () => {
                           id=""
                           min={1}
                           max={10}
-                          value={quantity ? quantity : item?.quantity}
+                          value={
+                            productUpdateDetail?.quantity
+                              ? productUpdateDetail?.quantity
+                              : item?.quantity
+                          }
                           onChange={(e) => {
-                            setQuantity(e.target.value);
+                            setProductUpdateDetail({
+                              cartItemId: item?._id,
+                              quantity: e.target.value,
+                            });
                           }}
                         />
                       </div>

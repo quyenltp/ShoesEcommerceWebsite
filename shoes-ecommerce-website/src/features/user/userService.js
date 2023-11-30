@@ -61,10 +61,19 @@ const removeProductFromCart = async (cartItemId) => {
   }
 };
 
+// const updateProductFromCart = async (cartDetail) => {
+//   const response = await axios.put(
+//     `${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,
+//     config
+//   );
+//   if (response.data) {
+//     return response.data;
+//   }
+// };
+
 const updateProductFromCart = async (cartDetail) => {
-  const response = await axios.delete(
-    `${base_url}/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,
-    config
+  const response = await axios.put(
+    `${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`
   );
   if (response.data) {
     return response.data;
