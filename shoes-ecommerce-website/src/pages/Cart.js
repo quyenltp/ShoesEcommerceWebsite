@@ -7,13 +7,32 @@ import Meta from "../components/Meta";
 import Container from "../components/Container";
 import product01 from "../assets/images/product-01.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserCart } from "../features/user/userSlice";
+import { useState } from "react";
+import {
+  deleteCartProduct,
+  getUserCart,
+  updateCartProduct,
+} from "../features/user/userSlice";
 const Cart = () => {
   const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(null);
   const usercartState = useSelector((state) => state.auth.cartProducts);
+
   useEffect(() => {
     dispatch(getUserCart());
   }, []);
+  const deleteACartProduct = (id) => {
+    dispatch(deleteCartProduct(id));
+    setTimeout(() => {
+      dispatch(getUserCart());
+    });
+  };
+  const updateACartProduct = (id) => {
+    dispatch(updateCartProduct({ cartItemId: id, quantity }));
+    setTimeout(() => {
+      dispatch(getUserCart());
+    });
+  };
   return (
     <>
       <Meta title={"Cart"} />
@@ -67,11 +86,17 @@ const Cart = () => {
                           id=""
                           min={1}
                           max={10}
-                          value={item?.quantity}
+                          value={quantity ? quantity : item?.quantity}
+                          onChange={(e) => {
+                            setQuantity(e.target.value);
+                          }}
                         />
                       </div>
                       <div>
-                        <AiFillDelete className="text-danger" />
+                        <AiFillDelete
+                          onClick={() => deleteACartProduct(item?._id)}
+                          className="text-danger"
+                        />
                       </div>
                     </div>
                     <div className="cart-col-4">

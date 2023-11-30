@@ -12,19 +12,29 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAProduct } from "../features/product/productSlice";
 import { toast } from "react-toastify";
-import { addProdToCart } from "../features/user/userSlice";
-
+import { addProdToCart, getUserCart } from "../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 const SingleProduct = () => {
   const [color, setColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [allreadyAdded, setAllreadyAdded] = useState(false);
   const productState = useSelector((state) => state.product.singleproduct);
-
+  const cartState = useSelector((state) => state.auth.cartProducts);
   const location = useLocation();
+  const navigate = useNavigate();
   const getProductId = location.pathname.split("/")[2];
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAProduct(getProductId));
+    dispatch(getUserCart());
   }, []);
+  useEffect(() => {
+    for (let index = 0; index < cartState.length; index++) {
+      if (cartState[index]?.productId?._id === getProductId) {
+        setAllreadyAdded(true);
+      }
+    }
+  });
 
   const uploadCart = () => {
     if (color === "") {
@@ -39,7 +49,8 @@ const SingleProduct = () => {
           quantity,
           color,
           price: productState?.price,
-        })
+        }),
+        navigate("/cart")
       );
     }
   };
@@ -199,38 +210,55 @@ const SingleProduct = () => {
                     </span>
                   </div>
                 </div>
-                <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Color: </h3>{" "}
-                  <Color setColor={setColor} colorData={productState?.color} />
-                </div>
+                {allreadyAdded === false && (
+                  <>
+                    <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                      <h3 className="product-heading">Color: </h3>{" "}
+                      <Color
+                        setColor={setColor}
+                        colorData={productState?.color}
+                      />
+                    </div>
+                  </>
+                )}
                 <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
-                  <h3 className="product-heading">Quantity: </h3>
-                  <div className="">
-                    <input
-                      type="number"
-                      name=""
-                      min={1}
-                      max={10}
-                      className="form-control"
-                      style={{ width: "70px" }}
-                      id=""
-                      onChange={(e) => setQuantity(e.target.value)}
-                      value={quantity}
-                    />
-                  </div>
-                  <div className="d-flex align-items-center gap-30 ms-5">
+                  {allreadyAdded === false && (
+                    <>
+                      <h3 className="product-heading">Quantity: </h3>
+                      <div className="">
+                        <input
+                          type="number"
+                          name=""
+                          min={1}
+                          max={10}
+                          className="form-control"
+                          style={{ width: "70px" }}
+                          id=""
+                          onChange={(e) => setQuantity(e.target.value)}
+                          value={quantity}
+                        />
+                      </div>
+                    </>
+                  )}
+                  <div
+                    className={
+                      allreadyAdded
+                        ? "ms-0"
+                        : "ms-5" + "d-flex align-items-center gap-30 ms-5"
+                    }
+                  >
                     <button
                       className="button border-0"
                       type="button"
                       // data-bs-toggle="modal"
                       // data-bs-target="#staticBackdrop"
                       onClick={() => {
-                        uploadCart();
+                        allreadyAdded ? navigate("/cart") : uploadCart();
                       }}
                     >
-                      Add to cart
+                      {allreadyAdded ? "Go To Cart" : "Add To Cart"}
                     </button>
-                    <button className="button signup">Buy now</button>
+                    {/* <button className="button signup">Buy now</button> */}
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
