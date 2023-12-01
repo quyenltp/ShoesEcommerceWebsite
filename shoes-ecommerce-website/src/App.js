@@ -21,6 +21,9 @@ import TermAndCondition from "./pages/TermAndCondition";
 import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import { PrivateRoutes } from "./routing/PrivateRoutes";
+import Orders from "./pages/Orders";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -45,6 +48,17 @@ function App() {
             <Route path="shipping-policy" element={<ShippingPolicy />} />
             <Route path="term-conditions" element={<TermAndCondition />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="my-orders" element={<Orders />} />
+            <Route path="my-profile" element={<Profile />} />
+
+            {/* <Route
+              path="cart"
+              element={
+                <PrivateRoutes>
+                  <Cart />
+                </PrivateRoutes>
+              }
+            /> */}
             <Route path="checkout" element={<Checkout />} />
           </Route>
         </Routes>

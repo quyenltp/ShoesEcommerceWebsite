@@ -6,7 +6,8 @@ import Meta from "../components/Meta";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import * as yup from "yup";
 import { loginUser } from "../features/user/userSlice";
@@ -19,16 +20,19 @@ const loginSchema = yup.object({
   password: yup.string().required("Password is required"),
 });
 const Login = () => {
+  const authState = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
-      mobile: "",
+      password: "",
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
       // alert(JSON.stringify(values));
       dispatch(loginUser(values));
+      navigate("/");
     },
   });
   return (

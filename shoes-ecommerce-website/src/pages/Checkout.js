@@ -86,7 +86,7 @@ const Checkout = () => {
   const checkoutHandler = async () => {
     // const res = await loadScript();
     const result = await axios.post(
-      "http://localhost:5000api/user/order/checkout",
+      "http://localhost:5000/api/user/order/checkout",
       { amount: totalAmount + 5 },
       config
     );
