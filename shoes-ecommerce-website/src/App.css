@@ -250,7 +250,7 @@ footer .input-group-text {
   padding: 15px;
   background-color: white;
   border-radius: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 100%;
 }
 /* .product-card .product-image {

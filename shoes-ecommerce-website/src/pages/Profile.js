@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import BreadCrumb from "../components/BreadCrumb";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../features/user/userSlice";
+import { FiEdit } from "react-icons/fi";
 
 const profileSchema = yup.object({
   firstname: yup.string().required("First name is required"),
@@ -15,6 +17,7 @@ const profileSchema = yup.object({
 const Profile = () => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state?.auth?.user);
+  const [edit, setEdit] = useState(true);
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -26,7 +29,8 @@ const Profile = () => {
     validationSchema: profileSchema,
     onSubmit: (values) => {
       // alert(JSON.stringify(values));
-      //   dispatch(loginUser(values));
+      dispatch(updateProfile(values));
+      setEdit(false);
     },
   });
   return (
@@ -34,6 +38,12 @@ const Profile = () => {
       <BreadCrumb title="My Profile" />
       <Container class1="cart-wrapper-home home-wrapper-2 py-5">
         <div className="row">
+          <div className="col-12">
+            <div className="d-flex justify-content-between align-items-center">
+              <h3 className="">Update Profile</h3>
+              <FiEdit className="fs-3" onClick={() => setEdit(false)} />
+            </div>
+          </div>
           <div className="col-12">
             <form onClick={formik.handleSubmit}>
               <div className="mb-3">
@@ -44,6 +54,7 @@ const Profile = () => {
                   type="text"
                   name="firstname"
                   className="form-control"
+                  disabled={edit}
                   id="example1"
                   value={formik.values.firstname}
                   onChange={formik.handleChange("firstname")}
@@ -61,6 +72,7 @@ const Profile = () => {
                   type="text"
                   name="lastname"
                   className="form-control"
+                  disabled={edit}
                   id="example2"
                   value={formik.values.lastname}
                   onChange={formik.handleChange("lastname")}
@@ -78,6 +90,7 @@ const Profile = () => {
                   type="email"
                   name="email"
                   className="form-control"
+                  disabled={edit}
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   value={formik.values.email}
@@ -96,6 +109,7 @@ const Profile = () => {
                   type="email"
                   name="mobile"
                   className="form-control"
+                  disabled={edit}
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   value={formik.values.mobile}
@@ -107,9 +121,11 @@ const Profile = () => {
                 </div>
               </div>
 
-              <button type="submit" className="btn btn-primary">
-                Save
-              </button>
+              {edit === false && (
+                <button type="submit" className="btn btn-primary">
+                  Save
+                </button>
+              )}
             </form>
           </div>
         </div>
