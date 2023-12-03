@@ -39,7 +39,7 @@ export const addProdToCart = createAsyncThunk(
   "user/cart/add",
   async (cartData, thunkAPI) => {
     try {
-      return await authService.addToCart(cartData), config;
+      return await authService.addToCart(cartData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -50,7 +50,11 @@ export const getUserCart = createAsyncThunk(
   "user/cart/get",
   async (thunkAPI) => {
     try {
-      return await authService.getCart();
+      const response = await authService.getCart();
+      if (response) {
+        console.log("Cart Response:", response);
+        return response;
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -72,7 +76,7 @@ export const updateCartProduct = createAsyncThunk(
   "user/cart/product/update",
   async (cartDetail, thunkAPI) => {
     try {
-      return await authService.updateProductFrDetail(cartDetail);
+      return await authService.updateProductFromCart(cartDetail);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -197,12 +201,14 @@ export const authSlice = createSlice({
       })
       .addCase(addProdToCart.pending, (state) => {
         state.isLoading = true;
+        console.log(state);
       })
       .addCase(addProdToCart.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.cartProduct = action.payload;
+        state.cartProduct = { ...action.payload };
         if (state.isSuccess === true) {
           toast.info("Product Added successfully");
         }

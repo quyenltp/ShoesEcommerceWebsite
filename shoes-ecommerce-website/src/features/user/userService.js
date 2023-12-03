@@ -21,7 +21,7 @@ const login = async (userData) => {
 };
 
 const getUserWishlist = async () => {
-  const response = await axios.get(`${base_url}user/wishlist`, config);
+  const response = await axios.get(`${base_url}user/wishlist`, config());
   console.log("Wishlist Response:", response.data);
   if (response.data) {
     return response.data;
@@ -29,14 +29,18 @@ const getUserWishlist = async () => {
 };
 
 const addToCart = async (cartData) => {
-  const response = await axios.post(`${base_url}user/cart`, cartData, config);
+  console.log("Cart Data:", cartData);
+  console.log("config():", config());
+  const response = await axios.post(`${base_url}user/cart`, cartData, config());
+
   if (response.data) {
     return response.data;
   }
 };
 const getCart = async () => {
-  const response = await axios.get(`${base_url}user/cart`, config);
+  const response = await axios.get(`${base_url}user/cart`, config());
   if (response.data) {
+    console.log("Cart Response:", response.data);
     return response.data;
   }
 };
@@ -44,7 +48,7 @@ const createOrder = async (orderDetail) => {
   const response = await axios.post(
     `${base_url}user/cart/create-order`,
     orderDetail,
-    config
+    config()
   );
   if (response.data) {
     return response.data;
@@ -54,7 +58,7 @@ const createOrder = async (orderDetail) => {
 const removeProductFromCart = async (cartItemId) => {
   const response = await axios.delete(
     `${base_url}user/delete-product-cart/${cartItemId}`,
-    config
+    config()
   );
   if (response.data) {
     return response.data;
@@ -71,24 +75,43 @@ const removeProductFromCart = async (cartItemId) => {
 //   }
 // };
 
+// const updateProductFromCart = async (cartDetail) => {
+//   const response = await axios.put(
+//     `${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,
+//     null,
+//     config
+//   );
+//   if (response.data) {
+//     return response.data;
+//   }
+// };
+
 const updateProductFromCart = async (cartDetail) => {
-  const response = await axios.put(
-    `${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`
-  );
-  if (response.data) {
-    return response.data;
+  try {
+    const response = await axios.put(
+      `${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,
+      null, // Pass null as the request body since you're using a PUT request
+      config()
+    );
+    console.log("Update Product Response:", response.data);
+    if (response.data) {
+      return response.data;
+    }
+  } catch (error) {
+    console.error("Update Product Error:", error);
+    throw error;
   }
 };
 
 const getUserOrders = async () => {
-  const response = await axios.get(`${base_url}user/getmyorders`, config);
+  const response = await axios.get(`${base_url}user/getmyorders`, config());
   if (response.data) {
     return response.data;
   }
 };
 
 const updateUser = async (data) => {
-  const response = await axios.put(`${base_url}user/edit-user`, data, config);
+  const response = await axios.put(`${base_url}user/edit-user`, data, config());
   if (response.data) {
     return response.data;
   }

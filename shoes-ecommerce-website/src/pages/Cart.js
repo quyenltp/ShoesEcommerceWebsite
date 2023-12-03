@@ -16,12 +16,16 @@ import {
 const Cart = () => {
   const dispatch = useDispatch();
   const [productUpdateDetail, setProductUpdateDetail] = useState(null);
-  const usercartState = useSelector((state) => state.auth.cartProducts);
+  const usercartState = useSelector((state) => {
+    return state.auth?.cartProducts;
+  });
+
   const [totalAmount, setTotalAmount] = useState(null);
   // console.log("Product Update Detail:", productUpdateDetail);
   useEffect(() => {
     dispatch(getUserCart());
   }, []);
+
   useEffect(() => {
     if (productUpdateDetail !== null) {
       dispatch(
@@ -34,13 +38,16 @@ const Cart = () => {
       });
     }
   }, [productUpdateDetail]);
+
   const deleteACartProduct = (id) => {
     dispatch(deleteCartProduct(id));
     setTimeout(() => {
       dispatch(getUserCart());
     });
   };
+
   const updateACartProduct = () => {};
+
   useEffect(() => {
     let sum = 0;
     for (let i = 0; i < usercartState?.length; i++) {
@@ -62,7 +69,7 @@ const Cart = () => {
               <h4 className="cart-col-4">Total</h4>
             </div>
             {usercartState &&
-              usercartState?.map((item, index) => {
+              usercartState.map((item, index) => {
                 return (
                   <div
                     key={index}

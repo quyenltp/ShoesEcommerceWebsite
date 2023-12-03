@@ -35,6 +35,7 @@ const Login = () => {
       navigate("/");
     },
   });
+
   return (
     <>
       <Meta title={"Login"} />

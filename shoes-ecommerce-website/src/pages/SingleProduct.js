@@ -18,8 +18,12 @@ const SingleProduct = () => {
   const [color, setColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [allreadyAdded, setAllreadyAdded] = useState(false);
-  const productState = useSelector((state) => state.product.singleproduct);
-  const cartState = useSelector((state) => state.auth.cartProducts);
+  const productState = useSelector((state) => state.product?.singleproduct);
+  const cartState = useSelector((state) => {
+    console.log(state);
+    return state.auth?.cartProduct;
+  });
+
   const location = useLocation();
   const navigate = useNavigate();
   const getProductId = location.pathname.split("/")[2];
@@ -29,37 +33,32 @@ const SingleProduct = () => {
     dispatch(getUserCart());
   }, []);
   useEffect(() => {
-    for (let index = 0; index <= cartState.length; index++) {
-      if (cartState[index]?.productId?._id === getProductId) {
-        setAllreadyAdded(true);
+    // for (let index = 0; index <= cartState.length; index++) {
+    //   if (cartState[index]?.productId?._id === getProductId) {
+    //     setAllreadyAdded(true);
+    //   }
+    // }
+    if (productState && cartState) {
+      // Check if cartState is defined
+      for (let index = 0; index < cartState.length; index++) {
+        // Change condition to avoid going out of bounds
+        if (cartState[index]?.productId?._id === getProductId) {
+          setAllreadyAdded(true);
+          break; // No need to continue checking once found
+        }
       }
     }
-  });
+    console.log(allreadyAdded);
+    console.log(cartState);
+  }, [cartState, getProductId]);
 
-  const uploadCart = () => {
-    if (color === "") {
-      return toast.error("Please select a color");
-    }
-    // if (quantity < 1) {
-    //   return toast.error("Please select a quantity");}
-    else {
-      dispatch(
-        addProdToCart({
-          productId: productState?._id,
-          quantity,
-          color,
-          price: productState?.price,
-        }),
-        navigate("/cart")
-      );
-    }
-  };
   // const uploadCart = () => {
-  //   try {
-  //     if (color === "") {
-  //       throw new Error("Please select a color");
-  //     }
+  //   console.log("Adding to cart:", productState?._id, quantity, color);
 
+  //   if (color === "") {
+  //     console.log("Color not selected!");
+  //     return toast.error("Please select a color");
+  //   } else {
   //     dispatch(
   //       addProdToCart({
   //         productId: productState?._id,
@@ -68,14 +67,30 @@ const SingleProduct = () => {
   //         price: productState?.price,
   //       })
   //     );
-
-  //     // Optionally, reset the form state or perform other actions on success.
-  //     setColor("");
-  //     setQuantity(1);
-  //   } catch (error) {
-  //     toast.error(error.message);
   //   }
   // };
+  const uploadCart = () => {
+    try {
+      if (color === "") {
+        throw new Error("Please select a color");
+      }
+
+      dispatch(
+        addProdToCart({
+          productId: productState?._id,
+          quantity,
+          color,
+          price: productState?.price,
+        })
+      );
+
+      // Optionally, reset the form state or perform other actions on success.
+      setColor("");
+      setQuantity(1);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   // const props = {
   //   width: 400,
   //   height: 500,
@@ -117,7 +132,7 @@ const SingleProduct = () => {
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
               {Array.isArray(productState?.images[0]) &&
-                productState?.images[0].map((item, index) => {
+                productState?.images[0]?.map((item, index) => {
                   return (
                     <div>
                       <img src={item?.url} alt="" className="img-fluid" />
