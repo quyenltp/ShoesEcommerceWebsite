@@ -42,7 +42,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="signup" element={<Signup />} />
-            <Route path="reset-password" element={<ResetPassword />} />
+            <Route path="reset-password/:token" element={<ResetPassword />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="refund" element={<Refund />} />
             <Route path="shipping-policy" element={<ShippingPolicy />} />

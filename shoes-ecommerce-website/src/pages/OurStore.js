@@ -238,7 +238,7 @@ const OurStore = () => {
                   </select>
                 </div>
                 <div className="d-flex align-items-center gap-10">
-                  <p className="totalproducts mb-0">21 Products</p>
+                  {/* <p className="totalproducts mb-0">21 Products</p> */}
                   <div className="d-flex gap-10 align-items-center grid">
                     <img
                       onClick={() => {
@@ -248,7 +248,7 @@ const OurStore = () => {
                       className="d-block img-fluid"
                       alt="grid"
                     />
-                    <img
+                    {/* <img
                       onClick={() => {
                         setGrid(4);
                       }}
@@ -264,7 +264,7 @@ const OurStore = () => {
                       src="assets/images/gr2.svg"
                       className="d-block img-fluid"
                       alt="grid"
-                    />
+                    /> */}
                     <img
                       onClick={() => {
                         setGrid(12);

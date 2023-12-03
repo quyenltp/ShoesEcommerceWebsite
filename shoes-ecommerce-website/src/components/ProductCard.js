@@ -52,7 +52,7 @@ const ProductCard = (props) => {
                   />
                   {/* Hover image */}
                   <img
-                    src={product01}
+                    src={item?.images[0]?.url}
                     className="img-fluid mx-auto"
                     alt="product image"
                     width={160}

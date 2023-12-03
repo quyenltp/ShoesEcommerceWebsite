@@ -286,7 +286,7 @@ const Checkout = () => {
                       Return to Cart
                     </Link>
                     <Link to="/cart" className="button">
-                      Continue to Shipping
+                      Continue to Shopping
                     </Link>
                     <button className="button border-0" type="submit">
                       Place Order

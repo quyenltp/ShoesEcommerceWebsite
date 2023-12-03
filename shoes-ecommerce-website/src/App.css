@@ -97,16 +97,20 @@ a {
 .header-bottom .dropdown-menu {
   background-color: var(--primary-color);
   width: 100%;
-  transform: translate3d(0px, 57px, 0px) !important;
+  /* transform: translate3d(0px, 57px, 0px) !important; */
 }
 .header-bottom .dropdown-item {
-  padding: 20px;
+  padding: 15px;
   margin-bottom: 3px;
   border-bottom: 1px solid var(--secondary-color);
 }
 .header-bottom .dropdown-item:hover{
   background-color: transparent;
   color: var(--light-yellow) !important;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 
 /* HEADER PART ENDS HERE */
@@ -250,7 +254,7 @@ footer .input-group-text {
   padding: 15px;
   background-color: white;
   border-radius: 10px;
-  /* overflow: hidden; */
+  overflow: hidden;
   width: 100%;
 }
 /* .product-card .product-image {

@@ -94,6 +94,17 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
+export const forgotPasswordToken = createAsyncThunk(
+  "user/password/token",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.forgotPassToken(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const createAnOrder = createAsyncThunk(
   "user/cart/create-order",
   async (orderDetail, thunkAPI) => {
@@ -328,6 +339,27 @@ export const authSlice = createSlice({
         }
       })
       .addCase(updateProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isSuccess === false) {
+          toast.error("Something Went Wrong");
+        }
+      })
+      .addCase(forgotPasswordToken.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgotPasswordToken.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.token = action.payload;
+        if (state.isSuccess === true) {
+          toast.success("Forgot Password Email Sent Successfully");
+        }
+      })
+      .addCase(forgotPasswordToken.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

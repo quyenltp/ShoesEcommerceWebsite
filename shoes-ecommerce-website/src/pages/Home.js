@@ -286,14 +286,14 @@ const Home = () => {
           </div>
           <div className="col-3">
             <img
-              src="assets/images/famous-01.avif"
+              src="assets/images/famous-04.avif"
               className="img-fluid"
               alt=""
             />
           </div>
           <div className="col-3">
             <img
-              src="assets/images/famous-02.avif"
+              src="assets/images/famous-03.avif"
               className="img-fluid"
               alt=""
             />
