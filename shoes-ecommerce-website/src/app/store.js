@@ -12,6 +12,7 @@ import authReducer from "../features/user/userSlice";
 import productReducer from "../features/product/productSlice";
 import blogReducer from "../features/blogs/blogSlice";
 import contactReducer from "../features/contact/contactSlice";
+import brandReducer from "../features/brand/brandSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     product: productReducer,
     blog: blogReducer,
     contact: contactReducer,
+    brand: brandReducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

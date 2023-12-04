@@ -10,6 +10,7 @@ import wishlist from "../assets/images/wishlist.svg";
 import user from "../assets/images/user.svg";
 import cart from "../assets/images/cart.svg";
 import logo from "../assets/images/logo.png";
+import { getAllBrands } from "../features/brand/brandSlice";
 
 // import { PiSneakerMoveFill } from "react-icons/pi";
 
@@ -17,9 +18,11 @@ const Header = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const authState = useSelector((state) => state?.auth);
+  const brandState = useSelector((state) => state?.brand);
   const productState = useSelector((state) => state?.product?.product);
   const [productOpt, setProductOpt] = useState([]);
   const [paginate, setPaginate] = useState(true);
+  const [brands, setBrands] = useState([]);
   const navigate = useNavigate();
   const [total, setTotal] = useState(null);
   useEffect(() => {
@@ -42,6 +45,21 @@ const Header = () => {
     }
     setProductOpt(data);
   }, [productState]);
+  useEffect(() => {
+    const fetchBrands = async () => {
+      try {
+        const response = await fetch("/api/brand");
+        const data = await response.json();
+        setBrands(data);
+        dispatch(getAllBrands()); // Dispatch the action after fetching brands
+      } catch (error) {
+        console.error("Error fetching brands:", error);
+      }
+    };
+
+    fetchBrands();
+  }, [dispatch]);
+  console.log(brandState); // Added dispatch to dependency array
   const handleLogout = () => {
     localStorage.clear();
     window.location.reload();
@@ -168,12 +186,15 @@ const Header = () => {
                       aria-expanded="false"
                     >
                       <img src="assets/images/menu.svg" alt="" />
-                      <span className="me-5 d-inline-block">
+                      <span
+                        onHover={() => dispatch(getAllBrands())}
+                        className="me-5 d-inline-block"
+                      >
                         Shop Categories
                       </span>
                     </button>
                     <ul className="dropdown-menu">
-                      <li>
+                      {/* <li>
                         <Link className="dropdown-item text-white" to="#">
                           Action
                         </Link>
@@ -187,7 +208,19 @@ const Header = () => {
                         <Link className="dropdown-item text-white" to="#">
                           Something else here
                         </Link>
-                      </li>
+                      </li> */}
+
+                      {brandState.brand &&
+                        brandState.brand.map((brand) => (
+                          <li key={brand._id}>
+                            <Link
+                              className="dropdown-item text-white"
+                              to={`/products/${brand._id}`}
+                            >
+                              {brand.title}
+                            </Link>
+                          </li>
+                        ))}
                     </ul>
                   </div>
                 </div>
