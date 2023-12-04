@@ -90,6 +90,7 @@ const Header = () => {
                   paginate={paginate}
                   labelKey={"name"}
                   placeholder="Search..."
+                  minLength={1}
                 />
                 <span className="input-group-text p-3" id="basic-addon2">
                   <BsSearch className="fs-6" />

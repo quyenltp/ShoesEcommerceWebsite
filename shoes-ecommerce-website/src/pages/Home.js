@@ -12,7 +12,7 @@ import { services } from "../utils/Data";
 import wish from "../assets/images/wish.svg";
 import addcart from "../assets/images/add-cart.svg";
 import view from "../assets/images/view.svg";
-import product01 from "../assets/images/product-01.jpg";
+import product01 from "../assets/images/softride-sophia-2.jpg";
 import { addToWishlist } from "../features/product/productSlice";
 import { getAllProducts } from "../features/product/productSlice";
 import { getAllBlogs } from "../features/blogs/blogSlice";
@@ -39,6 +39,13 @@ const Home = () => {
   const addToWish = (id) => {
     // alert(id);
     dispatch(addToWishlist(id));
+  };
+
+  const truncateText = (text) => {
+    if (text.length > 30) {
+      return text.substring(0, 30) + "...";
+    }
+    return text;
   };
 
   return (
@@ -86,7 +93,7 @@ const Home = () => {
                   <div className="d-flex align-items-center gap-15" key={index}>
                     <img src={item.image} alt="services" />
                     <div>
-                      <h6>{item.title}</h6>
+                      <h6>{truncateText(item.title)}</h6>
                       <p className="mb-0">{item.tagline}</p>
                     </div>
                   </div>
@@ -224,13 +231,13 @@ const Home = () => {
                         </button>
                       </div>
                       <div className="product-image">
-                        <img
+                        {/* <img
                           src={item?.images[0]?.url}
                           // src={product01}
                           className="img-fluid mx-auto"
                           alt="product image"
                           width={160}
-                        />
+                        /> */}
                         {/* Hover image */}
                         {/* <img
                           src={product01}
@@ -238,6 +245,7 @@ const Home = () => {
                           alt="product image"
                           width={160}
                         /> */}
+                        <img src={product01} alt="" />
                       </div>
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
@@ -249,7 +257,7 @@ const Home = () => {
                           edit={false}
                           activeColor="#ffd700"
                         />
-                        <p className="price">{item?.price} VND</p>
+                        <p className="price">$ {item?.price}</p>
                       </div>
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">
@@ -300,7 +308,7 @@ const Home = () => {
           </div>
         </div>
       </Container>
-      <Container class1="special-wrapper py-5 home-wrapper-2">
+      {/* <Container class1="special-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Special Products</h3>
@@ -325,7 +333,7 @@ const Home = () => {
               }
             })}
         </div>
-      </Container>
+      </Container> */}
       <Container class1="popular-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
@@ -357,13 +365,13 @@ const Home = () => {
                         </button>
                       </div>
                       <div className="product-image">
-                        <img
+                        {/* <img
                           src={item?.images[0]?.url}
                           // src={product01}
                           className="img-fluid mx-auto"
                           alt="product image"
                           width={160}
-                        />
+                        /> */}
                         {/* Hover image */}
                         {/* <img
                           src={product01}
@@ -371,6 +379,16 @@ const Home = () => {
                           alt="product image"
                           width={160}
                         /> */}
+                        <img
+                          src={product01}
+                          alt=""
+                          className="img-fluid mx-auto"
+                        />
+                        <img
+                          src={product01}
+                          alt=""
+                          className="img-fluid mx-auto"
+                        />
                       </div>
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
@@ -382,7 +400,7 @@ const Home = () => {
                           edit={false}
                           activeColor="#ffd700"
                         />
-                        <p className="price">{item?.price} VND</p>
+                        <p className="price">$ {item?.price}</p>
                       </div>
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">

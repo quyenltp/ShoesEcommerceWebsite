@@ -11,7 +11,7 @@
   --primary-color: #563d7c;
   --secondary-color: #7952b3;
   --light-yellow: #ffc769;
-  --light-purple: #f0e6f8;
+  --light-purple: #f8ecff;
   --border-color: #ededed;
   --light-gray: #777777;
 }.section-heading {
@@ -273,7 +273,7 @@ footer .input-group-text {
   display: block;
 }
 .product-card:hover .action-bar {
-  right: 35px;
+  right: 30px;
 }
 .product-card .product-details h6 {
   margin-top: 20px;
@@ -296,11 +296,11 @@ footer .input-group-text {
 .action-bar {
   top: 11%;
   right: -23px;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 .wishlist-icon {
   top: 5%;
-  right: 35px;
+  right: 30px;
 }
 
 /* Special Product Part */
@@ -543,9 +543,13 @@ margin-bottom: 8px;
   font-size: 14px;
   color: var(--light-gray);
 }
+.description-wrapper .description-box {
+  border-radius: 10px;
+}
 .review-inner-wrapper {
   background-color: white;
   padding: 30px;
+  border-radius: 10px;
 }
 .review-head {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -606,7 +610,7 @@ margin-bottom: 8px;
   z-index: 1000;
 }
 .main-product-details {
-  padding: 30px 20px;
+  padding: 30px 40px;
   background-color: white;
   border-radius: 10px;
 }
@@ -614,13 +618,13 @@ margin-bottom: 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 .main-product-details h3.title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 600;
   color: var(--primary-color);
   margin-bottom: 10px;
 }
 .main-product-details p.price {
-  font-size: 16px;
+  font-size: 20px;
   line-height: 20px;
   font-weight: 600;
   margin-top: 10px;
@@ -629,15 +633,15 @@ margin-bottom: 8px;
 .main-product-details a.review-btn,
 .t-review {
   color: var(--light-gray);
-  font-size: 13px;
+  font-size: 16px;
 }
 .product-heading {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--primary-color);
   margin-bottom: 0px;
 }
 .product-data {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--light-gray);
   margin-bottom: 0px;
 }
@@ -645,6 +649,7 @@ margin-bottom: 8px;
   font-size: 14px;
   color: var(--light-gray);
 }
+
 
 /* MAIN PRODUCT PAGE ENDS HERE */
 
@@ -656,7 +661,7 @@ margin-bottom: 8px;
   border-bottom: 1px solid #c3c3c3;
 }
 .cart-header h4 {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--primary-color);
 }
 .cart-col-1 {
@@ -687,12 +692,25 @@ margin-bottom: 8px;
 /* CHECKOUT PAGE STARTS HERE */
 
 .total {
-  font-size: 14px;
+  /* font-size: 14px; */
   color: var(--primary-color);
 }
 .total-price {
   font-size: 16px;
   color: var(--light-gray);
+}
+.payment-method .form-check-label {
+  /* font-size: 14px; */
+  line-height: 30px;
+}
+.address-wrapper {
+  border-radius: 10px;
+}
+.payment-method-wrapper {
+  border-radius: 10px;
+}
+.info-wrapper {
+  border-radius: 10px;
 }
 
 /* CHECKOUT PAGE ENDS HERE */

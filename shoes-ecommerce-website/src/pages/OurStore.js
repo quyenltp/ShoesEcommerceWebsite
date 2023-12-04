@@ -13,6 +13,7 @@ const OurStore = () => {
   const [grid, setGrid] = useState(3);
   const productState = useSelector((state) => state?.product?.product);
   console.log(productState);
+
   const dispatch = useDispatch();
   useEffect(() => {
     getProducts();
@@ -20,6 +21,7 @@ const OurStore = () => {
   const getProducts = () => {
     dispatch(getAllProducts());
   };
+
   return (
     <>
       <Meta title={"Our Store"} />

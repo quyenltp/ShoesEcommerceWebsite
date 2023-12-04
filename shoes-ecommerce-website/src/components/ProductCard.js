@@ -8,7 +8,7 @@ import wish from "../assets/images/wish.svg";
 import wishlist from "../assets/images/wishlist.svg";
 import addcart from "../assets/images/add-cart.svg";
 import view from "../assets/images/view.svg";
-import product01 from "../assets/images/product-01.jpg";
+import product01 from "../assets/images/softride-sophia-2.jpg";
 import { addToWishlist } from "../features/product/productSlice";
 
 const ProductCard = (props) => {
@@ -20,6 +20,13 @@ const ProductCard = (props) => {
   const addToWish = (id) => {
     // alert(id);
     dispatch(addToWishlist(id));
+  };
+
+  const truncateText = (text) => {
+    if (text.length > 20) {
+      return text.substring(0, 20) + "...";
+    }
+    return text;
   };
 
   return (
@@ -43,24 +50,30 @@ const ProductCard = (props) => {
                   </button>
                 </div>
                 <div className="product-image">
-                  <img
+                  {/* <img
                     src={item?.images[0]?.url}
                     // src={product01}
                     className="img-fluid mx-auto"
                     alt="product image"
                     width={160}
-                  />
+                  /> */}
                   {/* Hover image */}
-                  <img
+                  {/* <img
                     src={item?.images[0]?.url}
                     className="img-fluid mx-auto"
                     alt="product image"
                     width={160}
-                  />
+                  /> */}
+                  <img src={product01} alt="" className="img-fluid mx-auto" />
+                  <img src={product01} alt="" className="img-fluid mx-auto" />
                 </div>
                 <div className="product-details">
                   <h6 className="brand">{item?.brand}</h6>
-                  <h5 className="product-title">{item?.title}</h5>
+                  <Link to={`/product/${item?._id}`}>
+                    <h5 className="product-title">
+                      {truncateText(item?.title)}
+                    </h5>
+                  </Link>
                   <ReactStars
                     count={5}
                     size={24}
@@ -74,7 +87,7 @@ const ProductCard = (props) => {
                     }`}
                     dangerouslySetInnerHTML={{ __html: item?.description }}
                   ></p>
-                  <p className="price">{item?.price} VND</p>
+                  <p className="price">$ {item?.price}</p>
                 </div>
                 <div className="action-bar position-absolute">
                   <div className="d-flex flex-column">
