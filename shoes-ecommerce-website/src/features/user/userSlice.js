@@ -39,8 +39,10 @@ export const addProdToCart = createAsyncThunk(
   "user/cart/add",
   async (cartData, thunkAPI) => {
     try {
+      console.log("a", cartData);
       return await authService.addToCart(cartData);
     } catch (error) {
+      console.log("error cated", error);
       return thunkAPI.rejectWithValue(error);
     }
   }

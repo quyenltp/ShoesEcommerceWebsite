@@ -184,7 +184,7 @@ const Header = () => {
                     >
                       <img src="assets/images/menu.svg" alt="" />
                       <span
-                        onHover={() => dispatch(getAllBrands())}
+                        onClick={() => dispatch(getAllBrands())}
                         className="me-5 d-inline-block"
                       >
                         Shop Categories
