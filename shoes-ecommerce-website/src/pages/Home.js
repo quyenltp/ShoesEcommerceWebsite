@@ -231,21 +231,19 @@ const Home = () => {
                         </button>
                       </div>
                       <div className="product-image">
-                        {/* <img
+                        <img
                           src={item?.images[0]?.url}
                           // src={product01}
                           className="img-fluid mx-auto"
                           alt="product image"
-                          width={160}
-                        /> */}
+                        />
                         {/* Hover image */}
-                        {/* <img
-                          src={product01}
+                        <img
+                          src={item?.images[0]?.url}
                           className="img-fluid mx-auto"
                           alt="product image"
-                          width={160}
-                        /> */}
-                        <img src={product01} alt="" />
+                        />
+                        {/* <img src={product01} alt="" /> */}
                       </div>
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
@@ -365,30 +363,28 @@ const Home = () => {
                         </button>
                       </div>
                       <div className="product-image">
-                        {/* <img
+                        <img
                           src={item?.images[0]?.url}
                           // src={product01}
                           className="img-fluid mx-auto"
                           alt="product image"
-                          width={160}
-                        /> */}
+                        />
                         {/* Hover image */}
-                        {/* <img
-                          src={product01}
+                        <img
+                          src={item?.images[0]?.url}
                           className="img-fluid mx-auto"
                           alt="product image"
-                          width={160}
+                        />
+                        {/* <img
+                          src={product01}
+                          alt=""
+                          className="img-fluid mx-auto"
+                        />
+                        <img
+                          src={product01}
+                          alt=""
+                          className="img-fluid mx-auto"
                         /> */}
-                        <img
-                          src={product01}
-                          alt=""
-                          className="img-fluid mx-auto"
-                        />
-                        <img
-                          src={product01}
-                          alt=""
-                          className="img-fluid mx-auto"
-                        />
                       </div>
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
