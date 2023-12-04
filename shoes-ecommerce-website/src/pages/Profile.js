@@ -6,6 +6,8 @@ import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../features/user/userSlice";
 import { FiEdit } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const profileSchema = yup.object({
   firstname: yup.string().required("First name is required"),
@@ -17,6 +19,8 @@ const profileSchema = yup.object({
 const Profile = () => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state?.auth?.user);
+  const navigate = useNavigate();
+
   const [edit, setEdit] = useState(true);
   const formik = useFormik({
     enableReinitialize: true,
@@ -33,6 +37,13 @@ const Profile = () => {
       setEdit(false);
     },
   });
+
+  const handleLogout = () => {
+    localStorage.clear();
+    toast.success("Logout successfully!");
+    navigate("/");
+    window.location.reload();
+  };
   return (
     <>
       <BreadCrumb title="My Profile" />
@@ -40,8 +51,17 @@ const Profile = () => {
         <div className="row">
           <div className="col-12">
             <div className="d-flex justify-content-between align-items-center">
-              <h3 className="">Update Profile</h3>
-              <FiEdit className="fs-3" onClick={() => setEdit(false)} />
+              <h3 className="">Profile</h3>
+              <div>
+                <FiEdit className="fs-3 mx-3" onClick={() => setEdit(false)} />
+                <button
+                  className="btn btn-primary"
+                  type="button"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           </div>
           <div className="col-12">

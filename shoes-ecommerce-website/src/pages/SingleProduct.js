@@ -178,12 +178,13 @@ const SingleProduct = () => {
                 </a>
               </div>
               <div className="border-bottom py-3">
-                <p className="price">${productState?.price}</p>
+                <p className="price">$ {productState?.price}</p>
                 <div className="d-flex align-items-center gap-10">
                   <ReactStars
                     count={5}
                     size={24}
-                    value={productState?.totalratings}
+                    // value={productState?.totalratings}
+                    value={3}
                     edit={false}
                     activeColor="#ffd700"
                   />

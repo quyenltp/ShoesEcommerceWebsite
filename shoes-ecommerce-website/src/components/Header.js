@@ -60,10 +60,7 @@ const Header = () => {
     fetchBrands();
   }, [dispatch]);
   console.log(brandState); // Added dispatch to dependency array
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
+
   return (
     <>
       <header className="header-top-strip py-2">
@@ -163,7 +160,7 @@ const Header = () => {
                       <span className="badge bg-white text-dark">
                         {cartState?.length ? cartState?.length : 0}
                       </span>
-                      <p className="mb-0">{total ? total : 0} VND</p>
+                      <p className="mb-0">$ {total ? total : 0}</p>
                     </div>
                   </Link>
                 </div>
@@ -228,16 +225,9 @@ const Header = () => {
                   <div className="d-flex align-items-center gap-30">
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our Store</NavLink>
-                    <NavLink to="/my-orders">My Orders</NavLink>
+                    {/* <NavLink to="/my-orders">My Orders</NavLink> */}
                     <NavLink to="/blogs">Blogs</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
-                    <button
-                      className="border border-0 bg-transparent text-white text-uppercase"
-                      type="button"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </button>
                   </div>
                 </div>
               </div>
