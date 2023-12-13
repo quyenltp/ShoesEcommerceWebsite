@@ -183,7 +183,7 @@ const SingleProduct = () => {
                   <ReactStars
                     count={5}
                     size={24}
-                    // value={productState?.totalratings}
+                    // State?.totalratings}
                     value={3}
                     edit={false}
                     activeColor="#ffd700"
