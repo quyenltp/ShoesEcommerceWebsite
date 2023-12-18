@@ -78,7 +78,7 @@ const Cart = () => {
                     <div className="cart-col-1 gap-15 d-flex align-items-center">
                       <div className="w-25">
                         <img
-                          src={product01}
+                          src={item?.productId?.images[0]?.url}
                           className="img-fluid"
                           alt="product image"
                         />
@@ -93,7 +93,17 @@ const Cart = () => {
                             ></li>
                           </ul>
                         </p>
-                        <p>Size: 36</p>
+                        <p className="d-flex gap-10">
+                          Size :{" "}
+                          <span
+                            className="badge border border-1 bg-white text-dark border-secondary"
+                            // onClick={() => setSize(item?._id)}
+                            style={{ marginRight: "10px" }}
+                            // key={index}
+                          >
+                            {item?.size?.title}
+                          </span>
+                        </p>
                       </div>
                     </div>
                     <div className="cart-col-2">

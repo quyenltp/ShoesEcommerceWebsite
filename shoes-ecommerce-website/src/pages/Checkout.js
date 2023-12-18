@@ -397,11 +397,12 @@ const Checkout = () => {
                               {item?.productId?.title}
                             </h5>
                             <p className="total-price">{item?.color?.title}</p>
+                            <p className="total-price">{item?.size?.title}</p>
                           </div>
                         </div>
                         <div className="flex-grow-1">
                           <h5 className="total">
-                            {item?.price * item?.quantity} VND
+                            $ {item?.price * item?.quantity}
                           </h5>
                         </div>
                       </div>
@@ -412,18 +413,18 @@ const Checkout = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <p className="total">Subtotal</p>
                   <p className="total-price">
-                    {totalAmount ? totalAmount : "0"} VND
+                    $ {totalAmount ? totalAmount : "0"}
                   </p>
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
                   <p className="mb-0 total">Shipping</p>
-                  <p className="mb-0 total-price">50 VND</p>
+                  <p className="mb-0 total-price">$ 50</p>
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center border-bottom py-4">
                 <h4 className="total">Total</h4>
                 <h5 className="total-price">
-                  {totalAmount ? totalAmount + 50 : "0"} VND
+                  $ {totalAmount ? totalAmount + 50 : "0"}
                 </h5>
               </div>
             </div>

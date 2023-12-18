@@ -7,6 +7,7 @@ import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
 import ReactStars from "react-rating-stars-component";
 import Color from "../components/Color";
+import Size from "../components/Size";
 import Container from "../components/Container";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +17,7 @@ import { addProdToCart, getUserCart } from "../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 const SingleProduct = () => {
   const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [allreadyAdded, setAllreadyAdded] = useState(false);
   const productState = useSelector((state) => state.product?.singleproduct);
@@ -74,18 +76,23 @@ const SingleProduct = () => {
       if (color === "") {
         throw new Error("Please select a color");
       }
+      if (size === "") {
+        throw new Error("Please select a size");
+      }
 
       dispatch(
         addProdToCart({
           productId: productState?._id,
           quantity,
           color,
+          size,
           price: productState?.price,
         })
       );
 
       // Optionally, reset the form state or perform other actions on success.
       setColor("");
+      setSize("");
       setQuantity(1);
     } catch (error) {
       toast.error(error.message);
@@ -215,7 +222,7 @@ const SingleProduct = () => {
                   <h3 className="product-heading">Availablity: </h3>
                   <p className="product-data">In Stock</p>
                 </div> */}
-                <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                {/* <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Size: </h3>
                   <div className="d-flex flex-wrap gap-15">
                     <span className="badge border border-1 bg-white text-dark border-secondary">
@@ -228,9 +235,17 @@ const SingleProduct = () => {
                       38
                     </span>
                   </div>
-                </div>
+                </div> */}
                 {allreadyAdded === false && (
                   <>
+                    <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                      <h3 className="product-heading">Size: </h3>{" "}
+                      <Size
+                        setSize={setSize}
+                        sizeData={productState?.size}
+                        className="size"
+                      />
+                    </div>
                     <div className="d-flex gap-10 flex-column mt-2 mb-3">
                       <h3 className="product-heading">Color: </h3>{" "}
                       <Color
