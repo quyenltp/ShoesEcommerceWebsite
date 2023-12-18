@@ -89,7 +89,9 @@ const Header = () => {
               <img src={logo} alt="logo" className="logo-img" />
               {/* <PiSneakerMoveFill className="logo-img" /> */}
               <h3>
-                <Link className="text-white">Sneakify</Link>
+                <Link className="text-white" to="/">
+                  Sneakify
+                </Link>
               </h3>
             </div>
             <div className="col-5">
@@ -185,7 +187,7 @@ const Header = () => {
                       <img src="assets/images/menu.svg" alt="" />
                       <span
                         onClick={() => dispatch(getAllBrands())}
-                        className="me-5 d-inline-block"
+                        className="me-5 fs-6 d-inline-block"
                       >
                         Shop Categories
                       </span>
@@ -223,11 +225,19 @@ const Header = () => {
                 </div>
                 <div className="menu-links">
                   <div className="d-flex align-items-center gap-30">
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/product">Our Store</NavLink>
+                    <NavLink to="/" className="fs-6 px-3">
+                      Home
+                    </NavLink>
+                    <NavLink to="/product" className="fs-6 px-3">
+                      Our Store
+                    </NavLink>
                     {/* <NavLink to="/my-orders">My Orders</NavLink> */}
-                    <NavLink to="/blogs">Blogs</NavLink>
-                    <NavLink to="/contact">Contact</NavLink>
+                    <NavLink to="/blogs" className="fs-6 px-3">
+                      Blogs
+                    </NavLink>
+                    <NavLink to="/contact" className="fs-6 px-3">
+                      Contact
+                    </NavLink>
                   </div>
                 </div>
               </div>

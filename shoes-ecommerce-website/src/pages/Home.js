@@ -42,8 +42,8 @@ const Home = () => {
   };
 
   const truncateText = (text) => {
-    if (text.length > 30) {
-      return text.substring(0, 30) + "...";
+    if (text.length > 17) {
+      return text.substring(0, 17) + "...";
     }
     return text;
   };
@@ -211,7 +211,7 @@ const Home = () => {
             productState?.map((item, index) => {
               if (item.tags === "featured") {
                 return (
-                  <div key={index} className={"col-3"}>
+                  <div key={index} className={"col-2 mb-3"}>
                     <Link
                       // to={`${
                       //   location.pathname == "/"
@@ -248,7 +248,9 @@ const Home = () => {
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
                         <Link to={`/product/${item?._id}`}>
-                          <h5 className="product-title">{item?.title}</h5>
+                          <h5 className="product-title">
+                            {truncateText(item?.title)}
+                          </h5>
                         </Link>
                         <ReactStars
                           count={5}
@@ -261,9 +263,12 @@ const Home = () => {
                       </div>
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">
-                          <button className="border-0 bg-transparent">
+                          <Link
+                            to={`/product/${item?._id}`}
+                            className="border-0 bg-transparent"
+                          >
                             <img src={view} alt="view" />
-                          </button>
+                          </Link>
                           <button className="border-0 bg-transparent">
                             <img src={addcart} alt="addcart" />
                           </button>
@@ -345,7 +350,7 @@ const Home = () => {
             productState?.map((item, index) => {
               if (item.tags === "popular") {
                 return (
-                  <div key={index} className={"col-3"}>
+                  <div key={index} className={"col-2 mb-3"}>
                     <div
                       // to={`${
                       //   location.pathname == "/"
@@ -391,7 +396,9 @@ const Home = () => {
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
                         <Link to={`/product/${item?._id}`}>
-                          <h5 className="product-title">{item?.title}</h5>
+                          <h5 className="product-title">
+                            {truncateText(item?.title)}
+                          </h5>
                         </Link>
                         <ReactStars
                           count={5}
@@ -404,13 +411,12 @@ const Home = () => {
                       </div>
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">
-                          <button className="border-0 bg-transparent">
-                            <img
-                              onClick={() => navigate(`/product/${item?._id}`)}
-                              src={view}
-                              alt="view"
-                            />
-                          </button>
+                          <Link
+                            to={`/product/${item?._id}`}
+                            className="border-0 bg-transparent"
+                          >
+                            <img src={view} alt="view" />
+                          </Link>
                           <button className="border-0 bg-transparent">
                             <img src={addcart} alt="addcart" />
                           </button>

@@ -366,8 +366,8 @@ footer .input-group-text {
   gap: 10px
 }
 .colors li {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   background-color: red;
   border-radius: 50%;
 }
@@ -689,7 +689,7 @@ margin-bottom: 8px;
   width: 15%;
 }
 .cart-data h5.price {
-  font-size: 14px;
+  font-size: 18px;
   color: var(--primary-color)
 }
 

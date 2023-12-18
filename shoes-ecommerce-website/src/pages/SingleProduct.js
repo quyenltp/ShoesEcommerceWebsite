@@ -11,7 +11,7 @@ import Size from "../components/Size";
 import Container from "../components/Container";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAProduct } from "../features/product/productSlice";
+import { getAProduct, addRating } from "../features/product/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -20,10 +20,11 @@ const SingleProduct = () => {
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [allreadyAdded, setAllreadyAdded] = useState(false);
-  const productState = useSelector((state) => state.product?.singleproduct);
+  const productState = useSelector((state) => state?.product?.singleproduct);
+  const productsState = useSelector((state) => state?.product?.product);
   const cartState = useSelector((state) => {
     console.log(state);
-    return state.auth?.cartProduct;
+    return state?.auth?.cartProduct;
   });
 
   const location = useLocation();
@@ -125,6 +126,35 @@ const SingleProduct = () => {
   };
 
   const [orderedProduct, setOrderedProduct] = useState(true);
+  const [popularProduct, setPopularProduct] = useState([]);
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < productsState.length; index++) {
+      const element = productsState[index];
+      if (element.tags === "popular") {
+        data.push(element);
+      }
+      setPopularProduct(data);
+    }
+  }, [productState]);
+
+  const [star, setStar] = useState(null);
+  const [comment, setComment] = useState(null);
+  const addRatingToProduct = () => {
+    if (star === null) {
+      toast.error("Please Select A Star");
+      return false;
+    } else if (comment === null) {
+      toast.error("Please Write Review About The Product");
+      return false;
+    } else {
+      dispatch(
+        addRating({ star: star, comment: comment, prodId: getProductId })
+      );
+    }
+    return false;
+  };
+
   return (
     <>
       <Meta title={"Product Name"} />
@@ -370,27 +400,34 @@ const SingleProduct = () => {
               </div>
               <div className="review-form py-4">
                 <h4>Write a Review</h4>
-                <form action="" className="d-flex flex-column gap-15">
-                  <div>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      edit={true}
-                      activeColor="#ffd700"
-                    />
-                  </div>
-                  <textarea
-                    name=""
-                    id=""
-                    className="w-100 form-control"
-                    cols="30"
-                    rows="4"
-                    placeholder="Comment"
-                  ></textarea>
-                  <div className="d-flex justify-content-end">
-                    <button className="button border-0">Submit Review</button>
-                  </div>
-                </form>
+
+                <div>
+                  <ReactStars
+                    count={5}
+                    size={24}
+                    edit={true}
+                    activeColor="#ffd700"
+                    onChange={(e) => setStar(e)}
+                  />
+                </div>
+                <textarea
+                  name=""
+                  id=""
+                  className="w-100 form-control"
+                  cols="30"
+                  rows="4"
+                  placeholder="Comment"
+                  onChange={(e) => setComment(e.target.value)}
+                ></textarea>
+                <div className="d-flex justify-content-end mt-3">
+                  <button
+                    onClick={addRatingToProduct}
+                    className="button border-0"
+                    type="button"
+                  >
+                    Submit Review
+                  </button>
+                </div>
               </div>
               <div className="reviews mt-4">
                 <div className="review">
@@ -415,16 +452,16 @@ const SingleProduct = () => {
           </div>
         </div>
       </Container>
-      {/* <Container class1="popular-wrapper py-5 home-wrapper-2">
+      <Container class1="popular-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Our Popular Products</h3>
           </div>
         </div>
         <div className="row">
-          <ProductCard />
+          <ProductCard data={popularProduct} />
         </div>
-      </Container> */}
+      </Container>
     </>
   );
 };
