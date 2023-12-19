@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BsInstagram, BsFacebook, BsTwitter, BsTiktok } from "react-icons/bs";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo12.png";
 const Footer = () => {
   return (
     <>

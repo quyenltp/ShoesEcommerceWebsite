@@ -9,7 +9,7 @@ import compare from "../assets/images/compare.svg";
 import wishlist from "../assets/images/wishlist.svg";
 import user from "../assets/images/user.svg";
 import cart from "../assets/images/cart.svg";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo12.png";
 import { getAllBrands } from "../features/brand/brandSlice";
 
 // import { PiSneakerMoveFill } from "react-icons/pi";
