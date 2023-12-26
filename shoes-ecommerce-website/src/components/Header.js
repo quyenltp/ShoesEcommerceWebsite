@@ -11,6 +11,7 @@ import user from "../assets/images/user.svg";
 import cart from "../assets/images/cart.svg";
 import logo from "../assets/images/logo12.png";
 import { getAllBrands } from "../features/brand/brandSlice";
+import { getAProduct } from "../features/product/productSlice";
 
 // import { PiSneakerMoveFill } from "react-icons/pi";
 
@@ -101,6 +102,7 @@ const Header = () => {
                   onPaginate={() => console.log("Results paginated")}
                   onChange={(selected) => {
                     navigate(`/product/${selected[0]?.prod}`);
+                    dispatch(getAProduct(selected[0]?.prod));
                     setPaginate(false);
                   }}
                   options={productOpt}
@@ -158,8 +160,8 @@ const Header = () => {
                     className="d-flex align-items-center gap-10 text-white"
                   >
                     <img src={cart} alt="cart" />
-                    <div className="d-flex flex-column gap-10">
-                      <span className="badge bg-white text-dark">
+                    <div className="d-flex flex-column">
+                      <span className="badge bg-white text-dark mb-1">
                         {cartState?.length ? cartState?.length : 0}
                       </span>
                       <p className="mb-0">$ {total ? total : 0}</p>
@@ -193,22 +195,6 @@ const Header = () => {
                       </span>
                     </button>
                     <ul className="dropdown-menu">
-                      {/* <li>
-                        <Link className="dropdown-item text-white" to="#">
-                          Action
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="#">
-                          Another action
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="#">
-                          Something else here
-                        </Link>
-                      </li> */}
-
                       {brandState.brand &&
                         brandState.brand.map((brand) => (
                           <li key={brand._id}>

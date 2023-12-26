@@ -56,7 +56,10 @@ const Checkout = () => {
     validationSchema: shippingSchema,
     onSubmit: (values) => {
       setShippingInfo(values);
-      checkoutHandler();
+      localStorage.setItem("address", JSON.stringify(values));
+      setTimeout(() => {
+        checkoutHandler();
+      }, 300);
     },
   });
 

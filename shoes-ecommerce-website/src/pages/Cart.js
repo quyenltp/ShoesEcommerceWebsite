@@ -43,7 +43,7 @@ const Cart = () => {
     dispatch(deleteCartProduct(id));
     setTimeout(() => {
       dispatch(getUserCart());
-    });
+    }, 200);
   };
 
   const updateACartProduct = () => {};
@@ -63,10 +63,10 @@ const Cart = () => {
         <div className="row">
           <div className="col-12">
             <div className="cart-header py-3 d-flex justify-content-between align-items-center">
-              <h4 className="cart-col-1">Product</h4>
-              <h4 className="cart-col-2">Price</h4>
-              <h4 className="cart-col-3">Quantity</h4>
-              <h4 className="cart-col-4">Total</h4>
+              <h5 className="cart-col-1">Product</h5>
+              <h5 className="cart-col-2">Price</h5>
+              <h5 className="cart-col-3">Quantity</h5>
+              <h5 className="cart-col-4">Total</h5>
             </div>
             {usercartState &&
               usercartState.map((item, index) => {
@@ -84,8 +84,8 @@ const Cart = () => {
                         />
                       </div>
                       <div className="w-75">
-                        <p>{item?.productId?.title}</p>
-                        <p className="d-flex gap-10">
+                        <h6 className="mb-3">{item?.productId?.title}</h6>
+                        <p className="d-flex gap-10 mb-0">
                           Color :{" "}
                           <ul className="colors ps-0">
                             <li
@@ -114,13 +114,11 @@ const Cart = () => {
                         <input
                           className="form-control"
                           type="number"
-                          name=""
-                          id=""
+                          name={"quantity" + item?._id}
+                          id={"cart" + item?._id}
                           min={1}
                           max={10}
-                          value={
-                            item?.quantity ? item?.quantity : item?.quantity
-                          }
+                          value={item?.quantity}
                           onChange={(e) => {
                             setProductUpdateDetail({
                               cartItemId: item?._id,

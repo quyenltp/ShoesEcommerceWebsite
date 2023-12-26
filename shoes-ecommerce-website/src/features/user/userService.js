@@ -130,6 +130,13 @@ const forgotPassToken = async (data) => {
   }
 };
 
+const emptyCart = async (data) => {
+  const response = await axios.delete(`${base_url}user/empty-cart`, data);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 export const authService = {
   register,
   login,
@@ -142,4 +149,5 @@ export const authService = {
   getUserOrders,
   updateUser,
   forgotPassToken,
+  emptyCart,
 };

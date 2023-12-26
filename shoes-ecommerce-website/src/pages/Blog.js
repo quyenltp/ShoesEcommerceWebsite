@@ -16,6 +16,19 @@ const Blog = () => {
   const getblogs = () => {
     dispatch(getAllBlogs());
   };
+  const truncateBlogTitle = (text) => {
+    if (text.length > 45) {
+      return text.substring(0, 45) + "...";
+    }
+    return text;
+  };
+
+  const truncateBlogDescription = (text) => {
+    if (text.length > 70) {
+      return text.substring(0, 70) + "...";
+    }
+    return text;
+  };
   return (
     <>
       <Meta title={"Blogs"} />
@@ -61,8 +74,8 @@ const Blog = () => {
                     <div className="col-6 mb-3" key={index}>
                       <BlogCard
                         id={item?._id}
-                        title={item?.title}
-                        description={item?.description}
+                        title={truncateBlogTitle(item?.title)}
+                        description={truncateBlogDescription(item?.description)}
                         image={item?.images[0]?.url}
                         date={moment(item?.createdAt).format("LLL")}
                       />

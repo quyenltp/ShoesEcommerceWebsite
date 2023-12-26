@@ -34,7 +34,7 @@ const Profile = () => {
     onSubmit: (values) => {
       // alert(JSON.stringify(values));
       dispatch(updateProfile(values));
-      setEdit(false);
+      setEdit(true);
     },
   });
 
@@ -65,7 +65,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="col-12">
-            <form onClick={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="example1" className="form-label">
                   First Name
@@ -126,7 +126,7 @@ const Profile = () => {
                   Mobile Number
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   name="mobile"
                   className="form-control"
                   disabled={edit}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import BreadCrumb from "../components/BreadCrumb";
@@ -31,9 +31,13 @@ const Login = () => {
     onSubmit: (values) => {
       // alert(JSON.stringify(values));
       dispatch(loginUser(values));
-      navigate("/");
     },
   });
+  useEffect(() => {
+    if (authState.user !== null && authState.isError === false) {
+      navigate("/");
+    }
+  }, [authState]);
 
   return (
     <>

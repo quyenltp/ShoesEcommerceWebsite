@@ -22,7 +22,7 @@ const ProductCard = (props) => {
     dispatch(addToWishlist(id));
   };
 
-  const truncateText = (text) => {
+  const truncateProductTitle = (text) => {
     if (text.length > 20) {
       return text.substring(0, 20) + "...";
     }
@@ -46,7 +46,7 @@ const ProductCard = (props) => {
                     className="border-0 bg-transparent"
                     onClick={(e) => addToWish(item?._id)}
                   >
-                    <img src={wish} alt="wishlist" />
+                    <img src={wish} alt="wishlist" style={{ width: "20px" }} />
                   </button>
                 </div>
                 <div className="product-image">
@@ -68,7 +68,7 @@ const ProductCard = (props) => {
                   <h6 className="brand">{item?.brand}</h6>
                   <Link to={`/product/${item?._id}`}>
                     <h5 className="product-title">
-                      {truncateText(item?.title)}
+                      {truncateProductTitle(item?.title)}
                     </h5>
                   </Link>
                   <ReactStars
@@ -86,7 +86,7 @@ const ProductCard = (props) => {
                   ></p>
                   <p className="price">$ {item?.price}</p>
                 </div>
-                <div className="action-bar position-absolute">
+                {/* <div className="action-bar position-absolute">
                   <div className="d-flex flex-column">
                     <Link
                       to={`/product/${item?._id}`}
@@ -98,7 +98,7 @@ const ProductCard = (props) => {
                       <img src={addcart} alt="addcart" />
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           );

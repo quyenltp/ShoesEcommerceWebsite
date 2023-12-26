@@ -19,17 +19,13 @@ import {
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
-const SingleProduct = () => {
+const BrandProduct = () => {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [allreadyAdded, setAllreadyAdded] = useState(false);
   const productState = useSelector((state) => state?.product?.singleproduct);
   const productsState = useSelector((state) => state?.product?.product);
-  const cartState = useSelector((state) => {
-    console.log(state);
-    return state?.auth?.cartProduct;
-  });
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,77 +56,6 @@ const SingleProduct = () => {
     console.log(cartState);
   }, [cartState, getProductId]);
 
-  // const uploadCart = () => {
-  //   console.log("Adding to cart:", productState?._id, quantity, color);
-
-  //   if (color === "") {
-  //     console.log("Color not selected!");
-  //     return toast.error("Please select a color");
-  //   } else {
-  //     dispatch(
-  //       addProdToCart({
-  //         productId: productState?._id,
-  //         quantity,
-  //         color,
-  //         price: productState?.price,
-  //       })
-  //     );
-  //   }
-  // };
-  const uploadCart = () => {
-    try {
-      if (color === "") {
-        throw new Error("Please select a color");
-      }
-      if (size === "") {
-        throw new Error("Please select a size");
-      }
-
-      dispatch(
-        addProdToCart({
-          productId: productState?._id,
-          quantity,
-          color,
-          size,
-          price: productState?.price,
-        })
-      );
-
-      // Optionally, reset the form state or perform other actions on success.
-      setColor("");
-      setSize("");
-      setQuantity(1);
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-  // const props = {
-  //   width: 400,
-  //   height: 500,
-  //   zoomWidth: 500,
-  //   img: productState?.images[0]?.url
-  //     ? productState?.images[0]?.url
-  //     : "https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0",
-  // };
-  const props = {
-    width: 400,
-    height: 550,
-    zoomWidth: 500,
-    img:
-      productState?.images[0]?.url ||
-      "https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0",
-  };
-
-  const copyToClipboard = (text) => {
-    console.log("text", text);
-    var textField = document.createElement("textarea");
-    textField.innerText = text;
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand("copy");
-    textField.remove();
-  };
-
   const [orderedProduct, setOrderedProduct] = useState(true);
   const [specialProduct, setSpecialProduct] = useState([]);
   useEffect(() => {
@@ -143,26 +68,6 @@ const SingleProduct = () => {
       setSpecialProduct(data);
     }
   }, [productState]);
-
-  const [star, setStar] = useState(null);
-  const [comment, setComment] = useState(null);
-  const addRatingToProduct = () => {
-    if (star === null) {
-      toast.error("Please Select A Star");
-      return false;
-    } else if (comment === null) {
-      toast.error("Please Write Review About The Product");
-      return false;
-    } else {
-      dispatch(
-        addRating({ star: star, comment: comment, prodId: getProductId })
-      );
-      setTimeout(() => {
-        dispatch(getAProduct(getProductId));
-      }, 100);
-    }
-    return false;
-  };
 
   return (
     <>
@@ -474,4 +379,4 @@ const SingleProduct = () => {
   );
 };
 
-export default SingleProduct;
+export default BrandProduct;

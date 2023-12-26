@@ -41,9 +41,23 @@ const Home = () => {
     dispatch(addToWishlist(id));
   };
 
-  const truncateText = (text) => {
+  const truncateProductTitle = (text) => {
     if (text.length > 17) {
       return text.substring(0, 17) + "...";
+    }
+    return text;
+  };
+
+  const truncateBlogTitle = (text) => {
+    if (text.length > 25) {
+      return text.substring(0, 25) + "...";
+    }
+    return text;
+  };
+
+  const truncateBlogDescription = (text) => {
+    if (text.length > 60) {
+      return text.substring(0, 60) + "...";
     }
     return text;
   };
@@ -93,7 +107,7 @@ const Home = () => {
                   <div className="d-flex align-items-center gap-15" key={index}>
                     <img src={item.image} alt="services" />
                     <div>
-                      <h6>{truncateText(item.title)}</h6>
+                      <h6>{truncateProductTitle(item.title)}</h6>
                       <p className="mb-0">{item.tagline}</p>
                     </div>
                   </div>
@@ -227,7 +241,11 @@ const Home = () => {
                           className="border-0 bg-transparent"
                           onClick={(e) => addToWish(item?._id)}
                         >
-                          <img src={wish} alt="wishlist" />
+                          <img
+                            src={wish}
+                            alt="wishlist"
+                            style={{ width: "20px" }}
+                          />
                         </button>
                       </div>
                       <div className="product-image">
@@ -249,7 +267,7 @@ const Home = () => {
                         <h6 className="brand">{item?.brand}</h6>
                         <Link to={`/product/${item?._id}`}>
                           <h5 className="product-title">
-                            {truncateText(item?.title)}
+                            {truncateProductTitle(item?.title)}
                           </h5>
                         </Link>
                         <ReactStars
@@ -261,7 +279,7 @@ const Home = () => {
                         />
                         <p className="price">$ {item?.price}</p>
                       </div>
-                      <div className="action-bar position-absolute">
+                      {/* <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">
                           <Link
                             to={`/product/${item?._id}`}
@@ -273,7 +291,7 @@ const Home = () => {
                             <img src={addcart} alt="addcart" />
                           </button>
                         </div>
-                      </div>
+                      </div> */}
                     </Link>
                   </div>
                 );
@@ -366,7 +384,11 @@ const Home = () => {
                           className="border-0 bg-transparent"
                           onClick={(e) => addToWish(item?._id)}
                         >
-                          <img src={wish} alt="wishlist" />
+                          <img
+                            src={wish}
+                            alt="wishlist"
+                            style={{ width: "20px" }}
+                          />
                         </button>
                       </div>
                       <div className="product-image">
@@ -397,7 +419,7 @@ const Home = () => {
                         <h6 className="brand">{item?.brand}</h6>
                         <Link to={`/product/${item?._id}`}>
                           <h5 className="product-title">
-                            {truncateText(item?.title)}
+                            {truncateProductTitle(item?.title)}
                           </h5>
                         </Link>
                         <ReactStars
@@ -409,7 +431,7 @@ const Home = () => {
                         />
                         <p className="price">$ {item?.price}</p>
                       </div>
-                      <div className="action-bar position-absolute">
+                      {/* <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">
                           <Link
                             to={`/product/${item?._id}`}
@@ -421,7 +443,7 @@ const Home = () => {
                             <img src={addcart} alt="addcart" />
                           </button>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 );
@@ -447,9 +469,11 @@ const Home = () => {
                 return (
                   <div className="col-3" key={index}>
                     <BlogCard
-                      title={item.title}
+                      id={item?._id}
+                      title={truncateBlogTitle(item?.title)}
                       image={imageUrl}
-                      description={item.description}
+                      description={truncateBlogDescription(item?.description)}
+                      date={moment(item?.createdAt).format("LLL")}
                     />
                   </div>
                 );
