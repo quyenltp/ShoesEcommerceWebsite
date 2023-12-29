@@ -48,8 +48,8 @@ const Contact = () => {
   });
   return (
     <>
-      <Meta title={"Contact Us"} />
-      <BreadCrumb title="Contact Us" />
+      {/* <Meta title={"Contact Us"} />
+      <BreadCrumb title="Contact Us" /> */}
       <Container class1="contact-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">

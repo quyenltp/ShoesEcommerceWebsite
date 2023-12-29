@@ -31,6 +31,18 @@ const SingleProduct = () => {
     return state?.auth?.cartProduct;
   });
 
+  const [selectedColor, setSelectedColor] = useState(null);
+
+  const handleColorChange = (colorId) => {
+    setSelectedColor(colorId);
+  };
+
+  const [selectedSize, setSelectedSize] = useState(null);
+
+  const handleSizeChange = (sizeId) => {
+    setSelectedSize(sizeId);
+  };
+
   const location = useLocation();
   const navigate = useNavigate();
   const getProductId = location.pathname.split("/")[2];
@@ -166,8 +178,8 @@ const SingleProduct = () => {
 
   return (
     <>
-      <Meta title={productState?.title} />
-      <BreadCrumb title={productState?.title} />
+      {/* <Meta title={productState?.title} />
+      <BreadCrumb title={productState?.title} /> */}
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-6">
@@ -283,6 +295,8 @@ const SingleProduct = () => {
                         setSize={setSize}
                         sizeData={productState?.size}
                         className="size"
+                        selectedSize={selectedSize}
+                        setSelectedSize={handleSizeChange}
                       />
                     </div>
                     <div className="d-flex gap-10 flex-column mt-2 mb-3">
@@ -291,6 +305,8 @@ const SingleProduct = () => {
                         setColor={setColor}
                         colorData={productState?.color}
                         className="color"
+                        selectedColor={selectedColor}
+                        setSelectedColor={handleColorChange}
                       />
                     </div>
                   </>

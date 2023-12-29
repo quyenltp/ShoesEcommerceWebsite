@@ -24,8 +24,8 @@ const Wishlist = () => {
   // console.log(wishlistState);
   return (
     <>
-      <Meta title={"Wishlist"} />
-      <BreadCrumb title="Wishlist" />
+      {/* <Meta title={"Wishlist"} />
+      <BreadCrumb title="Wishlist" /> */}
       <Container class1="wistlist-wrapper home-wrapper-2 py-5">
         <div className="row">
           {wishlistState?.map((item, index) => {})}

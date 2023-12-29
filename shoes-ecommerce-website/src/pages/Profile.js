@@ -46,7 +46,7 @@ const Profile = () => {
   };
   return (
     <>
-      <BreadCrumb title="My Profile" />
+      {/* <BreadCrumb title="My Profile" /> */}
       <Container class1="cart-wrapper-home home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">

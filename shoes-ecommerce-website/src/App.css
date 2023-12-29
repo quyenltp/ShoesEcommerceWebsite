@@ -371,9 +371,22 @@ footer .input-group-text {
 .colors li {
   width: 25px;
   height: 25px;
-  background-color: red;
+  /* background-color: red; */
   border-radius: 50%;
   cursor: pointer;
+}
+.selection-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35px;  
+  height: 35px;
+  border: 2px solid darkred;
+  border-radius: 50%;
+}
+.selected-size {
+  border: 2px solid darkred !important;
 }
 .random-products h5 {
 font-size: 14px;
@@ -723,6 +736,12 @@ margin-bottom: 8px;
 }
 .info-wrapper {
   border-radius: 10px;
+}
+.order-btn {
+  text-align: right;
+}
+.checkout-product-details {
+  margin-left: 30px;
 }
 
 /* CHECKOUT PAGE ENDS HERE */

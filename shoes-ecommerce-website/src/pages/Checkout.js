@@ -128,7 +128,7 @@ const Checkout = () => {
           <div className="col-7">
             <div className="checkout-left-data">
               {/* <h3 className="website-name">Sneakify</h3> */}
-              <nav
+              {/* <nav
                 style={{ "--bs-breadcrumb-divider": ">" }}
                 aria-label="breadcrumb"
               >
@@ -157,7 +157,7 @@ const Checkout = () => {
                     Payment
                   </li>
                 </ol>
-              </nav>
+              </nav> */}
               <div className="info-wrapper bg-white p-4 mb-4">
                 <h5 className="title total">Contact Information</h5>
                 <p className="user-details mb-1">
@@ -352,37 +352,26 @@ const Checkout = () => {
               </div>
             </div>
             <div>
-              <div className="w-100">
-                <div className="d-flex justify-content-between align-items-center">
-                  <Link to="/cart" className="text-dark">
-                    <BiArrowBack className="me-2" />
-                    Return to Cart
-                  </Link>
-                  <Link to="/product" className="button">
-                    Continue to Shopping
-                  </Link>
-                  <button className="button border-0" type="submit">
-                    Place Order
-                  </button>
-                </div>
-              </div>
+              <Link to="/product" className="button">
+                Continue to Shopping
+              </Link>
             </div>
           </div>
 
           <div className="col-5">
-            <div className="p-4">
+            <div className="checkout-product-details">
               <div className="border-bottom py-4">
                 {cartState &&
                   cartState.map((item, index) => {
                     return (
                       <div
                         key={index}
-                        className="d-flex gap-10 mb-2 align-items-center"
+                        className="d-flex gap-10 mb-4 align-items-center"
                       >
                         <div className="w-75 d-flex gap-10">
                           <div className="w-25 position-relative">
                             <span
-                              style={{ top: "-10px", right: "2px" }}
+                              style={{ top: "-15px", right: "-20px" }}
                               className="badge bg-secondary text-white rounded-circle p-2 position-absolute"
                             >
                               {item?.quantity}
@@ -395,12 +384,16 @@ const Checkout = () => {
                               alt="product"
                             />
                           </div>
-                          <div>
+                          <div className="px-4">
                             <h5 className="total-price">
                               {item?.productId?.title}
                             </h5>
-                            <p className="total-price">{item?.color?.title}</p>
-                            <p className="total-price">{item?.size?.title}</p>
+                            <p className="total-price">
+                              Color: {item?.color?.title}
+                            </p>
+                            <p className="total-price">
+                              Size: {item?.size?.title}
+                            </p>
                           </div>
                         </div>
                         <div className="flex-grow-1">
@@ -429,6 +422,11 @@ const Checkout = () => {
                 <h5 className="total-price">
                   $ {totalAmount ? totalAmount + 50 : "0"}
                 </h5>
+              </div>
+              <div className="mt-4 order-btn">
+                <button className="button border-0" type="submit">
+                  Place Order
+                </button>
               </div>
             </div>
           </div>

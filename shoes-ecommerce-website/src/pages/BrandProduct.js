@@ -71,8 +71,8 @@ const BrandProduct = () => {
 
   return (
     <>
-      <Meta title={productState?.title} />
-      <BreadCrumb title={productState?.title} />
+      {/* <Meta title={productState?.title} />
+      <BreadCrumb title={productState?.title} /> */}
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-6">

@@ -57,8 +57,8 @@ const Cart = () => {
   }, [usercartState]);
   return (
     <>
-      <Meta title={"Cart"} />
-      <BreadCrumb title="Cart" />
+      {/* <Meta title={"Cart"} />
+      <BreadCrumb title="Cart" /> */}
       <Container class1="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
@@ -89,7 +89,10 @@ const Cart = () => {
                           Color :{" "}
                           <ul className="colors ps-0">
                             <li
-                              style={{ backgroundColor: item?.color.title }}
+                              style={{
+                                backgroundColor: item?.color.title,
+                                border: "1px solid black",
+                              }}
                             ></li>
                           </ul>
                         </p>

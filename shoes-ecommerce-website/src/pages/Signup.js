@@ -45,8 +45,8 @@ const Signup = () => {
   }, [authState]);
   return (
     <>
-      <Meta title={"Sign Up"} />
-      <BreadCrumb title="Sign Up" />
+      {/* <Meta title={"Sign Up"} />
+      <BreadCrumb title="Sign Up" /> */}
       <Container class1="login-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">

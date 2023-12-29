@@ -7,8 +7,8 @@ import Container from "../components/Container";
 const TermAndCondition = () => {
   return (
     <>
-      <Meta title={"Term And Condition"} />
-      <BreadCrumb title="Term And Condition" />
+      {/* <Meta title={"Term And Condition"} />
+      <BreadCrumb title="Term And Condition" /> */}
       <Container class1="policy-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
