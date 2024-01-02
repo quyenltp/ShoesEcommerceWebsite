@@ -35,37 +35,91 @@ const Orders = () => {
               </div>
             </div>
           </div>
-          <div className="col-12  mt-3">
-            <div className="row">
-              <div className="col-3">
-                <p>Order Id</p>
-              </div>
-              <div className="col-3">
-                <p>Total Amount</p>
-              </div>
-              <div className="col-3">
-                <p>Total Amount After Discount</p>
-              </div>
-              <div className="col-3">
-                <p>Status</p>
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="row bg-secondary p-3">
-                <div className="col-3">
-                  <p>Order Id</p>
-                </div>
-                <div className="col-3">
-                  <p>Total Amount</p>
-                </div>
-                <div className="col-3">
-                  <p>Total Amount After Discount</p>
-                </div>
-                <div className="col-3">
-                  <p>Status</p>
-                </div>
-              </div>
-            </div>
+          <div className="col-12 mt-3">
+            {orderState &&
+              orderState?.map((item, index) => {
+                return (
+                  <div
+                    style={{ backgroundColor: "var(--light-yellow)" }}
+                    className="row pt-3 my-3"
+                    key={index}
+                  >
+                    <div className="col-3">
+                      <p>{item?._id}</p>
+                    </div>
+                    <div className="col-3">
+                      <p>{item?.totalPrice}</p>
+                    </div>
+                    <div className="col-3">
+                      <p>{item?.totalPriceAfterDiscount}</p>
+                    </div>
+                    <div className="col-3">
+                      <p>{item?.orderStatus}</p>
+                    </div>
+
+                    <div className="col-12">
+                      <div
+                        className="row p-3"
+                        style={{ backgroundColor: "var(--primary-color)" }}
+                      >
+                        <div className="col-4">
+                          <h6 className="text-white">Product Name</h6>
+                        </div>
+                        <div className="col-2">
+                          <h6 className="text-white">Quantity</h6>
+                        </div>
+                        <div className="col-2">
+                          <h6 className="text-white">Price</h6>
+                        </div>
+                        <div className="col-2">
+                          <h6 className="text-white">Color</h6>
+                        </div>
+                        <div className="col-2">
+                          <h6 className="text-white">Size</h6>
+                        </div>
+
+                        {item?.orderItems?.map((i, index) => {
+                          return (
+                            <div className="col-12">
+                              <div className="row p-3">
+                                <div className="col-4">
+                                  <p className="text-white">
+                                    {i?.product?.title}
+                                  </p>
+                                </div>
+                                <div className="col-2">
+                                  <p className="text-white">{i?.quantity}</p>
+                                </div>
+                                <div className="col-2">
+                                  <p className="text-white">{i?.price}</p>
+                                </div>
+                                <div className="col-2">
+                                  <ul className="colors ps-0">
+                                    <li
+                                      style={{
+                                        backgroundColor: i?.color.title,
+                                        border: "1px solid black",
+                                      }}
+                                    ></li>
+                                  </ul>
+                                </div>
+                                <div className="col-2">
+                                  <span
+                                    className="badge border border-1 bg-white text-dark border-secondary"
+                                    style={{ marginRight: "10px" }}
+                                  >
+                                    {i?.size?.title}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </Container>

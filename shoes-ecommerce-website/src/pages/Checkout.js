@@ -20,10 +20,8 @@ const shippingSchema = yup.object({
   firstName: yup.string().required("First Name is Required."),
   lastName: yup.string().required("Last Name is Required."),
   address: yup.string().required("Address Details is Required."),
-  state: yup.string().required("State is Required."),
   city: yup.string().required("City is Required."),
-  country: yup.string().required("Country is Required."),
-  pincode: yup.number().required("Pincode is Required."),
+  phone: yup.number().required("Phone Number is Required."),
 });
 
 const Checkout = () => {
@@ -33,6 +31,11 @@ const Checkout = () => {
   const [totalAmount, setTotalAmount] = useState(null);
   const [shippingInfo, setShippingInfo] = useState(null);
   const [cartProductState, setCartProductState] = useState([]);
+  const [paymentInfo, setPaymentInfo] = useState({
+    razorpayPaymentId: "",
+    razorpayOrderId: "",
+  });
+  console.log(paymentInfo, shippingInfo);
 
   useEffect(() => {
     let sum = 0;
@@ -47,78 +50,114 @@ const Checkout = () => {
       firstName: "",
       lastName: "",
       address: "",
-      state: "",
       city: "",
-      country: "",
-      pincode: "",
+      phone: "",
       other: "",
     },
     validationSchema: shippingSchema,
     onSubmit: (values) => {
       setShippingInfo(values);
-      localStorage.setItem("address", JSON.stringify(values));
+      // localStorage.setItem("address", JSON.stringify(values));
       setTimeout(() => {
         checkoutHandler();
       }, 300);
     },
   });
 
-  // const loadScript = (src) => {
-  //   return new Promise((resolve) => {
-  //     const script = document.createElement("script");
-  //     script.src = src;
-  //     script.onload = () => {
-  //       resolve(true);
-  //     };
-  //     script.onerror = () => {
-  //       resolve(false);
-  //     };
-  //     document.body.appendChild(script);
-  //   });
-  // };
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
 
   useEffect(() => {
     let items = [];
 
     for (let index = 0; index < cartState?.length; index++) {
-      // console.log(cartState[index]);
       items.push({
         product: cartState[index].productId._id,
         quantity: cartState[index].quantity,
         color: cartState[index].color._id,
+        size: cartState[index].size._id,
         price: cartState[index].price,
       });
     }
     setCartProductState(items);
   }, []);
-
   const checkoutHandler = async () => {
-    // const res = await loadScript();
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
     const result = await axios.post(
       "http://localhost:5000/api/user/order/checkout",
-      { amount: totalAmount + 5 },
-      config
+      { amount: totalAmount + 50 },
+      config()
     );
+    if (!res) {
+      alert("Razorpay SDK failed to load.");
+      return;
+    }
     if (!result) {
       alert("Something went wrong.");
       return;
     }
     const { amount, id: order_id, currency } = result.data.order;
     const options = {
+      key: "rzp_test_rMcjpafCZaMpP1",
       amount: amount,
       currency: currency,
+      name: "Sneakify",
+      description: "Test Transaction",
       order_id: order_id,
-      handler: async function () {
+      handler: async function (response) {
+        const data = {
+          orderCreationId: order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+        };
+        const result = await axios.post(
+          "http://localhost:5000/api/user/order/paymentVerification",
+          data,
+          config()
+        );
+        setPaymentInfo({
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          // razorpayPaymentId: "razorpaymentid",
+          // razorpayOrderId: "razororderid",
+        });
         dispatch(
           createAnOrder({
             totalPrice: totalAmount,
             totalPriceAfterDiscount: totalAmount,
-            orderItems: [cartProductState],
+            orderItems: cartProductState,
+            paymentInfo,
             shippingInfo,
           })
         );
       },
+      prefill: {
+        name: "Sneakify",
+        email: "sneakify.vn@gmail.com",
+        contact: "0123456789",
+      },
+      notes: {
+        address: "Sneakify Shoes Store",
+      },
+      theme: {
+        color: "#61dafb",
+      },
     };
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
   };
 
   return (
@@ -166,6 +205,61 @@ const Checkout = () => {
                 <p className="mb-1">Email: {authState?.user?.email}</p>
                 {/* <p className="mb-0">Phone: {authState?.user?.mobile}</p> */}
               </div>
+              <div className="payment-method-wrapper my-4 p-4 bg-white">
+                <h5 className="total mb-3">Choose your payment method:</h5>
+                <div className="payment-method">
+                  <div class="form-check mb-3">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                      checked
+                    />
+                    <label className="form-check-label" for="flexRadioDefault1">
+                      {/* <HiOutlineCash /> */}
+                      <img src={cod} alt="" width={30} />
+                      &nbsp; Cash on delivery
+                    </label>
+                  </div>
+                  <div class="form-check mb-3">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label className="form-check-label" for="flexRadioDefault1">
+                      <img src={vnpay} alt="" width={30} />
+                      &nbsp; VNPAY
+                    </label>
+                  </div>
+                  <div class="form-check mb-3">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label className="form-check-label" for="flexRadioDefault1">
+                      <img src={momo} alt="" width={30} />
+                      &nbsp; MoMo
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label className="form-check-label" for="flexRadioDefault1">
+                      <img src={zalopay} alt="" width={30} />
+                      &nbsp; ZaloPay
+                    </label>
+                  </div>
+                </div>
+              </div>
               <div className="address-wrapper bg-white p-4">
                 <h5 className="py-2 total">Shipping Address</h5>
                 <form
@@ -173,24 +267,6 @@ const Checkout = () => {
                   action=""
                   className="d-flex gap-10 justify-content-between flex-wrap"
                 >
-                  <div className="w-100">
-                    <select
-                      name="country"
-                      onChange={formik.handleChange("country")}
-                      onBlur={formik.handleBlur("country")}
-                      value={formik.values.country}
-                      className="form-control form-select"
-                      id=""
-                    >
-                      <option value="" selected disabled>
-                        Select Country
-                      </option>
-                      <option value="vietnam">Vietnam</option>
-                    </select>
-                    <div className="error ms-2 my-1">
-                      {formik.touched.country && formik.errors.country}
-                    </div>
-                  </div>
                   <div className="flex-grow-1">
                     <input
                       type="text"
@@ -233,20 +309,6 @@ const Checkout = () => {
                       {formik.touched.address && formik.errors.address}
                     </div>
                   </div>
-                  <div className="w-100">
-                    <input
-                      type="text"
-                      placeholder="Apartment, Suite, etc"
-                      className="form-control"
-                      name="other"
-                      onChange={formik.handleChange("other")}
-                      onBlur={formik.handleBlur("other")}
-                      value={formik.values.other}
-                    />
-                    <div className="error ms-2 my-1">
-                      {formik.touched.other && formik.errors.other}
-                    </div>
-                  </div>
                   <div className="flex-grow-1">
                     <input
                       type="text"
@@ -261,100 +323,48 @@ const Checkout = () => {
                       {formik.touched.city && formik.errors.city}
                     </div>
                   </div>
-                  {/* <div className="flex-grow-1">
-                    <select
-                      name="state"
-                      onChange={formik.handleChange("state")}
-                      onBlur={formik.handleBlur("state")}
-                      value={formik.values.state}
-                      className="form-control form-select"
-                      id=""
-                    >
-                      <option value="" selected disabled>
-                        Select State
-                      </option>
-                      <option value="stateA">State A</option>
-                    </select>
-                    <div className="error ms-2 my-1">
-                      {formik.touched.state && formik.errors.state}
-                    </div>
-                  </div> */}
                   <div className="flex-grow-1">
                     <input
                       type="text"
-                      placeholder="Zip Code"
+                      placeholder="Phone Number"
                       className="form-control"
-                      name="pincode"
-                      onChange={formik.handleChange("pincode")}
-                      onBlur={formik.handleBlur("pincode")}
-                      value={formik.values.pincode}
+                      name="phone"
+                      onChange={formik.handleChange("phone")}
+                      onBlur={formik.handleBlur("phone")}
+                      value={formik.values.phone}
                     />
                     <div className="error ms-2 my-1">
-                      {formik.touched.pincode && formik.errors.pincode}
+                      {formik.touched.phone && formik.errors.phone}
+                    </div>
+                  </div>
+                  <div className="w-100">
+                    <input
+                      type="text"
+                      placeholder="Notes"
+                      className="form-control"
+                      name="other"
+                      onChange={formik.handleChange("other")}
+                      onBlur={formik.handleBlur("other")}
+                      value={formik.values.other}
+                    />
+                    <div className="error ms-2 my-1">
+                      {formik.touched.other && formik.errors.other}
+                    </div>
+                  </div>
+                  <div className="w-100 checkout-btn">
+                    <div>
+                      <Link to="/product" className="button">
+                        Continue to Shopping
+                      </Link>
+                    </div>
+                    <div className="order-btn ">
+                      <button className="button border-0" type="submit">
+                        Place Order
+                      </button>
                     </div>
                   </div>
                 </form>
               </div>
-            </div>
-            <div className="payment-method-wrapper my-4 p-4 bg-white">
-              <h5 className="total mb-3">Choose your payment method:</h5>
-              <div className="payment-method">
-                <div class="form-check mb-3">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                    checked
-                  />
-                  <label className="form-check-label" for="flexRadioDefault1">
-                    {/* <HiOutlineCash /> */}
-                    <img src={cod} alt="" width={30} />
-                    &nbsp; Cash on delivery
-                  </label>
-                </div>
-                <div class="form-check mb-3">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                  />
-                  <label className="form-check-label" for="flexRadioDefault1">
-                    <img src={vnpay} alt="" width={30} />
-                    &nbsp; VNPAY
-                  </label>
-                </div>
-                <div class="form-check mb-3">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                  />
-                  <label className="form-check-label" for="flexRadioDefault1">
-                    <img src={momo} alt="" width={30} />
-                    &nbsp; MoMo
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                  />
-                  <label className="form-check-label" for="flexRadioDefault1">
-                    <img src={zalopay} alt="" width={30} />
-                    &nbsp; ZaloPay
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div>
-              <Link to="/product" className="button">
-                Continue to Shopping
-              </Link>
             </div>
           </div>
 
@@ -362,7 +372,7 @@ const Checkout = () => {
             <div className="checkout-product-details">
               <div className="border-bottom py-4">
                 {cartState &&
-                  cartState.map((item, index) => {
+                  cartState?.map((item, index) => {
                     return (
                       <div
                         key={index}
@@ -422,11 +432,6 @@ const Checkout = () => {
                 <h5 className="total-price">
                   $ {totalAmount ? totalAmount + 50 : "0"}
                 </h5>
-              </div>
-              <div className="mt-4 order-btn">
-                <button className="button border-0" type="submit">
-                  Place Order
-                </button>
               </div>
             </div>
           </div>

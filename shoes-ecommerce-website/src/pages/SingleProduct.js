@@ -246,7 +246,9 @@ const SingleProduct = () => {
                     edit={false}
                     activeColor="#ffd700"
                   />
-                  <p className="mb-0 t-review">(1 review)</p>
+                  <p className="mb-0 t-review">
+                    ({productState?.ratings.length} review)
+                  </p>
                 </div>
                 <a className="review-btn" href="#review">
                   Write a Review
@@ -408,11 +410,13 @@ const SingleProduct = () => {
                     <ReactStars
                       count={5}
                       size={24}
-                      value="3"
+                      value={3}
                       edit={false}
                       activeColor="#ffd700"
                     />
-                    <p className="mb-0">Based on 1 review</p>
+                    <p className="mb-0">
+                      Based on {productState?.ratings.length} review
+                    </p>
                   </div>
                 </div>
                 {orderedProduct && (

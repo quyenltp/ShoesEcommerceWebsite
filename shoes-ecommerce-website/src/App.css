@@ -112,9 +112,9 @@ a {
   background-color: transparent;
   color: var(--light-yellow) !important;
 }
-.dropdown:hover .dropdown-menu {
+/* .dropdown:hover .dropdown-menu {
   display: block;
-}
+} */
 .search-bar {
   border-radius: 15px;
 }
@@ -739,9 +739,15 @@ margin-bottom: 8px;
 }
 .order-btn {
   text-align: right;
+  margin-left: 25px;
 }
 .checkout-product-details {
   margin-left: 30px;
+}
+.checkout-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 
 /* CHECKOUT PAGE ENDS HERE */

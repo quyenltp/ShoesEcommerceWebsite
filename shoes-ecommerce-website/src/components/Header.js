@@ -217,7 +217,9 @@ const Header = () => {
                     <NavLink to="/product" className="fs-6 px-3">
                       Our Store
                     </NavLink>
-                    {/* <NavLink to="/my-orders">My Orders</NavLink> */}
+                    <NavLink to="/my-orders" className="fs-6 px-3">
+                      My Orders
+                    </NavLink>
                     <NavLink to="/blogs" className="fs-6 px-3">
                       Blogs
                     </NavLink>

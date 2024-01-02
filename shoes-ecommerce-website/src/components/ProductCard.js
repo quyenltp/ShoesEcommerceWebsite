@@ -40,53 +40,56 @@ const ProductCard = (props) => {
                 location.pathname === "/product" ? `gr-${grid}` : "col-3"
               } `}
             >
-              <div className="product-card position-relative">
-                <div className="wishlist-icon position-absolute">
-                  <button
-                    className="border-0 bg-transparent"
-                    onClick={(e) => addToWish(item?._id)}
-                  >
-                    <img src={wish} alt="wishlist" style={{ width: "20px" }} />
-                  </button>
-                </div>
-                <div className="product-image">
-                  <img
-                    src={item?.images[0]?.url}
-                    // src={product01}
-                    className="img-fluid mx-auto"
-                    alt="product image"
-                  />
-                  <img
-                    src={item?.images[0]?.url}
-                    className="img-fluid mx-auto"
-                    alt="product image"
-                  />
-                  {/* <img src={product01} alt="" className="img-fluid mx-auto" />
+              <Link to={`/product/${item?._id}`}>
+                <div className="product-card position-relative">
+                  <div className="wishlist-icon position-absolute">
+                    <button
+                      className="border-0 bg-transparent"
+                      onClick={(e) => addToWish(item?._id)}
+                    >
+                      <img
+                        src={wish}
+                        alt="wishlist"
+                        style={{ width: "20px" }}
+                      />
+                    </button>
+                  </div>
+                  <div className="product-image">
+                    <img
+                      src={item?.images[0]?.url}
+                      // src={product01}
+                      className="img-fluid mx-auto"
+                      alt="product image"
+                    />
+                    <img
+                      src={item?.images[0]?.url}
+                      className="img-fluid mx-auto"
+                      alt="product image"
+                    />
+                    {/* <img src={product01} alt="" className="img-fluid mx-auto" />
                   <img src={product01} alt="" className="img-fluid mx-auto" /> */}
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">{item?.brand}</h6>
-                  <Link to={`/product/${item?._id}`}>
+                  </div>
+                  <div className="product-details">
+                    <h6 className="brand">{item?.brand}</h6>
                     <h5 className="product-title">
                       {truncateProductTitle(item?.title)}
                     </h5>
-                  </Link>
-                  <ReactStars
-                    count={5}
-                    size={24}
-                    value={item?.totalrating.toString()}
-                    edit={false}
-                    activeColor="#ffd700"
-                  />
-                  <p
-                    className={`description ${
-                      grid === 12 ? "d-block" : "d-none"
-                    }`}
-                    dangerouslySetInnerHTML={{ __html: item?.description }}
-                  ></p>
-                  <p className="price">$ {item?.price}</p>
-                </div>
-                {/* <div className="action-bar position-absolute">
+                    <ReactStars
+                      count={5}
+                      size={24}
+                      value={item?.totalrating.toString()}
+                      edit={false}
+                      activeColor="#ffd700"
+                    />
+                    <p
+                      className={`description ${
+                        grid === 12 ? "d-block" : "d-none"
+                      }`}
+                      dangerouslySetInnerHTML={{ __html: item?.description }}
+                    ></p>
+                    <p className="price">$ {item?.price}</p>
+                  </div>
+                  {/* <div className="action-bar position-absolute">
                   <div className="d-flex flex-column">
                     <Link
                       to={`/product/${item?._id}`}
@@ -99,7 +102,8 @@ const ProductCard = (props) => {
                     </button>
                   </div>
                 </div> */}
-              </div>
+                </div>
+              </Link>
             </div>
           );
         })}

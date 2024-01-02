@@ -226,60 +226,50 @@ const Home = () => {
               if (item.tags === "featured") {
                 return (
                   <div key={index} className={"col-2 mb-3"}>
-                    <Link
-                      // to={`${
-                      //   location.pathname == "/"
-                      //     ? "/product/:id"
-                      //     : location.pathname == "/product/:id"
-                      //     ? "/product/:id"
-                      //     : ":id"
-                      // }`}
-                      className="product-card position-relative"
-                    >
-                      <div className="wishlist-icon position-absolute">
-                        <button
-                          className="border-0 bg-transparent"
-                          onClick={(e) => addToWish(item?._id)}
-                        >
+                    <Link to={`/product/${item?._id}`}>
+                      <div className="product-card position-relative">
+                        <div className="wishlist-icon position-absolute">
+                          <button
+                            className="border-0 bg-transparent"
+                            onClick={(e) => addToWish(item?._id)}
+                          >
+                            <img
+                              src={wish}
+                              alt="wishlist"
+                              style={{ width: "20px" }}
+                            />
+                          </button>
+                        </div>
+                        <div className="product-image">
                           <img
-                            src={wish}
-                            alt="wishlist"
-                            style={{ width: "20px" }}
+                            src={item?.images[0]?.url}
+                            // src={product01}
+                            className="img-fluid mx-auto"
+                            alt="product image"
                           />
-                        </button>
-                      </div>
-                      <div className="product-image">
-                        <img
-                          src={item?.images[0]?.url}
-                          // src={product01}
-                          className="img-fluid mx-auto"
-                          alt="product image"
-                        />
-                        {/* Hover image */}
-                        <img
-                          src={item?.images[0]?.url}
-                          className="img-fluid mx-auto"
-                          alt="product image"
-                        />
-                        {/* <img src={product01} alt="" /> */}
-                      </div>
-                      <div className="product-details">
-                        <h6 className="brand">{item?.brand}</h6>
-                        <Link to={`/product/${item?._id}`}>
+                          {/* Hover image */}
+                          <img
+                            src={item?.images[0]?.url}
+                            className="img-fluid mx-auto"
+                            alt="product image"
+                          />
+                          {/* <img src={product01} alt="" /> */}
+                        </div>
+                        <div className="product-details">
+                          <h6 className="brand">{item?.brand}</h6>
                           <h5 className="product-title">
                             {truncateProductTitle(item?.title)}
                           </h5>
-                        </Link>
-                        <ReactStars
-                          count={5}
-                          size={24}
-                          value={item?.totalrating.toString()}
-                          edit={false}
-                          activeColor="#ffd700"
-                        />
-                        <p className="price">$ {item?.price}</p>
-                      </div>
-                      {/* <div className="action-bar position-absolute">
+                          <ReactStars
+                            count={5}
+                            size={24}
+                            value={item?.totalrating.toString()}
+                            edit={false}
+                            activeColor="#ffd700"
+                          />
+                          <p className="price">$ {item?.price}</p>
+                        </div>
+                        {/* <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">
                           <Link
                             to={`/product/${item?._id}`}
@@ -292,6 +282,7 @@ const Home = () => {
                           </button>
                         </div>
                       </div> */}
+                      </div>
                     </Link>
                   </div>
                 );
@@ -369,42 +360,43 @@ const Home = () => {
               if (item.tags === "popular") {
                 return (
                   <div key={index} className={"col-2 mb-3"}>
-                    <div
-                      // to={`${
-                      //   location.pathname == "/"
-                      //     ? "/product/:id"
-                      //     : location.pathname == "/product/:id"
-                      //     ? "/product/:id"
-                      //     : ":id"
-                      // }`}
-                      className="product-card position-relative"
-                    >
-                      <div className="wishlist-icon position-absolute">
-                        <button
-                          className="border-0 bg-transparent"
-                          onClick={(e) => addToWish(item?._id)}
-                        >
+                    <Link to={`/product/${item?._id}`}>
+                      <div
+                        // to={`${
+                        //   location.pathname == "/"
+                        //     ? "/product/:id"
+                        //     : location.pathname == "/product/:id"
+                        //     ? "/product/:id"
+                        //     : ":id"
+                        // }`}
+                        className="product-card position-relative"
+                      >
+                        <div className="wishlist-icon position-absolute">
+                          <button
+                            className="border-0 bg-transparent"
+                            onClick={(e) => addToWish(item?._id)}
+                          >
+                            <img
+                              src={wish}
+                              alt="wishlist"
+                              style={{ width: "20px" }}
+                            />
+                          </button>
+                        </div>
+                        <div className="product-image">
                           <img
-                            src={wish}
-                            alt="wishlist"
-                            style={{ width: "20px" }}
+                            src={item?.images[0]?.url}
+                            // src={product01}
+                            className="img-fluid mx-auto"
+                            alt="product image"
                           />
-                        </button>
-                      </div>
-                      <div className="product-image">
-                        <img
-                          src={item?.images[0]?.url}
-                          // src={product01}
-                          className="img-fluid mx-auto"
-                          alt="product image"
-                        />
-                        {/* Hover image */}
-                        <img
-                          src={item?.images[0]?.url}
-                          className="img-fluid mx-auto"
-                          alt="product image"
-                        />
-                        {/* <img
+                          {/* Hover image */}
+                          <img
+                            src={item?.images[0]?.url}
+                            className="img-fluid mx-auto"
+                            alt="product image"
+                          />
+                          {/* <img
                           src={product01}
                           alt=""
                           className="img-fluid mx-auto"
@@ -414,24 +406,22 @@ const Home = () => {
                           alt=""
                           className="img-fluid mx-auto"
                         /> */}
-                      </div>
-                      <div className="product-details">
-                        <h6 className="brand">{item?.brand}</h6>
-                        <Link to={`/product/${item?._id}`}>
+                        </div>
+                        <div className="product-details">
+                          <h6 className="brand">{item?.brand}</h6>
                           <h5 className="product-title">
                             {truncateProductTitle(item?.title)}
                           </h5>
-                        </Link>
-                        <ReactStars
-                          count={5}
-                          size={24}
-                          value={item?.totalrating.toString()}
-                          edit={false}
-                          activeColor="#ffd700"
-                        />
-                        <p className="price">$ {item?.price}</p>
-                      </div>
-                      {/* <div className="action-bar position-absolute">
+                          <ReactStars
+                            count={5}
+                            size={24}
+                            value={item?.totalrating.toString()}
+                            edit={false}
+                            activeColor="#ffd700"
+                          />
+                          <p className="price">$ {item?.price}</p>
+                        </div>
+                        {/* <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">
                           <Link
                             to={`/product/${item?._id}`}
@@ -444,7 +434,8 @@ const Home = () => {
                           </button>
                         </div>
                       </div> */}
-                    </div>
+                      </div>
+                    </Link>
                   </div>
                 );
               }

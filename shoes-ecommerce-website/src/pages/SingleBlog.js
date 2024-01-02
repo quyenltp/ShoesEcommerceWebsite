@@ -32,7 +32,7 @@ const SingleBlog = () => {
       <Container className="blog-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
-            <div className="single-blog-card">
+            <div className="single-blog-card py-5">
               <Link to="/blogs" className="d-flex align-items-center gap-10">
                 <HiOutlineArrowLeft className="fs-4" /> Go back to Blogs
               </Link>
