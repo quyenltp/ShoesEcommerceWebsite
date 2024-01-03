@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
@@ -14,7 +14,12 @@ import vnpay from "../assets/images/vnpay.png";
 import momo from "../assets/images/momo.jpg";
 import zalopay from "../assets/images/zalopay.png";
 
-import { createAnOrder } from "../features/user/userSlice";
+import {
+  createAnOrder,
+  deleteCartProduct,
+  deleteUserCart,
+  getUserCart,
+} from "../features/user/userSlice";
 
 const shippingSchema = yup.object({
   firstName: yup.string().required("First Name is Required."),
@@ -25,17 +30,23 @@ const shippingSchema = yup.object({
 });
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.auth.cartProducts);
   const authState = useSelector((state) => state?.auth);
   const [totalAmount, setTotalAmount] = useState(null);
-  const [shippingInfo, setShippingInfo] = useState(null);
   const [cartProductState, setCartProductState] = useState([]);
-  const [paymentInfo, setPaymentInfo] = useState({
+  // const [shippingInfo, setShippingInfo] = useState(null);
+  // const [paymentInfo, setPaymentInfo] = useState({
+  //   razorpayPaymentId: "",
+  //   razorpayOrderId: "",
+  // });
+  const shippingInfoRef = useRef(null);
+  const paymentInfoRef = useRef({
     razorpayPaymentId: "",
     razorpayOrderId: "",
   });
-  console.log(paymentInfo, shippingInfo);
+  // console.log(paymentInfo, shippingInfo);
 
   useEffect(() => {
     let sum = 0;
@@ -44,6 +55,19 @@ const Checkout = () => {
       setTotalAmount(sum);
     }
   }, [cartState]);
+
+  // useEffect(() => {
+  //   dispatch(getUserCart());
+  // });
+
+  // useEffect(() => {
+  //   if (
+  //     authState?.orderedProduct !== null &&
+  //     authState?.orderedProduct?.status === true
+  //   ) {
+  //     navigate("/my-orders");
+  //   }
+  // }, [authState]);
 
   const formik = useFormik({
     initialValues: {
@@ -55,8 +79,9 @@ const Checkout = () => {
       other: "",
     },
     validationSchema: shippingSchema,
-    onSubmit: (values) => {
-      setShippingInfo(values);
+    onSubmit: async (values) => {
+      shippingInfoRef.current = values;
+      // await setShippingInfo(values);
       // localStorage.setItem("address", JSON.stringify(values));
       setTimeout(() => {
         checkoutHandler();
@@ -128,21 +153,32 @@ const Checkout = () => {
           data,
           config()
         );
-        setPaymentInfo({
-          razorpayPaymentId: response.razorpay_payment_id,
-          razorpayOrderId: response.razorpay_order_id,
-          // razorpayPaymentId: "razorpaymentid",
-          // razorpayOrderId: "razororderid",
-        });
-        dispatch(
-          createAnOrder({
-            totalPrice: totalAmount,
-            totalPriceAfterDiscount: totalAmount,
-            orderItems: cartProductState,
-            paymentInfo,
-            shippingInfo,
-          })
-        );
+        console.log(result, "hello");
+        // setPaymentInfo(result.data);
+
+        // setPaymentInfo({
+        //   // razorpayPaymentId: response.razorpay_payment_id,
+        //   // razorpayOrderId: response.razorpay_order_id,
+        //   razorpayPaymentId: "razorpaymentid",
+        //   razorpayOrderId: "razororderid",
+        // });
+
+        setTimeout(() => {
+          dispatch(
+            createAnOrder({
+              totalPrice: totalAmount,
+              totalPriceAfterDiscount: totalAmount,
+              orderItems: cartProductState,
+              paymentInfo: {
+                razorpayPaymentId: "razorpaymentid",
+                razorpayOrderId: "razororderid",
+              },
+              shippingInfo: shippingInfoRef.current,
+            })
+          );
+        }, 300);
+
+        // dispatch(deleteUserCart());
       },
       prefill: {
         name: "Sneakify",
