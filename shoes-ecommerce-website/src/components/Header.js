@@ -12,7 +12,7 @@ import cart from "../assets/images/cart.svg";
 import logo from "../assets/images/logo12.png";
 import { getAllBrands } from "../features/brand/brandSlice";
 import { getAProduct } from "../features/product/productSlice";
-
+import { getUserCart } from "../features/user/userSlice";
 // import { PiSneakerMoveFill } from "react-icons/pi";
 
 const Header = () => {
@@ -60,6 +60,10 @@ const Header = () => {
 
     fetchBrands();
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUserCart());
+  }, []);
   console.log(brandState); // Added dispatch to dependency array
 
   return (

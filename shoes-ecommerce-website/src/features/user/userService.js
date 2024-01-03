@@ -131,7 +131,11 @@ const forgotPassToken = async (data) => {
 };
 
 const emptyCart = async (data) => {
-  const response = await axios.delete(`${base_url}user/empty-cart`, data);
+  const response = await axios.delete(
+    `${base_url}user/empty-cart`,
+    data,
+    config()
+  );
   if (response.data) {
     return response.data;
   }

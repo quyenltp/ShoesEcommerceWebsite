@@ -19,6 +19,7 @@ import {
   deleteCartProduct,
   deleteUserCart,
   getUserCart,
+  resetState,
 } from "../features/user/userSlice";
 
 const shippingSchema = yup.object({
@@ -56,18 +57,18 @@ const Checkout = () => {
     }
   }, [cartState]);
 
-  // useEffect(() => {
-  //   dispatch(getUserCart());
-  // });
+  useEffect(() => {
+    dispatch(getUserCart());
+  }, []);
 
-  // useEffect(() => {
-  //   if (
-  //     authState?.orderedProduct !== null &&
-  //     authState?.orderedProduct?.status === true
-  //   ) {
-  //     navigate("/my-orders");
-  //   }
-  // }, [authState]);
+  useEffect(() => {
+    if (
+      authState?.orderedProduct?.order !== null &&
+      authState?.orderedProduct?.success === true
+    ) {
+      navigate("/my-orders");
+    }
+  }, [authState]);
 
   const formik = useFormik({
     initialValues: {
@@ -79,10 +80,10 @@ const Checkout = () => {
       other: "",
     },
     validationSchema: shippingSchema,
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       shippingInfoRef.current = values;
       // await setShippingInfo(values);
-      // localStorage.setItem("address", JSON.stringify(values));
+      localStorage.setItem("address", JSON.stringify(values));
       setTimeout(() => {
         checkoutHandler();
       }, 300);
@@ -163,22 +164,22 @@ const Checkout = () => {
         //   razorpayOrderId: "razororderid",
         // });
 
-        setTimeout(() => {
-          dispatch(
-            createAnOrder({
-              totalPrice: totalAmount,
-              totalPriceAfterDiscount: totalAmount,
-              orderItems: cartProductState,
-              paymentInfo: {
-                razorpayPaymentId: "razorpaymentid",
-                razorpayOrderId: "razororderid",
-              },
-              shippingInfo: shippingInfoRef.current,
-            })
-          );
-        }, 300);
+        dispatch(
+          createAnOrder({
+            totalPrice: totalAmount,
+            totalPriceAfterDiscount: totalAmount,
+            orderItems: cartProductState,
+            paymentInfo: {
+              razorpayPaymentId: "razorpaymentid",
+              razorpayOrderId: "razororderid",
+            },
+            shippingInfo: JSON.parse(localStorage.getItem("address")),
+          })
+        );
 
-        // dispatch(deleteUserCart());
+        dispatch(deleteUserCart(config()));
+        localStorage.removeItem("address");
+        dispatch(resetState());
       },
       prefill: {
         name: "Sneakify",

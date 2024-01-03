@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { authService } from "./userService";
 import { toast } from "react-toastify";
 import { config } from "../../utils/axiosConfig";
@@ -139,6 +139,8 @@ export const getOrders = createAsyncThunk(
     }
   }
 );
+
+export const resetState = createAction("Reset_all");
 
 const getCustomerfromLocalStorage = localStorage.getItem("user")
   ? // ? JSON.parse(localStorage.getItem("customer"))
@@ -406,7 +408,8 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
-      });
+      })
+      .addCase(resetState, () => initialState);
   },
 });
 
