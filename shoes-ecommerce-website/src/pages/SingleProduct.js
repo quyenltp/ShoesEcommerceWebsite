@@ -188,44 +188,16 @@ const SingleProduct = () => {
                 <ReactImageZoom {...props} />
               </div>
             </div>
-            {/* <div className="other-product-images d-flex flex-wrap gap-15">
-              {Array.isArray(productState?.images[0]) &&
-                productState?.images[0]?.map((item, index) => {
+            <div className="other-product-images d-flex flex-wrap gap-15">
+              {Array.isArray(productState?.images) &&
+                productState?.images.slice(1).map((item, index) => {
                   return (
-                    <div>
+                    <div key={index}>
                       <img src={item?.url} alt="" className="img-fluid" />
                     </div>
                   );
                 })}
-              <div>
-                <img
-                  src="https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0"
-                  alt=""
-                  className="img-fluid"
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0"
-                  alt=""
-                  className="img-fluid"
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0"
-                  alt=""
-                  className="img-fluid"
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0"
-                  alt=""
-                  className="img-fluid"
-                />
-              </div>
-            </div> */}
+            </div>
           </div>
           <div className="col-6">
             <div className="main-product-details">

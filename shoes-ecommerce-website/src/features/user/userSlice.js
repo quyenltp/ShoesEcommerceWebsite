@@ -140,12 +140,12 @@ export const getOrders = createAsyncThunk(
   }
 );
 
-export const resetState = createAction("Reset_all");
-
 const getCustomerfromLocalStorage = localStorage.getItem("user")
   ? // ? JSON.parse(localStorage.getItem("customer"))
     JSON.parse(localStorage.getItem("user"))
   : null;
+
+export const resetState = createAction("Reset_all");
 
 const initialState = {
   user: getCustomerfromLocalStorage,

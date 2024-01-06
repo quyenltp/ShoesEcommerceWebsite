@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
-import { config } from "../utils/axiosConfig";
+import { base_url, config } from "../utils/axiosConfig";
 import { HiOutlineCash } from "react-icons/hi";
 
 import Container from "../components/Container";
@@ -47,7 +47,12 @@ const Checkout = () => {
     razorpayPaymentId: "",
     razorpayOrderId: "",
   });
-  // console.log(paymentInfo, shippingInfo);
+
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState("cashOnDelivery");
+  const handlePaymentMethodChange = (event) => {
+    setSelectedPaymentMethod(event.target.id);
+  };
 
   useEffect(() => {
     let sum = 0;
@@ -84,9 +89,7 @@ const Checkout = () => {
       shippingInfoRef.current = values;
       // await setShippingInfo(values);
       localStorage.setItem("address", JSON.stringify(values));
-      setTimeout(() => {
-        checkoutHandler();
-      }, 300);
+      checkoutHandler();
     },
   });
 
@@ -118,83 +121,142 @@ const Checkout = () => {
     }
     setCartProductState(items);
   }, []);
+
+  // const checkoutHandler = async () => {
+  //   // const res = await loadScript(
+  //   //   "https://checkout.razorpay.com/v1/checkout.js"
+  //   // );
+  //   const result = await axios.post(
+  //     "http://localhost:5000/api/user/order/checkout",
+  //     { amount: totalAmount + 50 },
+  //     config()
+  //   );
+  //   // if (!res) {
+  //   //   alert("Razorpay SDK failed to load.");
+  //   //   return;
+  //   // }
+  //   if (!result) {
+  //     alert("Something went wrong.");
+  //     return;
+  //   }
+  //   const { amount, id: order_id } = result.data.order;
+  //   const options = {
+  //     key: "rzp_test_rMcjpafCZaMpP1",
+  //     amount: amount,
+  //     currency: currency,
+  //     name: "Sneakify",
+  //     description: "Test Transaction",
+  //     order_id: order_id,
+  //     handler: async function (response) {
+  //       const data = {
+  //         orderCreationId: order_id,
+  //         razorpayPaymentId: response.razorpay_payment_id,
+  //         razorpayOrderId: response.razorpay_order_id,
+  //       };
+  //       const result = await axios.post(
+  //         "http://localhost:5000/api/user/order/paymentVerification",
+  //         data,
+  //         config()
+  //       );
+  //       // setPaymentInfo(result.data);
+
+  //       // setPaymentInfo({
+  //       //   // razorpayPaymentId: response.razorpay_payment_id,
+  //       //   // razorpayOrderId: response.razorpay_order_id,
+  //       //   razorpayPaymentId: "razorpaymentid",
+  //       //   razorpayOrderId: "razororderid",
+  //       // });
+
+  //       // if (selectedPaymentMethod === "cashOnDelivery") {
+
+  //       // }
+
+  //       dispatch(
+  //         createAnOrder({
+  //           totalPrice: totalAmount,
+  //           totalPriceAfterDiscount: totalAmount,
+  //           orderItems: cartProductState,
+  //           paymentInfo: {
+  //             razorpayPaymentId: "razorpaymentid",
+  //             razorpayOrderId: "razororderid",
+  //           },
+  //           shippingInfo: JSON.parse(localStorage.getItem("address")),
+  //         })
+  //       );
+
+  //       dispatch(deleteUserCart(config()));
+  //       localStorage.removeItem("address");
+  //       dispatch(resetState());
+  //     },
+  //   };
+  // };
+
   const checkoutHandler = async () => {
-    const res = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
     const result = await axios.post(
       "http://localhost:5000/api/user/order/checkout",
       { amount: totalAmount + 50 },
       config()
     );
-    if (!res) {
-      alert("Razorpay SDK failed to load.");
-      return;
-    }
+
     if (!result) {
       alert("Something went wrong.");
       return;
     }
-    const { amount, id: order_id, currency } = result.data.order;
-    const options = {
-      key: "rzp_test_rMcjpafCZaMpP1",
-      amount: amount,
-      currency: currency,
-      name: "Sneakify",
-      description: "Test Transaction",
-      order_id: order_id,
-      handler: async function (response) {
-        const data = {
-          orderCreationId: order_id,
-          razorpayPaymentId: response.razorpay_payment_id,
-          razorpayOrderId: response.razorpay_order_id,
-        };
-        const result = await axios.post(
-          "http://localhost:5000/api/user/order/paymentVerification",
-          data,
-          config()
-        );
-        console.log(result, "hello");
-        // setPaymentInfo(result.data);
 
-        // setPaymentInfo({
-        //   // razorpayPaymentId: response.razorpay_payment_id,
-        //   // razorpayOrderId: response.razorpay_order_id,
-        //   razorpayPaymentId: "razorpaymentid",
-        //   razorpayOrderId: "razororderid",
-        // });
+    const { amount, id: orderId } = result.data.order;
+    console.log("amount", amount, "orderId", orderId);
 
-        dispatch(
-          createAnOrder({
-            totalPrice: totalAmount,
-            totalPriceAfterDiscount: totalAmount,
-            orderItems: cartProductState,
-            paymentInfo: {
-              razorpayPaymentId: "razorpaymentid",
-              razorpayOrderId: "razororderid",
-            },
-            shippingInfo: JSON.parse(localStorage.getItem("address")),
-          })
-        );
-
-        dispatch(deleteUserCart(config()));
-        localStorage.removeItem("address");
-        dispatch(resetState());
-      },
-      prefill: {
-        name: "Sneakify",
-        email: "sneakify.vn@gmail.com",
-        contact: "0123456789",
-      },
-      notes: {
-        address: "Sneakify Shoes Store",
-      },
-      theme: {
-        color: "#61dafb",
-      },
+    const body = {
+      orderId,
+      amount,
+      orderDescription: "test description",
+      orderType: "topup",
     };
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
+
+    const url = `${base_url}user/create_payment_url`;
+    console.log("url", url);
+    try {
+      const reqConfig = config();
+      reqConfig.headers = {
+        ...reqConfig.headers,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods":
+          "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+      };
+      console.log(reqConfig);
+      const response = await axios.post(url, JSON.stringify(body), reqConfig);
+      console.log(response);
+      let vnpUrl = "";
+      if (response.status === 200) {
+        console.log("ok!");
+        vnpUrl = response.data.url;
+      }
+      console.log("url", vnpUrl);
+      if (vnpUrl) window.location.href = vnpUrl;
+      const urlParams = new URLSearchParams(vnpUrl.split("?")[1]);
+      const vnp_TransactionNo = urlParams.get("vnp_TransactionNo");
+
+      dispatch(
+        createAnOrder({
+          totalPrice: totalAmount,
+          totalPriceAfterDiscount: totalAmount,
+          orderItems: cartProductState,
+          paymentInfo: {
+            paymentType: "VNPay",
+            paymentId: vnp_TransactionNo,
+          },
+          shippingInfo: JSON.parse(localStorage.getItem("address")),
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+
+    // dispatch(deleteUserCart(config()));
+    // localStorage.removeItem("address");
+    // dispatch(resetState());
   };
 
   return (
@@ -247,11 +309,12 @@ const Checkout = () => {
                 <div className="payment-method">
                   <div class="form-check mb-3">
                     <input
-                      className="form-check-input"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
-                      checked
+                      id="cashOnDelivery"
+                      className="form-check-input"
+                      name="paymentMethod"
+                      checked={selectedPaymentMethod === "cashOnDelivery"}
+                      onChange={handlePaymentMethodChange}
                     />
                     <label className="form-check-label" for="flexRadioDefault1">
                       {/* <HiOutlineCash /> */}
@@ -261,17 +324,19 @@ const Checkout = () => {
                   </div>
                   <div class="form-check mb-3">
                     <input
-                      className="form-check-input"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
+                      id="vnpay"
+                      className="form-check-input"
+                      name="paymentMethod"
+                      checked={selectedPaymentMethod === "vnpay"}
+                      onChange={handlePaymentMethodChange}
                     />
                     <label className="form-check-label" for="flexRadioDefault1">
                       <img src={vnpay} alt="" width={30} />
                       &nbsp; VNPAY
                     </label>
                   </div>
-                  <div class="form-check mb-3">
+                  {/* <div class="form-check mb-3">
                     <input
                       className="form-check-input"
                       type="radio"
@@ -294,7 +359,7 @@ const Checkout = () => {
                       <img src={zalopay} alt="" width={30} />
                       &nbsp; ZaloPay
                     </label>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="address-wrapper bg-white p-4">
