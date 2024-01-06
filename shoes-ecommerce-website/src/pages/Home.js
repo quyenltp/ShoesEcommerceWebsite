@@ -83,7 +83,9 @@ const Home = () => {
                   <br />
                   playful multi-heart Chuck 70
                 </p>
-                <Link className="button">Shop Now</Link>
+                <Link className="button" to="/product">
+                  Shop Now
+                </Link>
               </div>
             </div>
           </div>

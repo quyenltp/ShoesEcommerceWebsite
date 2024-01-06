@@ -25,6 +25,8 @@ import { PrivateRoutes } from "./routing/PrivateRoutes";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import ProductByBrand from "./pages/ProductByBrand";
+import CheckoutReturn from "./pages/CheckoutReturn";
+import Payment from "./pages/payment";
 
 function App() {
   return (
@@ -55,6 +57,9 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="my-orders" element={<Orders />} />
             <Route path="my-profile" element={<Profile />} />
+
+            <Route path="checkout-return" element={<CheckoutReturn />} />
+            <Route path="payment" element={<Payment />} />
 
             {/* <Route
               path="cart"

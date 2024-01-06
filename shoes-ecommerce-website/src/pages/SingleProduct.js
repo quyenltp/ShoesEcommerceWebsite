@@ -192,8 +192,10 @@ const SingleProduct = () => {
               {Array.isArray(productState?.images) &&
                 productState?.images.slice(1).map((item, index) => {
                   return (
-                    <div key={index}>
-                      <img src={item?.url} alt="" className="img-fluid" />
+                    <div className="other-image-border d-flex align-items-center justify-content-center">
+                      <div key={index}>
+                        <img src={item?.url} alt="" className="img-fluid" />
+                      </div>
                     </div>
                   );
                 })}
@@ -209,22 +211,27 @@ const SingleProduct = () => {
               </div>
               <div className="border-bottom py-3">
                 <p className="price">$ {productState?.price}</p>
-                <div className="d-flex align-items-center gap-10">
-                  <ReactStars
-                    count={5}
-                    size={24}
-                    // State?.totalratings}
-                    value={3}
-                    edit={false}
-                    activeColor="#ffd700"
-                  />
-                  <p className="mb-0 t-review">
-                    ({productState?.ratings.length} review)
-                  </p>
+                <div className="d-flex align-items-center justify-content-between gap-10">
+                  <div className="d-flex align-items-center gap-10">
+                    <ReactStars
+                      count={5}
+                      size={24}
+                      // State?.totalratings}
+                      value={3}
+                      edit={false}
+                      activeColor="#ffd700"
+                    />
+                    <p className="mb-0 t-review">
+                      ({productState?.ratings.length} review)
+                    </p>
+                  </div>
+                  <a
+                    className="review-btn text-decoration-underline"
+                    href="#review"
+                  >
+                    Write a Review
+                  </a>
                 </div>
-                <a className="review-btn" href="#review">
-                  Write a Review
-                </a>
               </div>
               <div className="py-3">
                 <div className="d-flex gap-10 align-items-center my-2">
@@ -391,13 +398,13 @@ const SingleProduct = () => {
                     </p>
                   </div>
                 </div>
-                {orderedProduct && (
+                {/* {orderedProduct && (
                   <div>
                     <a className="text-dark text-decoration-underline" href="">
                       Write a Review
                     </a>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="review-form py-4">
                 <h4>Write a Review</h4>

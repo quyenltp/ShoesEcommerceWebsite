@@ -80,6 +80,72 @@ const ProductByBrand = () => {
       <Container class1="store-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-3">
+            <div className="filter-card mb-3 p-3">
+              <div className="d-flex justify-content-between align-items-center">
+                <div className="d-flex align-items-center gap-10">
+                  <p
+                    className="mb-0 d-block filter-title"
+                    style={{ width: "100px" }}
+                  >
+                    Sort By:
+                  </p>
+                  <select
+                    name=""
+                    defaultValue={"manual"}
+                    className="form-control form-select"
+                    id=""
+                    onChange={(e) => {
+                      setSort(e.target.value);
+                    }}
+                  >
+                    <option value="title">Alphabetically, A-Z</option>
+                    <option value="-title">Alphabetically, Z-A</option>
+                    <option value="price">Price, low to high</option>
+                    <option value="-price">Price, high to low</option>
+                    <option value="createdAt">Date, old to new</option>
+                    <option value="-createdAt">Date, new to old</option>
+                  </select>
+                </div>
+                <div className="d-flex align-items-center gap-10">
+                  {/* <p className="totalproducts mb-0">21 Products</p> */}
+                  <div className="d-flex gap-10 align-items-center grid">
+                    {/* <img
+                      onClick={() => {
+                        setGrid(3);
+                      }}
+                      src="../assets/images/gr4.svg"
+                      className="d-block img-fluid"
+                      alt="grid"
+                    /> */}
+                    {/* <img
+                      onClick={() => {
+                        setGrid(4);
+                      }}
+                      src="assets/images/gr3.svg"
+                      className="d-block img-fluid"
+                      alt="grid"
+                    />
+
+                    <img
+                      onClick={() => {
+                        setGrid(6);
+                      }}
+                      src="assets/images/gr2.svg"
+                      className="d-block img-fluid"
+                      alt="grid"
+                    /> */}
+                    {/* <img
+                      onClick={() => {
+                        setGrid(12);
+                      }}
+                      src="../assets/images/gr.svg"
+                      className="d-block img-fluid"
+                      alt="grid"
+                    /> */}
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="filter-card mb-3">
               <h3 className="filter-title">Shop By Categories</h3>
               <div>
@@ -217,69 +283,6 @@ const ProductByBrand = () => {
             </div>
           </div>
           <div className="col-9">
-            <div className="filter-sort-grid mb-4">
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="d-flex align-items-center gap-10">
-                  <p className="mb-0 d-block" style={{ width: "100px" }}>
-                    Sort By:
-                  </p>
-                  <select
-                    name=""
-                    defaultValue={"manual"}
-                    className="form-control form-select"
-                    id=""
-                    onChange={(e) => {
-                      setSort(e.target.value);
-                    }}
-                  >
-                    <option value="title">Alphabetically, A-Z</option>
-                    <option value="-title">Alphabetically, Z-A</option>
-                    <option value="price">Price, low to high</option>
-                    <option value="-price">Price, high to low</option>
-                    <option value="createdAt">Date, old to new</option>
-                    <option value="-createdAt">Date, new to old</option>
-                  </select>
-                </div>
-                <div className="d-flex align-items-center gap-10">
-                  {/* <p className="totalproducts mb-0">21 Products</p> */}
-                  <div className="d-flex gap-10 align-items-center grid">
-                    {/* <img
-                      onClick={() => {
-                        setGrid(3);
-                      }}
-                      src="../assets/images/gr4.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    /> */}
-                    {/* <img
-                      onClick={() => {
-                        setGrid(4);
-                      }}
-                      src="assets/images/gr3.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    />
-
-                    <img
-                      onClick={() => {
-                        setGrid(6);
-                      }}
-                      src="assets/images/gr2.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    /> */}
-                    {/* <img
-                      onClick={() => {
-                        setGrid(12);
-                      }}
-                      src="../assets/images/gr.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    /> */}
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="products-list pb-5">
               <div className="d-flex gap-10 flex-wrap">
                 <ProductCard
