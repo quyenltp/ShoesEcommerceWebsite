@@ -23,6 +23,17 @@ export const getAProduct = createAsyncThunk(
     }
   }
 );
+
+export const getProByBrand = createAsyncThunk(
+  "product/getProductsByBrand",
+  async (data, thunkAPI) => {
+    try {
+      return await productService.getByBrand(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const addToWishlist = createAsyncThunk(
   "product/wishlist",
   async (prodId, thunkAPI) => {
@@ -106,20 +117,16 @@ export const productSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(addRating.pending, (state) => {
+      .addCase(getProByBrand.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(addRating.fulfilled, (state, action) => {
+      .addCase(getProByBrand.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.rating = action.payload;
-        state.message = "Rating Added Successfully!";
-        if (state.isSuccess) {
-          toast.success("Rating Added Successfully!");
-        }
+        state.productbybrand = action.payload;
       })
-      .addCase(addRating.rejected, (state, action) => {
+      .addCase(getProByBrand.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

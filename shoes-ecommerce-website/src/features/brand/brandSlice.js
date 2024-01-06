@@ -13,7 +13,7 @@ export const getABrand = createAsyncThunk(
   "product/getABrand",
   async (id, thunkAPI) => {
     try {
-      return await brandService.getSingleProduct(id);
+      return await brandService.getABrand(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

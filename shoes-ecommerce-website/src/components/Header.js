@@ -48,14 +48,15 @@ const Header = () => {
   }, [productState]);
   useEffect(() => {
     const fetchBrands = async () => {
-      try {
-        const response = await fetch("/api/brand");
-        const data = await response.json();
-        setBrands(data);
-        dispatch(getAllBrands()); // Dispatch the action after fetching brands
-      } catch (error) {
-        console.error("Error fetching brands:", error);
-      }
+      // try {
+      //   const response = await fetch("/api/brand");
+      //   const data = await response.json();
+      //   setBrands(data);
+      //   dispatch(getAllBrands()); // Dispatch the action after fetching brands
+      // } catch (error) {
+      //   console.error("Error fetching brands:", error);
+      // }
+      dispatch(getAllBrands());
     };
 
     fetchBrands();
@@ -193,6 +194,7 @@ const Header = () => {
                       <img src="assets/images/menu.svg" alt="" />
                       <span
                         onClick={() => dispatch(getAllBrands())}
+                        onHover={() => dispatch(getAllBrands())}
                         className="me-5 fs-6 d-inline-block"
                       >
                         Shop Categories
@@ -201,10 +203,16 @@ const Header = () => {
                     <ul className="dropdown-menu">
                       {brandState.brand &&
                         brandState.brand.map((brand) => (
-                          <li key={brand._id}>
+                          <li key={brand.title}>
                             <Link
                               className="dropdown-item text-white"
-                              to={`/products/${brand._id}`}
+                              // to={`/product/brand/${brand._id}`}
+                              to={`/product/productbybrand/${encodeURIComponent(
+                                brand.title
+                              )}`}
+                              // onClick={() =>
+                              //   navigate(`/product/${brand.title}`)
+                              // }
                             >
                               {brand.title}
                             </Link>
