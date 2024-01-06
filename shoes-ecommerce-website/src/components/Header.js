@@ -100,8 +100,8 @@ const Header = () => {
                 </Link>
               </h3>
             </div>
-            <div className="col-5">
-              <div className="input-group">
+            <div className="col-6">
+              <div className="input-group px-5">
                 <Typeahead
                   id="pagination-example"
                   onPaginate={() => console.log("Results paginated")}
@@ -121,16 +121,16 @@ const Header = () => {
                 </span>
               </div>
             </div>
-            <div className="col-5">
+            <div className="col-4">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
-                <div>
+                {/* <div>
                   <Link className="d-flex align-items-center gap-10 text-white">
                     <img src={compare} alt="compare" />
                     <p className="mb-0">
                       Compare <br /> Products
                     </p>
                   </Link>
-                </div>
+                </div> */}
                 <div>
                   <Link
                     to="/wishlist"
