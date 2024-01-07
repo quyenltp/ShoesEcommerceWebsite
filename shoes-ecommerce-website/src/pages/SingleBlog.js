@@ -41,7 +41,7 @@ const SingleBlog = () => {
                 src={
                   blogState?.images[0]?.url ? blogState?.images[0]?.url : blog
                 }
-                className="img-fluid w-100 my-4"
+                className="img-fluid w-75 my-4 rounded-3 d-block mx-auto"
                 alt="blog"
               />
               <p
