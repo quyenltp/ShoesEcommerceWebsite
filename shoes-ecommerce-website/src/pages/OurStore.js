@@ -9,6 +9,7 @@ import Color from "../components/Color";
 import Size from "../components/Size";
 import Container from "../components/Container";
 import { getAllProducts } from "../features/product/productSlice";
+import { resetState } from "../features/user/userSlice";
 
 const OurStore = () => {
   const [grid, setGrid] = useState(3);
@@ -19,6 +20,8 @@ const OurStore = () => {
   const [tags, setTags] = useState([]);
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(16);
 
   // Filter States
   const [brand, setBrand] = useState(null);
@@ -56,9 +59,23 @@ const OurStore = () => {
     getProducts();
   }, [sort, brand, category, tag, minPrice, maxPrice]);
   const getProducts = () => {
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
     dispatch(
-      getAllProducts({ sort, brand, category, tag, minPrice, maxPrice })
+      getAllProducts({
+        sort,
+        brand,
+        category,
+        tag,
+        minPrice,
+        maxPrice,
+        startIndex,
+        endIndex,
+      })
     );
+  };
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -277,6 +294,21 @@ const OurStore = () => {
                   data={productState ? productState : []}
                   grid={grid}
                 />
+              </div>
+              <div className="pagination">
+                {[
+                  ...Array(
+                    Math.ceil(productState.length / productsPerPage)
+                  ).keys(),
+                ].map((number) => (
+                  <span
+                    style={{ cursor: "pointer" }}
+                    key={number}
+                    onClick={() => paginate(number + 1)}
+                  >
+                    {number + 1}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

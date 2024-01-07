@@ -33,9 +33,9 @@ const Blog = () => {
     <>
       {/* <Meta title={"Blogs"} />
       <BreadCrumb title="Blogs" /> */}
-      <Container class1="blog-wrapper home-wrapper-2 py-5">
+      <Container class1="blog-wrapper home-wrapper-2 py-3">
         <div className="row">
-          <div className="col-3">
+          {/* <div className="col-3">
             <div className="filter-card mb-3">
               <h3 className="filter-title">Find By Categories</h3>
               <div>
@@ -47,8 +47,9 @@ const Blog = () => {
                 </ul>
               </div>
             </div>
-          </div>
-          <div className="col-9">
+          </div> */}
+          <h2 className="p-3 text-center mb-3">All Blogs</h2>
+          <div className="col-12 container">
             <div className="row">
               {/* {Object.keys(blogState)?.map((item, index) => {
                 return (
@@ -71,7 +72,7 @@ const Blog = () => {
                       ? item.images[0].url
                       : "assets/images/blog-01.jpg";
                   return (
-                    <div className="col-6 mb-3" key={index}>
+                    <div className="col-md-3 mb-3" key={index}>
                       <BlogCard
                         id={item?._id}
                         title={truncateBlogTitle(item?.title)}
