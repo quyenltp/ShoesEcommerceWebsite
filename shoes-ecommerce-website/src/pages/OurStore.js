@@ -10,7 +10,7 @@ import Size from "../components/Size";
 import Container from "../components/Container";
 import { getAllProducts } from "../features/product/productSlice";
 import { resetState } from "../features/user/userSlice";
-
+import Pagination from "../components/Pagination";
 const OurStore = () => {
   const [grid, setGrid] = useState(3);
   const productState = useSelector((state) => state?.product?.product);
@@ -21,7 +21,7 @@ const OurStore = () => {
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(16);
+  const [productsPerPage] = useState(12);
 
   // Filter States
   const [brand, setBrand] = useState(null);
@@ -53,7 +53,12 @@ const OurStore = () => {
     setColors(newColors);
     setSizes(newSizes);
   }, [productState]);
-
+  const paginate = ({ totalPosts, postsPerPage, setCurrentPage }) => {
+    let pages = [];
+    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+      pages.push(i);
+    }
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     getProducts();
@@ -74,10 +79,13 @@ const OurStore = () => {
       })
     );
   };
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
+  const lastProductIndex = currentPage * productsPerPage;
+  const firstProductIndex = lastProductIndex - productsPerPage;
+  const currentProduct = productState.slice(
+    firstProductIndex,
+    lastProductIndex
+  );
   return (
     <>
       {/* <Meta title={"Our Store"} />
@@ -291,25 +299,48 @@ const OurStore = () => {
             <div className="products-list pb-5">
               <div className="d-flex gap-10 flex-wrap">
                 <ProductCard
-                  data={productState ? productState : []}
+                  // data={productState ? productState : []}
+                  data={currentProduct ? currentProduct : []}
                   grid={grid}
                 />
               </div>
-              <div className="pagination">
-                {[
-                  ...Array(
-                    Math.ceil(productState.length / productsPerPage)
-                  ).keys(),
-                ].map((number) => (
-                  <span
-                    style={{ cursor: "pointer" }}
-                    key={number}
-                    onClick={() => paginate(number + 1)}
-                  >
-                    {number + 1}
-                  </span>
-                ))}
-              </div>
+              {/* <nav aria-label="Page navigation example">
+                <ul className="pagination justify-content-center">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">
+                      <span aria-hidden="true">&laquo; </span>
+                      Previous
+                    </a>
+                  </li>
+                  {[
+                    ...Array(
+                      Math.ceil(productState.length / productsPerPage)
+                    ).keys(),
+                  ].map((number) => (
+                    <li
+                      className="page-item"
+                      key={number}
+                      onClick={() => paginate(number + 1)}
+                    >
+                      <span className="page-link" href="#">
+                        {number + 1}
+                      </span>
+                    </li>
+                  ))}
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span class="sr-only">Next</span>
+                      <span aria-hidden="true"> &raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav> */}
+              <Pagination
+                totalPosts={productState ? productState.length : 0}
+                postsPerPage={productsPerPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+              />
             </div>
           </div>
         </div>

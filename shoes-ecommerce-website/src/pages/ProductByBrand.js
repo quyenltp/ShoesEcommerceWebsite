@@ -59,6 +59,7 @@ const ProductByBrand = () => {
   useEffect(() => {
     setBrand(brandName);
     getProducts();
+    setGrid(3);
   }, [sort, brandName, category, tag, minPrice, maxPrice]);
   const getProducts = () => {
     dispatch(
@@ -287,7 +288,7 @@ const ProductByBrand = () => {
               <div className="d-flex gap-10 flex-wrap">
                 <ProductCard
                   data={productState ? productState : []}
-                  grid={grid}
+                  className="col-3"
                 />
               </div>
             </div>
