@@ -13,8 +13,13 @@ const Color = (props) => {
             return (
               <li
                 onClick={() => {
-                  setColor(item?._id);
-                  setSelectedColor(item?._id);
+                  if (isSelected) {
+                    setColor("");
+                    setSelectedColor(null);
+                  } else {
+                    setColor(item?._id);
+                    setSelectedColor(item?._id);
+                  }
                 }}
                 style={{
                   backgroundColor: item?.title,

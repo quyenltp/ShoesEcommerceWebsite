@@ -32,6 +32,7 @@ const OurStore = () => {
   const [minPrice, setMinPrice] = useState(null);
   const [maxPrice, setMaxPrice] = useState(null);
   const [sort, setSort] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     let newBrands = [];
@@ -63,6 +64,7 @@ const OurStore = () => {
   useEffect(() => {
     getProducts();
   }, [sort, brand, category, tag, minPrice, maxPrice]);
+
   const getProducts = () => {
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
@@ -86,6 +88,21 @@ const OurStore = () => {
     firstProductIndex,
     lastProductIndex
   );
+
+  const handleCategoryClick = (clickedCategory) => {
+    if (clickedCategory === selectedCategory) {
+      setCategory(null);
+    } else {
+      setCategory(clickedCategory);
+    }
+    // if (isSelected) {
+    //   category && setCategory(null);
+    // } else {
+    //   setCategory(item);
+    //   setSelectedCategory(item);
+    // }
+  };
+
   return (
     <>
       {/* <Meta title={"Our Store"} />
@@ -165,8 +182,22 @@ const OurStore = () => {
                 <ul className="ps-0">
                   {categories &&
                     [...new Set(categories)].map((item, index) => {
+                      const isSelected = item === selectedCategory;
                       return (
-                        <li key={index} onClick={() => setCategory(item)}>
+                        <li
+                          key={index}
+                          onClick={() => {
+                            if (isSelected && item === selectedCategory) {
+                              category &&
+                                setCategory(null) &&
+                                setSelectedCategory(null);
+                            } else {
+                              setCategory(item);
+                              setSelectedCategory(item);
+                            }
+                            // handleCategoryClick(item);
+                          }}
+                        >
                           {item}
                         </li>
                       );
@@ -231,7 +262,7 @@ const OurStore = () => {
                     <label htmlFor="floatingInput">To</label>
                   </div>
                 </div>
-                {/* <h5 className="sub-title">Color</h5>
+                <h5 className="sub-title">Color</h5>
                 <div>
                   {colors &&
                     [...new Set(colors)].map((item, index) => {
@@ -244,7 +275,7 @@ const OurStore = () => {
                       );
                     })}
                   <Color />
-                </div> */}
+                </div>
                 {/* <h5 className="sub-title">Size</h5>
                 <div>
                   {sizes &&

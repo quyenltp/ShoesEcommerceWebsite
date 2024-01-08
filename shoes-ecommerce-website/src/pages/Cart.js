@@ -90,7 +90,7 @@ const Cart = () => {
                           <ul className="colors ps-0">
                             <li
                               style={{
-                                backgroundColor: item?.color.title,
+                                backgroundColor: item?.color?.title,
                                 border: "1px solid black",
                               }}
                             ></li>

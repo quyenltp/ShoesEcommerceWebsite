@@ -14,12 +14,17 @@ const Size = (props) => {
                 // className="badge border border-1 bg-white text-dark border-secondary "
                 className={
                   isSelected
-                    ? "selected-size badge bg-white text-dark"
-                    : "badge border border-1 bg-white text-dark"
+                    ? "selected-size badge bg-white text-dark size-badge"
+                    : "badge border border-1 bg-white text-dark size-badge"
                 }
                 onClick={() => {
-                  setSize(item?._id);
-                  setSelectedSize(item?._id);
+                  if (isSelected) {
+                    setSize("");
+                    setSelectedSize(null);
+                  } else {
+                    setSize(item?._id);
+                    setSelectedSize(item?._id);
+                  }
                 }}
                 style={{ marginRight: "10px", position: "relative" }}
                 key={index}

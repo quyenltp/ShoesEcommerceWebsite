@@ -48,7 +48,7 @@ const Blog = () => {
               </div>
             </div>
           </div> */}
-          <h2 className="p-3 text-center mb-3">All Blogs</h2>
+          <h3 className="p-4 text-center">All Blogs</h3>
           <div className="col-12 container">
             <div className="row">
               {/* {Object.keys(blogState)?.map((item, index) => {

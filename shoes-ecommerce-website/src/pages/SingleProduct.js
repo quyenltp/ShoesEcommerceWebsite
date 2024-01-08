@@ -91,11 +91,11 @@ const SingleProduct = () => {
   // };
   const uploadCart = () => {
     try {
-      if (color === "") {
-        throw new Error("Please select a color");
-      }
       if (size === "") {
-        throw new Error("Please select a size");
+        throw new Error("Please Select A Size!");
+      }
+      if (color === "") {
+        throw new Error("Please Select A Color!");
       }
 
       dispatch(
@@ -160,10 +160,10 @@ const SingleProduct = () => {
   const [comment, setComment] = useState(null);
   const addRatingToProduct = () => {
     if (star === null) {
-      toast.error("Please Select A Star");
+      toast.error("Please Select A Star!");
       return false;
     } else if (comment === null) {
-      toast.error("Please Write Review About The Product");
+      toast.error("Please Write Review About The Product!");
       return false;
     } else {
       dispatch(
@@ -233,16 +233,16 @@ const SingleProduct = () => {
                   </a>
                 </div>
               </div>
-              <div className="py-3">
-                <div className="d-flex gap-10 align-items-center my-2">
+              <div className="pt-3">
+                <div className="d-flex gap-10 align-items-center mt-2 mb-3">
                   <h3 className="product-heading">Type:</h3>
                   <p className="product-data">Sneaker</p>
                 </div>
-                <div className="d-flex gap-10 align-items-center my-2">
+                <div className="d-flex gap-10 align-items-center mt-2 mb-3">
                   <h3 className="product-heading">Brand:</h3>
                   <p className="product-data">{productState?.brand}</p>
                 </div>
-                <div className="d-flex gap-10 align-items-center my-2">
+                <div className="d-flex gap-10 align-items-center mt-2 mb-3">
                   <h3 className="product-heading">Categories:</h3>
                   <p className="product-data">{productState?.category}</p>
                 </div>
@@ -270,7 +270,7 @@ const SingleProduct = () => {
                 </div> */}
                 {allreadyAdded === false && (
                   <>
-                    <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                    <div className="d-flex gap-10 flex-column mt-2 mb-2">
                       <h3 className="product-heading">Size: </h3>{" "}
                       <Size
                         setSize={setSize}
@@ -280,7 +280,7 @@ const SingleProduct = () => {
                         setSelectedSize={handleSizeChange}
                       />
                     </div>
-                    <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                    <div className="d-flex gap-10 flex-column mt-2 mb-2">
                       <h3 className="product-heading">Color: </h3>{" "}
                       <Color
                         setColor={setColor}
@@ -338,7 +338,7 @@ const SingleProduct = () => {
                     Add to Wishlist
                   </a>
                 </div> */}
-                <div className="d-flex flex-column gap-10 my-4">
+                <div className="d-flex flex-column gap-10 mt-4 mb-3">
                   <h3 className="product-heading">Shipping & Returns: </h3>
                   <p className="product-data">
                     Free shipping and returns available on all orders! <br />
@@ -352,6 +352,7 @@ const SingleProduct = () => {
                     onClick={() => {
                       copyToClipboard(window.location.href);
                     }}
+                    style={{ fontSize: "16px" }}
                   >
                     Copy Product Link
                   </a>

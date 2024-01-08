@@ -8,13 +8,13 @@ const Footer = () => {
       <footer className="py-4">
         <div className="container-xxl">
           <div className="row align-items-center">
-            <div className="col-5">
+            <div className="col-6">
               <div className="footer-top-data d-flex gap-30 align-items-center">
                 <img src={logo} alt="newsletter" />
                 <h3 className="mb-0 text-white">Sign Up for Newsletter</h3>
               </div>
             </div>
-            <div className="col-7">
+            <div className="col-6">
               <div className="input-group">
                 <input
                   type="text"

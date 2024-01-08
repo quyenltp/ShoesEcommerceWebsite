@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { useDispatch, useSelector } from "react-redux";
 import ReactStars from "react-rating-stars-component";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { IoIosArrowBack } from "react-icons/io";
 
 import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
@@ -61,6 +65,64 @@ const Home = () => {
     }
     return text;
   };
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Auto play, incrementing the current index
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % blogState.length);
+    }, 5000); // Change the interval as needed (in milliseconds)
+
+    return () => clearInterval(interval);
+  }, [blogState.length]);
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 100,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    cssEase: "ease-in-out",
+    pauseOnHover: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    beforeChange: (current, next) => setCurrentIndex(next),
+  };
+
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: "block",
+          background: "var(--secondary-color)",
+          borderRadius: "50%",
+        }}
+        onClick={onClick}
+      />
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: "block",
+          background: "var(--secondary-color)",
+          borderRadius: "50%",
+        }}
+        onClick={onClick}
+      />
+    );
+  }
 
   return (
     <>
@@ -451,27 +513,27 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          {blogState &&
-            Object.keys(blogState).map((key, index) => {
-              const item = blogState[key];
-              const imageUrl =
-                item?.image && item.image.length > 0
-                  ? item.images[0].url
-                  : "assets/images/blog-01.jpg";
-              if (index < 4) {
+          <Slider {...settings}>
+            {blogState &&
+              Object.keys(blogState).map((key, index) => {
+                const item = blogState[key];
+                const imageUrl =
+                  item?.image && item.image.length > 0
+                    ? item.images[0].url
+                    : "assets/images/blog-01.jpg";
                 return (
-                  <div className="col-3" key={index}>
+                  <div className="col-3 px-2" key={index}>
                     <BlogCard
                       id={item?._id}
                       title={truncateBlogTitle(item?.title)}
-                      image={imageUrl}
+                      image={item?.images[0]?.url}
                       description={truncateBlogDescription(item?.description)}
                       date={moment(item?.createdAt).format("LLL")}
                     />
                   </div>
                 );
-              }
-            })}
+              })}
+          </Slider>
         </div>
       </Container>
     </>

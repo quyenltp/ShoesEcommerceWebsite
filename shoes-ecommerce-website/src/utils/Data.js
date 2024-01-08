@@ -1,7 +1,7 @@
 export const services = [
   {
     title: "Free Shipping",
-    tagline: "From all orders over 100.000 VND",
+    tagline: "From all orders over $ 300",
     image: "assets/images/service.png",
   },
   {
