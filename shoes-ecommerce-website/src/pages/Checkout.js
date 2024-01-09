@@ -7,7 +7,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { base_url, config } from "../utils/axiosConfig";
 import { HiOutlineCash } from "react-icons/hi";
-
+import CouponCard from "../components/CouponCard";
 import Container from "../components/Container";
 import cod from "../assets/images/cod.png";
 import vnpay from "../assets/images/vnpay.png";
@@ -529,7 +529,7 @@ const Checkout = () => {
                   <p className="mb-0 total-price">$ 50</p>
                 </div>
               </div>
-              <div>
+              <div className="border-bottom py-4">
                 <ModalComponent />
               </div>
 
