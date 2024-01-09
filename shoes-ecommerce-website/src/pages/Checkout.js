@@ -94,19 +94,19 @@ const Checkout = () => {
     },
   });
 
-  const loadScript = (src) => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
-  };
+  // const loadScript = (src) => {
+  //   return new Promise((resolve) => {
+  //     const script = document.createElement("script");
+  //     script.src = src;
+  //     script.onload = () => {
+  //       resolve(true);
+  //     };
+  //     script.onerror = () => {
+  //       resolve(false);
+  //     };
+  //     document.body.appendChild(script);
+  //   });
+  // };
 
   useEffect(() => {
     let items = [];
@@ -195,7 +195,7 @@ const Checkout = () => {
   const checkoutHandler = async () => {
     const result = await axios.post(
       "http://localhost:5000/api/user/order/checkout",
-      { amount: totalAmount + 50 },
+      { amount: totalAmount + 30 },
       config()
     );
 
@@ -278,6 +278,24 @@ const Checkout = () => {
         console.log(err);
       }
     }
+  };
+
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+    setSelectedValue(value);
+  };
+
+  const calculateDiscount = (discount, limit, totalAmount) => {
+    return (totalAmount * discount) / 100 > limit
+      ? limit
+      : (totalAmount * discount) / 100;
   };
 
   return (
@@ -529,7 +547,7 @@ const Checkout = () => {
                             </p>
                           </div>
                         </div>
-                        <div className="flex-grow-1">
+                        <div className="flex-grow-1 ps-5">
                           <h5 className="total">
                             $ {item?.price * item?.quantity}
                           </h5>
@@ -547,17 +565,51 @@ const Checkout = () => {
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
                   <p className="mb-0 total">Shipping</p>
-                  <p className="mb-0 total-price">$ 50</p>
+                  <p className="mb-0 total-price">$ 30</p>
                 </div>
               </div>
-              <div className="border-bottom py-4">
-                <ModalComponent />
+              <div className="border-bottom py-4 d-flex justify-content-between">
+                <div className="apply-coupon ">
+                  <Link onClick={handleClickOpen} style={{ cursor: "pointer" }}>
+                    {selectedValue
+                      ? `${selectedValue.name}`
+                      : "Apply Your Coupons"}
+                  </Link>
+                </div>
+                <ModalComponent
+                  selectedValue={selectedValue}
+                  open={open}
+                  onClose={handleClose}
+                />
+                <div>
+                  <p className="mb-0 total-price">
+                    {selectedValue
+                      ? `- $ ${calculateDiscount(
+                          selectedValue?.discount,
+                          selectedValue?.limit,
+                          totalAmount
+                        )}`
+                      : ""}
+                  </p>
+                </div>
               </div>
 
               <div className="d-flex justify-content-between align-items-center border-bottom py-4">
                 <h4 className="total">Total</h4>
-                <h5 className="total-price">
-                  $ {totalAmount ? totalAmount + 50 : "0"}
+                <h5 className="total-price" style={{ fontSize: "24px" }}>
+                  {selectedValue
+                    ? `$ ${
+                        totalAmount
+                          ? totalAmount +
+                            30 -
+                            calculateDiscount(
+                              selectedValue?.discount,
+                              selectedValue?.limit,
+                              totalAmount
+                            )
+                          : "0"
+                      }`
+                    : `$ ${totalAmount ? totalAmount + 30 : "0"}`}
                 </h5>
               </div>
             </div>

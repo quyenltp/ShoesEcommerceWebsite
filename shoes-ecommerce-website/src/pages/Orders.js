@@ -68,8 +68,10 @@ const Orders = () => {
                     </div> */}
                       <div className="col-3">
                         <p className="text-white">
-                          <span className="fw-bold">Price After Discount:</span>
-                          {" $"}
+                          <span className="fw-bold">
+                            Price After Discount:{" "}
+                          </span>
+                          {"$ "}
                           {item?.totalPriceAfterDiscount}
                         </p>
                       </div>

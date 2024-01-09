@@ -151,7 +151,7 @@ const SingleProduct = () => {
 
   useEffect(() => {
     let data = [];
-    for (let index = 0; index < productsState.length; index++) {
+    for (let index = 0; index < 4; index++) {
       const element = productsState[index];
       if (element.brand === productState?.brand) {
         data.push(element);
@@ -446,6 +446,7 @@ const SingleProduct = () => {
                   productState.ratings?.map((item, index) => {
                     return (
                       <div key={index} className="review">
+                        <p className="fw-bold mb-0">#{item?.postedby}</p>
                         <div className="d-flex gap-10 align-items-center">
                           <ReactStars
                             count={5}
