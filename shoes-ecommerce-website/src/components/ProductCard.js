@@ -2,6 +2,7 @@ import React from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Tooltip } from "@mui/material";
 
 import compare from "../assets/images/compare.svg";
 import wish from "../assets/images/wish.svg";
@@ -71,9 +72,11 @@ const ProductCard = (props) => {
                   </div>
                   <div className="product-details">
                     <h6 className="brand">{item?.brand}</h6>
-                    <h5 className="product-title">
-                      {truncateProductTitle(item?.title)}
-                    </h5>
+                    <Tooltip title={item?.title}>
+                      <h5 className="product-title">
+                        {truncateProductTitle(item?.title)}
+                      </h5>
+                    </Tooltip>
                     <ReactStars
                       count={5}
                       size={24}

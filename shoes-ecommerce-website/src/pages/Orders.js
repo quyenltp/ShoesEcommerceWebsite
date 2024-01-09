@@ -130,7 +130,7 @@ const Orders = () => {
                                     <ul className="colors ps-2 align-self-center">
                                       <li
                                         style={{
-                                          backgroundColor: i?.color.title,
+                                          backgroundColor: i?.color?.title,
                                           border: "1px solid black",
                                         }}
                                       ></li>

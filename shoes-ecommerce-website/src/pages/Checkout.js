@@ -204,58 +204,79 @@ const Checkout = () => {
       return;
     }
 
-    const { amount, id: orderId } = result.data.order;
-    console.log("amount", amount, "orderId", orderId);
-
-    const body = {
-      orderId,
-      amount,
-      orderDescription: "test description",
-      orderType: "topup",
-    };
-
-    const url = `${base_url}user/create_payment_url`;
-    console.log("url", url);
-    try {
-      const reqConfig = config();
-      reqConfig.headers = {
-        ...reqConfig.headers,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods":
-          "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
-      };
-      console.log(reqConfig);
-      const response = await axios.post(url, JSON.stringify(body), reqConfig);
-      console.log(response);
-      let vnpUrl = "";
-      if (response.status === 200) {
-        console.log("ok!");
-        vnpUrl = response.data.url;
-      }
-      console.log("url", vnpUrl);
-      if (vnpUrl) window.location.href = vnpUrl;
-      const urlParams = new URLSearchParams(vnpUrl.split("?")[1]);
-      const vnp_TransactionNo = urlParams.get("vnp_TransactionNo");
-
+    if (selectedPaymentMethod === "cashOnDelivery") {
       dispatch(
         createAnOrder({
           totalPrice: totalAmount,
           totalPriceAfterDiscount: totalAmount,
           orderItems: cartProductState,
           paymentInfo: {
-            paymentType: "VNPay",
-            paymentId: "vnp_TransactionNo",
+            paymentType: "cash",
+            paymentId: "cash",
           },
           shippingInfo: JSON.parse(localStorage.getItem("address")),
         })
       );
+
       dispatch(deleteUserCart(config()));
       localStorage.removeItem("address");
       dispatch(resetState());
-    } catch (err) {
-      console.log(err);
+      navigate("/checkout-success");
+    } else if (selectedPaymentMethod === "vnpay") {
+      const { amount, id: orderId } = result.data.order;
+      console.log("amount", amount, "orderId", orderId);
+
+      const body = {
+        orderId,
+        amount,
+        orderDescription: "test description",
+        orderType: "topup",
+      };
+
+      const url = `${base_url}user/create_payment_url`;
+      console.log("url", url);
+      try {
+        const reqConfig = config();
+        reqConfig.headers = {
+          ...reqConfig.headers,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+            "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+        };
+        console.log(reqConfig);
+        const response = await axios.post(url, JSON.stringify(body), reqConfig);
+        console.log(response);
+        let vnpUrl = "";
+        if (response.status === 200) {
+          console.log("ok!");
+          vnpUrl = response.data.url;
+        }
+        console.log("url", vnpUrl);
+        if (vnpUrl) window.location.href = vnpUrl;
+        const urlParams = new URLSearchParams(vnpUrl.split("?")[1]);
+        const vnp_TransactionNo = urlParams.get("vnp_TransactionNo");
+
+        dispatch(
+          createAnOrder({
+            totalPrice: totalAmount,
+            totalPriceAfterDiscount: totalAmount,
+            orderItems: cartProductState,
+            paymentInfo: {
+              paymentType: "VNPay",
+              paymentId: "vnp_TransactionNo",
+            },
+            shippingInfo: JSON.parse(localStorage.getItem("address")),
+          })
+        );
+
+        dispatch(deleteUserCart(config()));
+        localStorage.removeItem("address");
+        dispatch(resetState());
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

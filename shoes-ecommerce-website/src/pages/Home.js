@@ -11,6 +11,7 @@ import {
   IoIosArrowForward,
   IoIosArrowRoundForward,
 } from "react-icons/io";
+import { Tooltip } from "@mui/material";
 
 import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
@@ -50,8 +51,8 @@ const Home = () => {
   };
 
   const truncateProductTitle = (text) => {
-    if (text.length > 17) {
-      return text.substring(0, 17) + "...";
+    if (text.length > 25) {
+      return text.substring(0, 25) + "...";
     }
     return text;
   };
@@ -105,6 +106,7 @@ const Home = () => {
     prevArrow: <SamplePrevArrow />,
     beforeChange: (current, next) => setCurrentIndex(next),
   };
+
   const settingsPopuplar = {
     dots: false,
     infinite: true,
@@ -355,9 +357,12 @@ const Home = () => {
                         </div>
                         <div className="product-details">
                           <h6 className="brand">{item?.brand}</h6>
-                          <h5 className="product-title">
-                            {truncateProductTitle(item?.title)}
-                          </h5>
+                          <Tooltip title={item?.title}>
+                            <h5 className="product-title">
+                              {truncateProductTitle(item?.title)}
+                            </h5>
+                          </Tooltip>
+
                           <ReactStars
                             count={5}
                             size={24}
@@ -508,9 +513,11 @@ const Home = () => {
                           </div>
                           <div className="product-details">
                             <h6 className="brand">{item?.brand}</h6>
-                            <h5 className="product-title">
-                              {truncateProductTitle(item?.title)}
-                            </h5>
+                            <Tooltip title={item?.title}>
+                              <h5 className="product-title">
+                                {truncateProductTitle(item?.title)}
+                              </h5>
+                            </Tooltip>
                             <ReactStars
                               count={5}
                               size={24}
