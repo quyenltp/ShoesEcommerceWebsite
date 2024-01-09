@@ -314,9 +314,9 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.orderedProduct = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Order Created Successfully!");
-        }
+        // if (state.isSuccess === true) {
+        //   toast.success("Order Created Successfully!");
+        // }
       })
       .addCase(createAnOrder.rejected, (state, action) => {
         state.isLoading = false;

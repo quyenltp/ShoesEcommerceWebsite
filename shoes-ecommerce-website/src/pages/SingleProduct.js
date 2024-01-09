@@ -52,6 +52,7 @@ const SingleProduct = () => {
     dispatch(getUserCart());
     dispatch(getAllProducts());
   }, []);
+
   useEffect(() => {
     // for (let index = 0; index <= cartState.length; index++) {
     //   if (cartState[index]?.productId?._id === getProductId) {
@@ -89,6 +90,7 @@ const SingleProduct = () => {
   //     );
   //   }
   // };
+
   const uploadCart = () => {
     try {
       if (size === "") {
@@ -124,9 +126,10 @@ const SingleProduct = () => {
   //     ? productState?.images[0]?.url
   //     : "https://images.vans.com/is/image/Vans/VN0A5JMI_ZS0_HERO?wid=800&hei=1004&fmt=jpeg&qlt=50&resMode=sharp2&op_usm=0.9,1.5,8,0",
   // };
+
   const props = {
     width: 400,
-    height: 550,
+    height: 500,
     zoomWidth: 500,
     img:
       productState?.images[0]?.url ||
@@ -145,11 +148,12 @@ const SingleProduct = () => {
 
   const [orderedProduct, setOrderedProduct] = useState(true);
   const [specialProduct, setSpecialProduct] = useState([]);
+
   useEffect(() => {
     let data = [];
     for (let index = 0; index < productsState.length; index++) {
       const element = productsState[index];
-      if (element.tags === "special") {
+      if (element.brand === productState?.brand) {
         data.push(element);
       }
       setSpecialProduct(data);
@@ -463,7 +467,7 @@ const SingleProduct = () => {
       <Container class1="special-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Our Special Products</h3>
+            <h3 className="section-heading">Our Relevant Products</h3>
           </div>
         </div>
         <div className="row">

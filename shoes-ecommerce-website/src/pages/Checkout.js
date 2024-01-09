@@ -67,14 +67,14 @@ const Checkout = () => {
     dispatch(getUserCart());
   }, []);
 
-  useEffect(() => {
-    if (
-      authState?.orderedProduct?.order !== null &&
-      authState?.orderedProduct?.success === true
-    ) {
-      navigate("/my-orders");
-    }
-  }, [authState]);
+  // useEffect(() => {
+  //   if (
+  //     authState?.orderedProduct?.order !== null &&
+  //     authState?.orderedProduct?.success === true
+  //   ) {
+  //     navigate("/my-orders");
+  //   }
+  // }, [authState]);
 
   const formik = useFormik({
     initialValues: {
@@ -246,18 +246,17 @@ const Checkout = () => {
           orderItems: cartProductState,
           paymentInfo: {
             paymentType: "VNPay",
-            paymentId: vnp_TransactionNo,
+            paymentId: "vnp_TransactionNo",
           },
           shippingInfo: JSON.parse(localStorage.getItem("address")),
         })
       );
+      dispatch(deleteUserCart(config()));
+      localStorage.removeItem("address");
+      dispatch(resetState());
     } catch (err) {
       console.log(err);
     }
-
-    // dispatch(deleteUserCart(config()));
-    // localStorage.removeItem("address");
-    // dispatch(resetState());
   };
 
   return (
@@ -498,13 +497,13 @@ const Checkout = () => {
                             />
                           </div>
                           <div className="px-4">
-                            <h5 className="total-price">
+                            <h5 className="total-price ">
                               {item?.productId?.title}
                             </h5>
-                            <p className="total-price">
+                            <p className="total-price mb-1 prop-label">
                               Color: {item?.color?.title}
                             </p>
-                            <p className="total-price">
+                            <p className="total-price prop-label">
                               Size: {item?.size?.title}
                             </p>
                           </div>

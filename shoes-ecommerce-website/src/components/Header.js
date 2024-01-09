@@ -67,6 +67,12 @@ const Header = () => {
   }, []);
   console.log(brandState); // Added dispatch to dependency array
 
+  const [typedValue, setTypedValue] = useState("");
+
+  const handleTypeaheadInputChange = (input) => {
+    setTypedValue(input);
+  };
+
   return (
     <>
       <header className="header-top-strip py-2">
@@ -115,9 +121,16 @@ const Header = () => {
                   labelKey={"name"}
                   placeholder="Search..."
                   minLength={1}
+                  onInputChange={handleTypeaheadInputChange}
                 />
                 <span className="input-group-text p-3" id="basic-addon2">
-                  <BsSearch className="fs-6" />
+                  <BsSearch
+                    style={{ cursor: "pointer" }}
+                    className="fs-6"
+                    onClick={() =>
+                      navigate(`/product/productbybrand/${typedValue}`)
+                    }
+                  />
                 </span>
               </div>
             </div>
@@ -195,7 +208,7 @@ const Header = () => {
                       <span
                         onClick={() => dispatch(getAllBrands())}
                         onHover={() => dispatch(getAllBrands())}
-                        className="me-5 fs-6 d-inline-block"
+                        className="me-4 fs-6 d-inline-block"
                       >
                         Shop Categories
                       </span>
@@ -223,7 +236,7 @@ const Header = () => {
                 </div>
                 <div className="menu-links">
                   <div className="d-flex align-items-center gap-30">
-                    <NavLink to="/" className="fs-6 px-3">
+                    <NavLink to="/" className="fs-6 px-3 ps-5">
                       Home
                     </NavLink>
                     <NavLink to="/product" className="fs-6 px-3">

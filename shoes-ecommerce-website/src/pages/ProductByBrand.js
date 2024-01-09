@@ -33,6 +33,9 @@ const ProductByBrand = () => {
   const [minPrice, setMinPrice] = useState(null);
   const [maxPrice, setMaxPrice] = useState(null);
   const [sort, setSort] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedTag, setSelectedTag] = useState(null);
 
   useEffect(() => {
     let newBrands = [];
@@ -153,8 +156,22 @@ const ProductByBrand = () => {
                 <ul className="ps-0">
                   {categories &&
                     [...new Set(categories)].map((item, index) => {
+                      const isSelected = item === selectedCategory;
                       return (
-                        <li key={index} onClick={() => setCategory(item)}>
+                        <li
+                          key={index}
+                          onClick={() => {
+                            if (isSelected && item === selectedCategory) {
+                              category &&
+                                setCategory(null) &&
+                                setSelectedCategory(null);
+                            } else {
+                              setCategory(item);
+                              setSelectedCategory(item);
+                            }
+                            // handleCategoryClick(item);
+                          }}
+                        >
                           {item}
                         </li>
                       );
@@ -250,10 +267,20 @@ const ProductByBrand = () => {
                 <div className="product-tag d-flex flex-wrap align-items-center gap-10">
                   {brands &&
                     [...new Set(brands)].map((item, index) => {
+                      const isSelected = item === selectedBrand;
+
                       return (
                         <span
                           key={index}
-                          onClick={() => setBrand(item)}
+                          onClick={() => {
+                            if (isSelected && item === selectedBrand) {
+                              brand && setBrand(null) && setSelectedBrand(null);
+                            } else {
+                              setBrand(item);
+                              setSelectedBrand(item);
+                            }
+                            // handleCategoryClick(item);
+                          }}
                           className="badge bg-light text-secondary rounded-3 py-2 px-3"
                         >
                           {item}
@@ -269,10 +296,19 @@ const ProductByBrand = () => {
                 <div className="product-tag d-flex flex-wrap align-items-center gap-10">
                   {tags &&
                     [...new Set(tags)].map((item, index) => {
+                      const isSelected = item === selectedTag;
                       return (
                         <span
                           key={index}
-                          onClick={() => setTag(item)}
+                          onClick={() => {
+                            if (isSelected && item === selectedTag) {
+                              tag && setTag(null) && setSelectedTag(null);
+                            } else {
+                              setTag(item);
+                              setSelectedTag(item);
+                            }
+                            // handleCategoryClick(item);
+                          }}
                           className="badge bg-light text-secondary rounded-3 py-2 px-3"
                         >
                           {item}

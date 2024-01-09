@@ -6,7 +6,11 @@ import ReactStars from "react-rating-stars-component";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { IoIosArrowBack } from "react-icons/io";
+import {
+  IoIosArrowBack,
+  IoIosArrowForward,
+  IoIosArrowRoundForward,
+} from "react-icons/io";
 
 import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
@@ -67,6 +71,7 @@ const Home = () => {
   };
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentPIndex, setCurrentPIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,6 +81,15 @@ const Home = () => {
 
     return () => clearInterval(interval);
   }, [blogState.length]);
+
+  useEffect(() => {
+    const intervalP = setInterval(() => {
+      // Auto play, incrementing the current index
+      setCurrentPIndex((prevIndex) => (prevIndex + 1) % productState.length);
+    }, 5000); // Change the interval as needed (in milliseconds)
+
+    return () => clearInterval(intervalP);
+  }, [productState.length]);
 
   const settings = {
     dots: false,
@@ -91,17 +105,34 @@ const Home = () => {
     prevArrow: <SamplePrevArrow />,
     beforeChange: (current, next) => setCurrentIndex(next),
   };
+  const settingsPopuplar = {
+    dots: false,
+    infinite: true,
+    speed: 100,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    cssEase: "ease-in-out",
+    pauseOnHover: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    beforeChange: (current, next) => setCurrentPIndex(next),
+  };
 
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
+      <IoIosArrowForward
         className={className}
         style={{
           ...style,
           display: "block",
-          background: "var(--secondary-color)",
+          // background: "var(--secondary-color)",
           borderRadius: "50%",
+          color: "var(--secondary-color)",
+          width: "35px",
+          height: "35px",
         }}
         onClick={onClick}
       />
@@ -111,13 +142,16 @@ const Home = () => {
   function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
+      <IoIosArrowBack
         className={className}
         style={{
           ...style,
           display: "block",
-          background: "var(--secondary-color)",
+          // background: "var(--secondary-color)",
           borderRadius: "50%",
+          color: "var(--secondary-color)",
+          width: "35px",
+          height: "35px",
         }}
         onClick={onClick}
       />
@@ -181,7 +215,7 @@ const Home = () => {
           </div>
         </div>
       </Container>
-      <Container class1="home-wrapper-2 py-5">
+      {/* <Container class1="home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
             <div className="categories d-flex justify-content-between flex-wrap align-items-center">
@@ -245,7 +279,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
       <Container class1="marquee-wrapper py-5">
         <div className="row">
           <div className="col-12">
@@ -358,28 +392,28 @@ const Home = () => {
         <div className="row">
           <div className="col-3">
             <img
-              src="assets/images/famous-01.avif"
+              src="assets/images/famous001.avif"
               className="img-fluid"
               alt=""
             />
           </div>
           <div className="col-3">
             <img
-              src="assets/images/famous-02.avif"
+              src="assets/images/famous002.avif"
               className="img-fluid"
               alt=""
             />
           </div>
           <div className="col-3">
             <img
-              src="assets/images/famous-04.avif"
+              src="assets/images/famous003.avif"
               className="img-fluid"
               alt=""
             />
           </div>
           <div className="col-3">
             <img
-              src="assets/images/famous-03.avif"
+              src="assets/images/famous001.avif"
               className="img-fluid"
               alt=""
             />
@@ -419,48 +453,49 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          {productState &&
-            productState?.map((item, index) => {
-              if (item.tags === "popular") {
-                return (
-                  <div key={index} className={"col-2 mb-3"}>
-                    <Link to={`/product/${item?._id}`}>
-                      <div
-                        // to={`${
-                        //   location.pathname == "/"
-                        //     ? "/product/:id"
-                        //     : location.pathname == "/product/:id"
-                        //     ? "/product/:id"
-                        //     : ":id"
-                        // }`}
-                        className="product-card position-relative"
-                      >
-                        <div className="wishlist-icon position-absolute">
-                          <button
-                            className="border-0 bg-transparent"
-                            onClick={(e) => addToWish(item?._id)}
-                          >
+          <Slider {...settingsPopuplar}>
+            {productState &&
+              productState?.map((item, index) => {
+                if (item.tags === "popular") {
+                  return (
+                    <div key={index} className={"col-2 mb-3"}>
+                      <Link to={`/product/${item?._id}`}>
+                        <div
+                          // to={`${
+                          //   location.pathname == "/"
+                          //     ? "/product/:id"
+                          //     : location.pathname == "/product/:id"
+                          //     ? "/product/:id"
+                          //     : ":id"
+                          // }`}
+                          className="product-card position-relative"
+                        >
+                          <div className="wishlist-icon position-absolute">
+                            <button
+                              className="border-0 bg-transparent"
+                              onClick={(e) => addToWish(item?._id)}
+                            >
+                              <img
+                                src={wish}
+                                alt="wishlist"
+                                style={{ width: "20px" }}
+                              />
+                            </button>
+                          </div>
+                          <div className="product-image">
                             <img
-                              src={wish}
-                              alt="wishlist"
-                              style={{ width: "20px" }}
+                              src={item?.images[0]?.url}
+                              // src={product01}
+                              className="img-fluid mx-auto"
+                              alt="product image"
                             />
-                          </button>
-                        </div>
-                        <div className="product-image">
-                          <img
-                            src={item?.images[0]?.url}
-                            // src={product01}
-                            className="img-fluid mx-auto"
-                            alt="product image"
-                          />
-                          {/* Hover image */}
-                          <img
-                            src={item?.images[0]?.url}
-                            className="img-fluid mx-auto"
-                            alt="product image"
-                          />
-                          {/* <img
+                            {/* Hover image */}
+                            <img
+                              src={item?.images[0]?.url}
+                              className="img-fluid mx-auto"
+                              alt="product image"
+                            />
+                            {/* <img
                           src={product01}
                           alt=""
                           className="img-fluid mx-auto"
@@ -470,22 +505,22 @@ const Home = () => {
                           alt=""
                           className="img-fluid mx-auto"
                         /> */}
-                        </div>
-                        <div className="product-details">
-                          <h6 className="brand">{item?.brand}</h6>
-                          <h5 className="product-title">
-                            {truncateProductTitle(item?.title)}
-                          </h5>
-                          <ReactStars
-                            count={5}
-                            size={24}
-                            value={item?.totalrating.toString()}
-                            edit={false}
-                            activeColor="#ffd700"
-                          />
-                          <p className="price">$ {item?.price}</p>
-                        </div>
-                        {/* <div className="action-bar position-absolute">
+                          </div>
+                          <div className="product-details">
+                            <h6 className="brand">{item?.brand}</h6>
+                            <h5 className="product-title">
+                              {truncateProductTitle(item?.title)}
+                            </h5>
+                            <ReactStars
+                              count={5}
+                              size={24}
+                              value={item?.totalrating.toString()}
+                              edit={false}
+                              activeColor="#ffd700"
+                            />
+                            <p className="price">$ {item?.price}</p>
+                          </div>
+                          {/* <div className="action-bar position-absolute">
                         <div className="d-flex flex-column">
                           <Link
                             to={`/product/${item?._id}`}
@@ -498,12 +533,13 @@ const Home = () => {
                           </button>
                         </div>
                       </div> */}
-                      </div>
-                    </Link>
-                  </div>
-                );
-              }
-            })}
+                        </div>
+                      </Link>
+                    </div>
+                  );
+                }
+              })}
+          </Slider>
         </div>
       </Container>
       <Container class1="blog-wrapper py-5 home-wrapper-2">

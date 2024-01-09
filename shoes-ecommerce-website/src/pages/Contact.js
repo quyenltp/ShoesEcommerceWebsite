@@ -66,7 +66,7 @@ const Contact = () => {
           </div>
           <div className="col-12 mt-5">
             <div className="contact-inner-wrapper d-flex justify-content-between">
-              <div>
+              <div className="ps-5">
                 <h3 className="contact-title mb-4">Contact</h3>
                 <form
                   action=""
@@ -134,7 +134,7 @@ const Contact = () => {
                   </div>
                 </form>
               </div>
-              <div>
+              <div className="ps-5">
                 <h3 className="contact-title mb-4">Get In Touch With Us</h3>
                 <div>
                   <ul className="ps-0">

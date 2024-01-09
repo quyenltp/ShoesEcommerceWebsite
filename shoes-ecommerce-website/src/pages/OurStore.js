@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from "react-redux";
 
+import { getAllColors } from "../features/color/colorSlice";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
@@ -23,6 +24,8 @@ const OurStore = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(12);
 
+  const colorState = useSelector((state) => state?.color);
+
   // Filter States
   const [brand, setBrand] = useState(null);
   const [category, setCategory] = useState(null);
@@ -33,6 +36,8 @@ const OurStore = () => {
   const [maxPrice, setMaxPrice] = useState(null);
   const [sort, setSort] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedTag, setSelectedTag] = useState(null);
 
   useEffect(() => {
     let newBrands = [];
@@ -54,12 +59,14 @@ const OurStore = () => {
     setColors(newColors);
     setSizes(newSizes);
   }, [productState]);
+
   const paginate = ({ totalPosts, postsPerPage, setCurrentPage }) => {
     let pages = [];
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
       pages.push(i);
     }
   };
+
   const dispatch = useDispatch();
   useEffect(() => {
     getProducts();
@@ -89,19 +96,34 @@ const OurStore = () => {
     lastProductIndex
   );
 
-  const handleCategoryClick = (clickedCategory) => {
-    if (clickedCategory === selectedCategory) {
-      setCategory(null);
-    } else {
-      setCategory(clickedCategory);
-    }
-    // if (isSelected) {
-    //   category && setCategory(null);
-    // } else {
-    //   setCategory(item);
-    //   setSelectedCategory(item);
-    // }
-  };
+  // const handleCategoryClick = (clickedCategory) => {
+  //   if (clickedCategory === selectedCategory) {
+  //     setCategory(null);
+  //   } else {
+  //     setCategory(clickedCategory);
+  //   }
+  //   // if (isSelected) {
+  //   //   category && setCategory(null);
+  //   // } else {
+  //   //   setCategory(item);
+  //   //   setSelectedCategory(item);
+  //   // }
+  // };
+
+  useEffect(() => {
+    const fetchColors = async () => {
+      // try {
+      //   const response = await fetch("/api/brand");
+      //   const data = await response.json();
+      //   setBrands(data);
+      //   dispatch(getAllBrands()); // Dispatch the action after fetching brands
+      // } catch (error) {
+      //   console.error("Error fetching brands:", error);
+      // }
+      dispatch(getAllColors());
+    };
+    fetchColors();
+  }, [dispatch]);
 
   return (
     <>
@@ -208,37 +230,6 @@ const OurStore = () => {
             <div className="filter-card mb-3">
               <h3 className="filter-title">Filter By</h3>
               <div>
-                {/* <h5 className="sub-title">Availablity</h5>
-                <div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexCheckDefault"
-                    >
-                      In Stock (1)
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckChecked"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexCheckChecked"
-                    >
-                      Out of Stock (0)
-                    </label>
-                  </div>
-                </div> */}
                 <h5 className="sub-title">Price</h5>
                 <div className="d-flex align-items-center gap-10">
                   <div className="form-floating">
@@ -262,7 +253,7 @@ const OurStore = () => {
                     <label htmlFor="floatingInput">To</label>
                   </div>
                 </div>
-                <h5 className="sub-title">Color</h5>
+                {/* <h5 className="sub-title">Color</h5>
                 <div>
                   {colors &&
                     [...new Set(colors)].map((item, index) => {
@@ -275,7 +266,7 @@ const OurStore = () => {
                       );
                     })}
                   <Color />
-                </div>
+                </div> */}
                 {/* <h5 className="sub-title">Size</h5>
                 <div>
                   {sizes &&
@@ -293,10 +284,20 @@ const OurStore = () => {
                 <div className="product-tag d-flex flex-wrap align-items-center gap-10">
                   {brands &&
                     [...new Set(brands)].map((item, index) => {
+                      const isSelected = item === selectedBrand;
+
                       return (
                         <span
                           key={index}
-                          onClick={() => setBrand(item)}
+                          onClick={() => {
+                            if (isSelected && item === selectedBrand) {
+                              brand && setBrand(null) && setSelectedBrand(null);
+                            } else {
+                              setBrand(item);
+                              setSelectedBrand(item);
+                            }
+                            // handleCategoryClick(item);
+                          }}
                           className="badge bg-light text-secondary rounded-3 py-2 px-3"
                         >
                           {item}
@@ -312,10 +313,19 @@ const OurStore = () => {
                 <div className="product-tag d-flex flex-wrap align-items-center gap-10">
                   {tags &&
                     [...new Set(tags)].map((item, index) => {
+                      const isSelected = item === selectedTag;
                       return (
                         <span
                           key={index}
-                          onClick={() => setTag(item)}
+                          onClick={() => {
+                            if (isSelected && item === selectedTag) {
+                              tag && setTag(null) && setSelectedTag(null);
+                            } else {
+                              setTag(item);
+                              setSelectedTag(item);
+                            }
+                            // handleCategoryClick(item);
+                          }}
                           className="badge bg-light text-secondary rounded-3 py-2 px-3"
                         >
                           {item}

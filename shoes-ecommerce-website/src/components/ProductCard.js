@@ -23,8 +23,8 @@ const ProductCard = (props) => {
   };
 
   const truncateProductTitle = (text) => {
-    if (text.length > 20) {
-      return text.substring(0, 20) + "...";
+    if (text.length > 30) {
+      return text.substring(0, 30) + "...";
     }
     return text;
   };

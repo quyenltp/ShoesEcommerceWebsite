@@ -637,7 +637,7 @@ margin-bottom: 8px;
 }
 .other-product-images {
   background-color: white;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -746,6 +746,9 @@ margin-bottom: 8px;
 .total-price {
   font-size: 16px;
   color: var(--light-gray);
+}
+.prop-label {
+  font-size: 14px;
 }
 .payment-method .form-check-label {
   /* font-size: 14px; */

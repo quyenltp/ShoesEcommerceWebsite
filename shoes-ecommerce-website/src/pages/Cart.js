@@ -155,7 +155,7 @@ const Cart = () => {
                 <div className="d-flex flex-column align-items-end gap-15">
                   <h4>Subtotal: $ {totalAmount}</h4>
                   <p style={{ fontSize: "13px" }}>
-                    Taxes and shipping calculated at checkout.
+                    Shipping calculated at checkout.
                   </p>
                   <Link
                     to="/checkout"

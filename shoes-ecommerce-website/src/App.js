@@ -58,7 +58,7 @@ function App() {
             <Route path="my-orders" element={<Orders />} />
             <Route path="my-profile" element={<Profile />} />
 
-            <Route path="checkout-return" element={<CheckoutReturn />} />
+            <Route path="checkout-success" element={<CheckoutReturn />} />
             <Route path="payment" element={<Payment />} />
 
             {/* <Route

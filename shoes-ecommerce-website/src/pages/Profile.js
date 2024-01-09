@@ -5,7 +5,7 @@ import BreadCrumb from "../components/BreadCrumb";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../features/user/userSlice";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit, FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -47,24 +47,32 @@ const Profile = () => {
   return (
     <>
       {/* <BreadCrumb title="My Profile" /> */}
-      <Container class1="cart-wrapper-home home-wrapper-2 py-5">
+      <Container class1="cart-wrapper-home home-wrapper-2 py-4">
         <div className="row">
-          <div className="col-12">
-            <div className="d-flex justify-content-between align-items-center">
-              <h3 className="">Profile</h3>
-              <div>
-                <FiEdit className="fs-3 mx-3" onClick={() => setEdit(false)} />
-                <button
-                  className="btn btn-primary"
-                  type="button"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
+          <div className="col-12 auth-card">
+            <div className="col-12 mb-4">
+              <div className="d-flex justify-content-between align-items-center">
+                <h3 className="mb-0 fs-3">Profile</h3>
+                <div>
+                  <FiEdit
+                    className="fs-4 mx-3"
+                    onClick={() => setEdit(false)}
+                  />
+                  <FiLogOut
+                    className="fs-4"
+                    type="button"
+                    onClick={handleLogout}
+                  />
+                  {/* <button
+                    className="btn btn-primary"
+                    type="button"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button> */}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-12">
             <form onSubmit={formik.handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="example1" className="form-label">
@@ -142,7 +150,10 @@ const Profile = () => {
               </div>
 
               {edit === false && (
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="btn button border-0 btn-primary"
+                >
                   Save
                 </button>
               )}
