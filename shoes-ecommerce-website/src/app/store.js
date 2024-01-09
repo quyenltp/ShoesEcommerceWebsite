@@ -13,6 +13,7 @@ import productReducer from "../features/product/productSlice";
 import blogReducer from "../features/blogs/blogSlice";
 import contactReducer from "../features/contact/contactSlice";
 import brandReducer from "../features/brand/brandSlice";
+import couponReducer from "../features/coupons/couponSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,16 +22,6 @@ export const store = configureStore({
     blog: blogReducer,
     contact: contactReducer,
     brand: brandReducer,
+    coupon: couponReducer,
   },
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware({
-  //     serializableCheck: {
-  //       // Ignore these paths in the state
-  //       ignoredPaths: ["auth.user"],
-  //       // Ignore these action types
-  //       ignoredActionPaths: ["payload.request", "payload.response"],
-  //       // Ignore specific action types
-  //       ignoredActions: ["auth/register/rejected"],
-  //     },
-  //   }),
 });

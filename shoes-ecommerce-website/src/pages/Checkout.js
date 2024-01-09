@@ -21,6 +21,7 @@ import {
   getUserCart,
   resetState,
 } from "../features/user/userSlice";
+import ModalComponent from "../components/ModalComponent";
 
 const shippingSchema = yup.object({
   firstName: yup.string().required("First Name is Required."),
@@ -529,6 +530,10 @@ const Checkout = () => {
                   <p className="mb-0 total-price">$ 50</p>
                 </div>
               </div>
+              <div>
+                <ModalComponent />
+              </div>
+
               <div className="d-flex justify-content-between align-items-center border-bottom py-4">
                 <h4 className="total">Total</h4>
                 <h5 className="total-price">
