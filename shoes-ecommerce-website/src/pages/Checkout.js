@@ -195,7 +195,16 @@ const Checkout = () => {
   const checkoutHandler = async () => {
     const result = await axios.post(
       "http://localhost:5000/api/user/order/checkout",
-      { amount: totalAmount + 30 },
+      {
+        amount:
+          totalAmount +
+          30 -
+          calculateDiscount(
+            selectedValue.discount,
+            selectedValue.limit,
+            totalAmount
+          ),
+      },
       config()
     );
 
@@ -208,7 +217,14 @@ const Checkout = () => {
       dispatch(
         createAnOrder({
           totalPrice: totalAmount,
-          totalPriceAfterDiscount: totalAmount,
+          totalPriceAfterDiscount:
+            totalAmount +
+            30 -
+            calculateDiscount(
+              selectedValue.discount,
+              selectedValue.limit,
+              totalAmount
+            ),
           orderItems: cartProductState,
           paymentInfo: {
             paymentType: "cash",
@@ -261,7 +277,14 @@ const Checkout = () => {
         dispatch(
           createAnOrder({
             totalPrice: totalAmount,
-            totalPriceAfterDiscount: totalAmount,
+            totalPriceAfterDiscount:
+              totalAmount +
+              30 -
+              calculateDiscount(
+                selectedValue.discount,
+                selectedValue.limit,
+                totalAmount
+              ),
             orderItems: cartProductState,
             paymentInfo: {
               paymentType: "VNPay",

@@ -26,6 +26,8 @@ const SingleProduct = () => {
   const [allreadyAdded, setAllreadyAdded] = useState(false);
   const productState = useSelector((state) => state?.product?.singleproduct);
   const productsState = useSelector((state) => state?.product?.product);
+  const authState = useSelector((state) => state?.auth);
+
   const cartState = useSelector((state) => {
     console.log(state);
     return state?.auth?.cartProduct;
@@ -61,7 +63,7 @@ const SingleProduct = () => {
     // }
     if (productState && cartState) {
       // Check if cartState is defined
-      for (let index = 0; index < cartState.length; index++) {
+      for (let index = 0; index < cartState?.length; index++) {
         // Change condition to avoid going out of bounds
         if (cartState[index]?.productId?._id === getProductId) {
           setAllreadyAdded(true);
@@ -153,7 +155,7 @@ const SingleProduct = () => {
     let data = [];
     for (let index = 0; index < 4; index++) {
       const element = productsState[index];
-      if (element.brand === productState?.brand) {
+      if (element?.brand === productState?.brand) {
         data.push(element);
       }
       setSpecialProduct(data);
@@ -217,17 +219,26 @@ const SingleProduct = () => {
                 <p className="price">$ {productState?.price}</p>
                 <div className="d-flex align-items-center justify-content-between gap-10">
                   <div className="d-flex align-items-center gap-10">
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      // State?.totalratings}
-                      value={3}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                    <p className="mb-0 t-review">
-                      ({productState?.ratings.length} review)
-                    </p>
+                    {productState &&
+                      productState.ratings?.map((item, index) => {
+                        return (
+                          <div key={index} className="review">
+                            <div className="d-flex gap-10 align-items-center">
+                              <ReactStars
+                                count={5}
+                                size={24}
+                                value={item?.star !== null ? item?.star : 0}
+                                edit={false}
+                                activeColor="#ffd700"
+                              />
+                              <p className="mb-0">
+                                (Based on {productState?.ratings?.length}{" "}
+                                review)
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
                   </div>
                   <a
                     className="review-btn text-decoration-underline"
@@ -389,27 +400,29 @@ const SingleProduct = () => {
             <div className="review-inner-wrapper">
               <div className="review-head d-flex align-items-end justify-content-between">
                 <div>
-                  <h4 classNames="mb-2">Customer Reviews</h4>
-                  <div className="d-flex align-items-center gap-10">
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={3}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                    <p className="mb-0">
-                      Based on {productState?.ratings.length} review
-                    </p>
-                  </div>
+                  {productState &&
+                    productState.ratings?.map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="review d-flex align-items-center"
+                        >
+                          <div className="d-flex gap-10 align-items-center">
+                            <ReactStars
+                              count={5}
+                              size={24}
+                              value={item?.star}
+                              edit={false}
+                              activeColor="#ffd700"
+                            />
+                          </div>
+                          <p className="mb-0 ps-2">
+                            (Based on {productState?.ratings?.length} review)
+                          </p>
+                        </div>
+                      );
+                    })}
                 </div>
-                {/* {orderedProduct && (
-                  <div>
-                    <a className="text-dark text-decoration-underline" href="">
-                      Write a Review
-                    </a>
-                  </div>
-                )} */}
               </div>
               <div className="review-form py-4">
                 <h4>Write a Review</h4>
@@ -446,7 +459,9 @@ const SingleProduct = () => {
                   productState.ratings?.map((item, index) => {
                     return (
                       <div key={index} className="review">
-                        <p className="fw-bold mb-0">#{item?.postedby}</p>
+                        <p className="fw-bold mb-0">
+                          {authState?.user?.lastname}
+                        </p>
                         <div className="d-flex gap-10 align-items-center">
                           <ReactStars
                             count={5}
