@@ -4,6 +4,6 @@
   * Lê Thị Phương Quyên - MSSV: 20520729  
   * Dương Hoàng Mai - MSSV: 20520626
 
-* Link demo website: https://youtu.be/EgCl-XOh-Qk
+* Video demo website: https://youtu.be/EgCl-XOh-Qk
 
 
